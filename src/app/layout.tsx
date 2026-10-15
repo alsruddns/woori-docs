@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import "./globals.css";
+
+type RootLayoutProps = {
+  children: ReactNode;
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.woori.today"),
@@ -12,7 +17,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko">
       <body>{children}</body>

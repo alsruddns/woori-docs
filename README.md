@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Git branch policy
+
+- `main` is the production branch.
+- `develop` is the general development branch. Start all work from `develop`.
+- After completing work, verify it, commit and push to `develop`, merge `develop` into `main`, and push `main`.
+- Return to `develop` after updating `main`.
+- Do not create or use a `release` branch.
+
 ## Getting Started
 
 First, run the development server:

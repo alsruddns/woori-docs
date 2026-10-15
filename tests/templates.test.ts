@@ -4,6 +4,7 @@ import { addTemplateField, cloneDocumentTemplate, createBlankTemplate, deleteTem
 import { makeTemplateField } from "../src/lib/template-schema";
 import editorTranslations from "../src/lib/editor-translations.json";
 import { getDocumentMetadata } from "../src/lib/seo";
+import { renderDocumentText } from "../src/lib/engine";
 
 class MemoryStorage {
   values = new Map<string,string>();
@@ -34,7 +35,7 @@ describe("expanded template engine", () => {
     expect(expense?.titleKo).toBe("\uc9c0\ucd9c\uacb0\uc758\uc11c");
     const names=expense!.fields.map(field=>field.label);
     for(const name of ["Document number","Created date","Requester","Department","Expense date","Purpose","Expense category","Vendor","Payment method","Bank account","Receipt type","Receipt attached","Project name","Cost center","Budget code","Payment date","Notes","Reviewer","Approver"]) expect(names).toContain(name);
-    expect(expense?.tables?.[0].calculations).toMatchObject({quantityColumn:"quantity",unitPriceColumn:"unit-price",amountColumn:"amount",subtotal:true});
+    expect(expense?.fields.find(field=>field.id==="Tax rate")?.defaultValue).toBe(10);expect(expense?.tables?.[0].calculations).toMatchObject({quantityColumn:"quantity",unitPriceColumn:"unit-price",amountColumn:"amount",subtotal:true,vatRateFieldId:"Tax rate"});const text=renderDocumentText(expense!,{"Tax rate":"5","table:expense-items":JSON.stringify([{quantity:"2","unit-price":"50"}])},"en");expect(text).toContain("Amount: 100");expect(text).toContain("VAT: 5");expect(text).toContain("Total: 105");
   });
   it("supports adding, editing, deleting, and keyboard reordering custom fields",()=>{
     const base=createBlankTemplate("one","Test","work","2026-01-01T00:00:00Z");

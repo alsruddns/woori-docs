@@ -74,7 +74,7 @@ export { ui, localeLabels } from "./chrome-i18n";
 
 const legacyCategoryMap: Record<string, Category> = { career: "hr-admin", business: "finance", work: "work", personal: "personal", checklists: "checklists", planning: "planning", finance: "finance", agreements: "records" };
 function toFields(labels: readonly string[]): TemplateField[] {
-  return labels.map((label, index) => ({ id: label, label, type: inferFieldType(label), required: index < 2 }));
+  return labels.map((label, index) => ({ id: label, label, type: inferFieldType(label), required: index < 2, ...(label === "Tax rate" ? { defaultValue: 10 } : {}) }));
 }
 const legacyDocuments: DocumentDefinition[] = rows.map(([slug, legacyCategory, title, titleKo, kind = "form", policy = false, fieldList]) => ({
   slug, category: legacyCategoryMap[legacyCategory], title, titleKo, description: `${title} for creating, previewing, copying, and printing a useful document in your browser.`, kind, policyReviewRequired: policy, browserOnly: true, isPublic: true, supportedLocales: locales, supportedFormats: ["pdf", "text"], fields: toFields((fieldList ?? "Title,Date,Details,Notes").split(",")), keywords: slug.split("-"), relatedServices: [],

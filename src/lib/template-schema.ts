@@ -21,7 +21,7 @@ export type TemplateTable = {
   label: string;
   columns: TemplateTableColumn[];
   minRows?: number;
-  calculations?: { quantityColumn?: string; unitPriceColumn?: string; amountColumn?: string; subtotal?: boolean; vatRate?: number };
+  calculations?: { quantityColumn?: string; unitPriceColumn?: string; amountColumn?: string; subtotal?: boolean; vatRate?: number; vatRateFieldId?: string };
   summaryLabels?: { subtotal: string; vat: string; total: string };
 };
 export type DocumentTemplate = {

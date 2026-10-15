@@ -195,6 +195,7 @@
       "Bank account",
       "Receipt type",
       "Receipt attached",
+      "Tax rate",
       "Project name",
       "Cost center",
       "Budget code",
@@ -243,7 +244,8 @@
           "unitPriceColumn": "unit-price",
           "amountColumn": "amount",
           "subtotal": true,
-          "vatRate": 0.1
+          "vatRate": 0.1,
+          "vatRateFieldId": "Tax rate"
         }
       }
     ]

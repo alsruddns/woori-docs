@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { categories, documents, locales, ui } from "../src/lib/registry";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
-import { GET } from "../src/app/docs-sitemap.xml/route";
+import { GET } from "../src/app/sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
 import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl, portalPath } from "../src/lib/urls";
 
@@ -33,12 +33,22 @@ describe("document registry", () => {
   });
   it("generates sitemap entries from registry and locale data", async () => {
     const response = GET(); const xml = await response.text();
+    const sitemapUrls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    const publicDocuments = documents.filter((doc) => doc.isPublic);
+    const expectedCount = locales.length + publicDocuments.reduce((count, doc) => count + doc.supportedLocales.length, 0);
     expect(response.headers.get("Content-Type")).toContain("application/xml");
-    expect((xml.match(/<url>/g) ?? []).length).toBe(documents.length * locales.length + locales.length);
+    expect(sitemapUrls).toHaveLength(expectedCount);
+    expect(new Set(sitemapUrls).size).toBe(sitemapUrls.length);
+    expect(sitemapUrls.every((url) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
+    expect(sitemapUrls).toContain("https://www.woori.today/ko/docs");
     expect(xml).toContain("https://www.woori.today/ko/docs/resume-template");
     expect(xml).toContain("https://www.woori.today/pt-br/docs");
     expect(xml).toContain("https://www.woori.today/zh-tw/docs");
     expect(xml).not.toMatch(/https:\/\/www\.woori\.today\/(?:docs|quiz)\/(?:ko|en)(?:\/|<)/);
+    expect(xml).not.toMatch(/localhost|127\.0\.0\.1|woori-docs(?::|\/)/i);
+    expect(sitemapUrls.filter((url) => url.startsWith("https://www.woori.today/")).length).toBe(sitemapUrls.length);
+    expect(sitemapUrls.length).toBe(locales.length + publicDocuments.length * locales.length);
+    expect(publicDocuments).toHaveLength(56);
   });
   it("generates canonical, hreflang, x-default, title, and description metadata", async () => {
     const metadata = getDocumentMetadata("ko", "resume-template");
@@ -50,6 +60,8 @@ describe("document registry", () => {
     expect(metadata.alternates?.languages?.["pt-BR"]).toBe("/pt-br/docs/resume-template");
     expect(metadata.alternates?.languages?.["zh-TW"]).toBe("/zh-tw/docs/resume-template");
     expect(metadata.alternates?.languages?.["x-default"]).toBe("/en/docs/resume-template");
+    expect(Object.keys(metadata.alternates?.languages ?? {})).toHaveLength(locales.length + 1);
+    expect(new Set(Object.values(metadata.alternates?.languages ?? {})).size).toBe(locales.length);
     expect(metadata.openGraph?.url).toBe("/ko/docs/resume-template");
   });
   it("builds locale-first public paths and 855 IndexNow URLs", async () => {
@@ -62,10 +74,14 @@ describe("document registry", () => {
     expect(docsPathForLocale("/ko/docs/resume-template", "en")).toBe("/en/docs/resume-template");
     const { createIndexNowUrls } = await import("../scripts/submit-indexnow.mjs");
     const urls = createIndexNowUrls();
-    expect(urls).toHaveLength(855);
+    expect(urls).toHaveLength(locales.length + documents.filter((doc) => doc.isPublic).reduce((count, doc) => count + doc.supportedLocales.length, 0));
+    expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain("https://www.woori.today/ko/docs");
     expect(urls).toContain("https://www.woori.today/pt-br/docs/resume-template");
     expect(urls.every((url: string) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
+    const response = GET(); const sitemapXml = await response.text();
+    const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    expect(new Set(urls)).toEqual(new Set(sitemapUrls));
   });
   it("keeps the catalog synchronized", async () => {
     const { readFile } = await import("node:fs/promises");

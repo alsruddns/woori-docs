@@ -29,7 +29,7 @@ export function createIndexNowUrls(definitions = documents, changedSlugs = null)
   const selectedDocs = changedSlugs === null ? publicDocs : publicDocs.filter(({ slug }) => changedSlugs.has(slug));
   return [...new Set([
     ...locales.map((locale) => docsUrl(locale)),
-    ...selectedDocs.flatMap(({ slug }) => locales.map((locale) => docsUrl(locale, slug))),
+    ...selectedDocs.flatMap(({ slug, supportedLocales }) => locales.filter((locale) => supportedLocales.includes(locale)).map((locale) => docsUrl(locale, slug))),
   ])];
 }
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { localeLabels, locales, ui, type Locale } from "@/lib/registry";
+import { localeLabels, locales, ui, type Locale } from "@/lib/chrome-i18n";
 import { docsPathForLocale, portalPath } from "@/lib/urls";
 
 const chromeText: Record<Locale, { family: string; portal: string; calculators: string; tools: string; money: string; docs: string; quiz: string; privacy: string; terms: string; contact: string; contactTitle: string; inquiry: string; guidance: string; email: string; copy: string; copied: string; close: string; types: string[] }> = {

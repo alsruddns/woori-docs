@@ -1,5 +1,6 @@
 export const locales = ["ko", "en", "ja", "zh", "es", "pt-br", "de", "fr", "vi", "id", "th", "zh-tw", "it", "nl", "hi"] as const;
 export type Locale = (typeof locales)[number];
+export const localeLabels: Record<Locale, string> = { ko:"한국어", en:"English", ja:"日本語", zh:"简体中文", es:"Español", "pt-br":"Português (Brasil)", de:"Deutsch", fr:"Français", vi:"Tiếng Việt", id:"Bahasa Indonesia", th:"ไทย", "zh-tw":"繁體中文", it:"Italiano", nl:"Nederlands", hi:"हिन्दी" };
 export const categories = ["career", "business", "work", "personal", "checklists", "planning", "finance", "agreements"] as const;
 export type Category = (typeof categories)[number];
 export type DocKind = "form" | "checklist" | "planner";

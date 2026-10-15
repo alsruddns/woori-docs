@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { categories, documents, locales, ui } from "../src/lib/registry";
+import { categories, documents, localeLabels, locales, ui } from "../src/lib/registry";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
@@ -21,6 +21,11 @@ describe("document registry", () => {
       expect(ui[locale].download).toBeTruthy();
       expect(documents.every((doc) => doc.supportedLocales.includes(locale))).toBe(true);
     }
+  });
+  it("uses a display label for every supported locale", () => {
+    expect(locales.map((locale) => localeLabels[locale])).toEqual([
+      "한국어", "English", "日本語", "简体中文", "Español", "Português (Brasil)", "Deutsch", "Français", "Tiếng Việt", "Bahasa Indonesia", "ไทย", "繁體中文", "Italiano", "Nederlands", "हिन्दी",
+    ]);
   });
   it("requires core fields and renders a live preview as text", () => {
     const doc = documents[0];

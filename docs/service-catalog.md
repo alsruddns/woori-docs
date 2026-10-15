@@ -63,13 +63,76 @@ The registry in src/lib/registry.ts is the implementation source of truth. Updat
 
 ## Catalog counts
 
-- Total features: 56 (all 8 requested categories)
-- Public: 56
+- Total features: 119 (14 categories)
+- Public: 119
 - Closed: 0
 - Policy review required: 12
 - By category: career 6, business 8, work 8, personal 5, checklists 10, planning 7, finance 6, agreements 6.
 - Formats: browser print / PDF and plain text download.
 - Locale identifiers routed: 15; translation review is still required for non-Korean document titles and field labels before claiming fully localized content.
-- Sitemap target: 56 × 15 localized detail URLs + 15 localized index URLs = 855 URLs.
+- Sitemap target: 119 × 15 localized detail URLs + 15 localized index URLs = 1,800 URLs.
 
 The 12 policy-review entries are the invoice and transaction/expense records plus general agreements, consent, loan, contract, NDA, and employment record templates. Tax, payroll, statutory, and jurisdiction-specific rules are not calculated or asserted.
+| 57 | Work request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/work-request-form` |
+| 58 | Cooperation request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/cooperation-request-form` |
+| 59 | Business trip report | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/business-trip-report` |
+| 60 | Business trip plan | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/business-trip-plan` |
+| 61 | Work plan template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/work-plan-template` |
+| 62 | Work allocation chart | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/work-allocation-chart` |
+| 63 | Approval request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/approval-request-form` |
+| 64 | Official letter template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/official-letter-template` |
+| 65 | Expense approval form | Public ? general template; review required | true | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/expense-approval-form` |
+| 66 | Cost settlement form | Public ? general template; review required | true | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/cost-settlement-form` |
+| 67 | Corporate card usage log | Public ? general template; review required | true | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/corporate-card-log` |
+| 68 | Cashbook template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/cashbook-template` |
+| 69 | Daily cash flow report | Public ? general template; review required | true | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/cash-flow-daily-report` |
+| 70 | Payment request form | Public ? general template; review required | true | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/payment-request-form` |
+| 71 | Expense processing checklist | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/expense-processing-checklist` |
+| 72 | Leave request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/leave-request-form` |
+| 73 | Attendance record | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/attendance-record` |
+| 74 | Employee directory | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/employee-directory` |
+| 75 | Interview evaluation form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/interview-evaluation-form` |
+| 76 | Performance review form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/performance-review-form` |
+| 77 | Training application form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/training-application-form` |
+| 78 | Equipment request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/equipment-request-form` |
+| 79 | Vehicle log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/vehicle-log` |
+| 80 | Requirements specification | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/requirements-specification` |
+| 81 | Issue tracker | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/issue-tracker` |
+| 82 | Risk register | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/risk-register` |
+| 83 | Change request form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/change-request-form` |
+| 84 | Meeting action items | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/meeting-action-items` |
+| 85 | Decision log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/decision-log` |
+| 86 | Project retrospective | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/project-retrospective` |
+| 87 | Sprint retrospective | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/sprint-retrospective` |
+| 88 | Test case template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/test-case-template` |
+| 89 | Bug report | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/bug-report` |
+| 90 | Incident report | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/incident-report` |
+| 91 | Deployment checklist | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/deployment-checklist` |
+| 92 | Code review checklist | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/code-review-checklist` |
+| 93 | Release notes template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/release-notes-template` |
+| 94 | Server inspection checklist | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/server-inspection-checklist` |
+| 95 | Customer call log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/customer-call-log` |
+| 96 | Customer inquiry log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/customer-inquiry-log` |
+| 97 | Sales activity report | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/sales-activity-report` |
+| 98 | Sales daily log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/sales-daily-log` |
+| 99 | Customer meeting notes | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/customer-meeting-notes` |
+| 100 | Customer complaint record | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/customer-complaint-record` |
+| 101 | Inventory count sheet | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/inventory-count-sheet` |
+| 102 | Stock receipt log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/stock-receipt-log` |
+| 103 | Stock issue log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/stock-issue-log` |
+| 104 | Purchase order tracker | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/purchase-order-tracker` |
+| 105 | Delivery confirmation | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/delivery-confirmation` |
+| 106 | Reading journal | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/reading-journal` |
+| 107 | Assignment tracker | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/assignment-tracker` |
+| 108 | Exam study plan | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/exam-study-plan` |
+| 109 | Class notes template | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/class-notes-template` |
+| 110 | Workout log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/workout-log` |
+| 111 | Weight tracker | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/weight-tracker` |
+| 112 | Meal tracker | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/meal-tracker` |
+| 113 | Sleep journal | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/sleep-journal` |
+| 114 | Packing checklist | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/packing-checklist` |
+| 115 | Travel itinerary | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/travel-itinerary` |
+| 116 | Trip expense settlement | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/trip-expense-settlement` |
+| 117 | Personal record form | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/personal-record-form` |
+| 118 | Payment record log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/payment-record-log` |
+| 119 | Service history log | Public ? general template | false | N/A | No jurisdiction-specific claims; general template only | UI routes: 15; localized title and fields | `/{locale}/docs/service-history-log` |

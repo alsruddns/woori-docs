@@ -1,5 +1,8 @@
+import documentTranslations from "./document-translations.json";
+
 export const locales = ["ko", "en", "ja", "zh", "es", "pt-br", "de", "fr", "vi", "id", "th", "zh-tw", "it", "nl", "hi"] as const;
 export type Locale = (typeof locales)[number];
+const translatedData = documentTranslations as Record<Locale, { titles: Record<string, string>; fields: Record<string, string>; interface: Record<string, string> }>;
 export const localeLabels: Record<Locale, string> = { ko:"한국어", en:"English", ja:"日本語", zh:"简体中文", es:"Español", "pt-br":"Português (Brasil)", de:"Deutsch", fr:"Français", vi:"Tiếng Việt", id:"Bahasa Indonesia", th:"ไทย", "zh-tw":"繁體中文", it:"Italiano", nl:"Nederlands", hi:"हिन्दी" };
 export const categories = ["career", "business", "work", "personal", "checklists", "planning", "finance", "agreements"] as const;
 export type Category = (typeof categories)[number];
@@ -113,7 +116,9 @@ for (const doc of documents) {
 export const getDocument = (slug: string) => documents.find((doc) => doc.slug === slug);
 export const getRelated = (doc: DocumentDefinition) => doc.relatedServices.map((slug) => documents.find((item) => item.slug === slug)).filter((item): item is DocumentDefinition => Boolean(item));
 export const localizedTitle = (doc: DocumentDefinition, locale: Locale) => locale === "ko" ? doc.titleKo : doc.title;
+export const localizedDocumentTitle = (doc: DocumentDefinition, locale: Locale) => locale === "ko" ? doc.titleKo : translatedData[locale].titles[doc.slug] || doc.title;
+export const localizedDescription = (doc: DocumentDefinition, locale: Locale) => translatedData[locale].interface.description.replace("{title}", localizedDocumentTitle(doc, locale));
+export const localizedInterface = (locale: Locale) => translatedData[locale].interface;
 export const localizeField = (field: string, locale: Locale) => {
-  const ko: Record<string,string> = {Name:"이름",Email:"이메일",Phone:"전화번호",Date:"날짜",Notes:"메모",Amount:"금액",Total:"합계",Items:"항목","Checklist items":"체크 항목","Due date":"마감일",Owner:"담당자",Priority:"우선순위",Company:"회사",Role:"직무",Customer:"고객",Provider:"제공자",Description:"설명",Purpose:"목적",Parties:"당사자",Signature:"서명",Signatures:"서명",Month:"월",Week:"주",Destination:"목적지","Start date":"시작일","Target date":"목표일",Project:"프로젝트",Task:"업무",Title:"제목",Status:"상태",Category:"분류",Address:"주소",Period:"기간",Income:"수입",Expenses:"지출","Payment method":"결제 방법","Travel dates":"여행 날짜","Event date":"행사 날짜"};
-  return locale === "ko" ? (ko[field] ?? field) : field;
+  return translatedData[locale].fields[field] || field;
 };

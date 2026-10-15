@@ -1,44 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# woori.today Docs
 
-## Git branch policy
+Docs (`문서양식`) is a browser-first document-template service at `/docs`. Users can fill in a template, preview it, copy its text, print it, or download a text file. Document entries stay in the browser and are saved in localStorage.
 
-- `main` is the production branch.
-- `develop` is the general development branch. Start all work from `develop`.
-- After completing work, verify it, commit and push to `develop`, merge `develop` into `main`, and push `main`.
-- Return to `develop` after updating `main`.
+## Development
+
+- Run `pnpm dev` on port 3004.
+- Run checks with `pnpm test`, `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build`.
+- The localized library routes are `/docs/{locale}` for `ko`, `en`, `ja`, `zh`, `es`, `pt-br`, `de`, `fr`, `vi`, `id`, `th`, `zh-tw`, `it`, `nl`, and `hi`.
+- The registry-generated sitemap is `/docs-sitemap.xml`.
+- Production Docker image uses standalone output on port 3004; Nginx routes `/docs/` and the public sitemap endpoint.
+- Browser print provides PDF export; text files are available as a direct download. Word and Excel export are not implemented yet.
+
+## Service documentation
+
+- [Common service rules](docs/common-rules.md)
+- [UI guidelines](docs/ui-guidelines.md)
+- [Service catalog](docs/service-catalog.md)
+
+Every new public feature must be added to `src/lib/registry.ts` and `docs/service-catalog.md` together.
+
+## Branch policy
+
+- `main` is production; `develop` is development.
+- Start all regular work from `develop`. Verify changes, commit and push `develop`, merge and push `main`, then return to `develop`.
 - Do not create or use a `release` branch.
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

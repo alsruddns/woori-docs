@@ -11,6 +11,10 @@ export function docsUrl(locale: Locale, slug?: string): string {
   return `${SITE_ORIGIN}${docsPath(locale, slug)}`;
 }
 
+export function portalPath(locale: Locale): string {
+  return `/${locale}`;
+}
+
 export function familyServiceUrl(locale: Locale, service: "docs" | "quiz"): string {
   return `${SITE_ORIGIN}/${locale}/${service}`;
 }

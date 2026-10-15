@@ -3,7 +3,7 @@ import { categories, documents, locales, ui } from "../src/lib/registry";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/docs-sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
-import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl } from "../src/lib/urls";
+import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl, portalPath } from "../src/lib/urls";
 
 describe("document registry", () => {
   it("contains the complete requested feature set and categories", () => {
@@ -56,6 +56,8 @@ describe("document registry", () => {
     expect(docsPath("ko")).toBe("/ko/docs");
     expect(docsPath("en", "resume-template")).toBe("/en/docs/resume-template");
     expect(docsUrl("zh-tw")).toBe("https://www.woori.today/zh-tw/docs");
+    expect(portalPath("ko")).toBe("/ko");
+    expect(portalPath("en")).toBe("/en");
     expect(familyServiceUrl("pt-br", "quiz")).toBe("https://www.woori.today/pt-br/quiz");
     expect(docsPathForLocale("/ko/docs/resume-template", "en")).toBe("/en/docs/resume-template");
     const { createIndexNowUrls } = await import("../scripts/submit-indexnow.mjs");

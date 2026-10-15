@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: "/docs",
   output: "standalone",
+  assetPrefix: "/_assets/docs",
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,

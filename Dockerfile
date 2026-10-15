@@ -29,7 +29,6 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/scripts/standalone-router.mjs ./scripts/standalone-router.mjs
 USER nextjs
 EXPOSE 3004
 HEALTHCHECK \
@@ -38,4 +37,4 @@ HEALTHCHECK \
   --start-period=10s \
   --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:3004/ko/docs').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
-CMD ["node", "scripts/standalone-router.mjs"]
+CMD ["node", "server.js"]

@@ -3,6 +3,7 @@ import { categories, documents, locales, ui } from "../src/lib/registry";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/docs-sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
+import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl } from "../src/lib/urls";
 
 describe("document registry", () => {
   it("contains the complete requested feature set and categories", () => {
@@ -34,14 +35,35 @@ describe("document registry", () => {
     const response = GET(); const xml = await response.text();
     expect(response.headers.get("Content-Type")).toContain("application/xml");
     expect((xml.match(/<url>/g) ?? []).length).toBe(documents.length * locales.length + locales.length);
-    expect(xml).toContain("/docs/ko/resume-template");
+    expect(xml).toContain("https://www.woori.today/ko/docs/resume-template");
+    expect(xml).toContain("https://www.woori.today/pt-br/docs");
+    expect(xml).toContain("https://www.woori.today/zh-tw/docs");
+    expect(xml).not.toMatch(/https:\/\/www\.woori\.today\/(?:docs|quiz)\/(?:ko|en)(?:\/|<)/);
   });
   it("generates canonical, hreflang, x-default, title, and description metadata", async () => {
     const metadata = getDocumentMetadata("ko", "resume-template");
     expect(metadata.title).toBe("이력서 양식");
     expect(metadata.description).toBeTruthy();
-    expect(metadata.alternates?.canonical).toBe("/docs/ko/resume-template");
-    expect(metadata.alternates?.languages?.["x-default"]).toBe("/docs/en/resume-template");
+    expect(metadata.alternates?.canonical).toBe("/ko/docs/resume-template");
+    expect(metadata.alternates?.languages?.ko).toBe("/ko/docs/resume-template");
+    expect(metadata.alternates?.languages?.en).toBe("/en/docs/resume-template");
+    expect(metadata.alternates?.languages?.["pt-BR"]).toBe("/pt-br/docs/resume-template");
+    expect(metadata.alternates?.languages?.["zh-TW"]).toBe("/zh-tw/docs/resume-template");
+    expect(metadata.alternates?.languages?.["x-default"]).toBe("/en/docs/resume-template");
+    expect(metadata.openGraph?.url).toBe("/ko/docs/resume-template");
+  });
+  it("builds locale-first public paths and 855 IndexNow URLs", async () => {
+    expect(docsPath("ko")).toBe("/ko/docs");
+    expect(docsPath("en", "resume-template")).toBe("/en/docs/resume-template");
+    expect(docsUrl("zh-tw")).toBe("https://www.woori.today/zh-tw/docs");
+    expect(familyServiceUrl("pt-br", "quiz")).toBe("https://www.woori.today/pt-br/quiz");
+    expect(docsPathForLocale("/ko/docs/resume-template", "en")).toBe("/en/docs/resume-template");
+    const { createIndexNowUrls } = await import("../scripts/submit-indexnow.mjs");
+    const urls = createIndexNowUrls();
+    expect(urls).toHaveLength(855);
+    expect(urls).toContain("https://www.woori.today/ko/docs");
+    expect(urls).toContain("https://www.woori.today/pt-br/docs/resume-template");
+    expect(urls.every((url: string) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
   });
   it("keeps the catalog synchronized", async () => {
     const { readFile } = await import("node:fs/promises");

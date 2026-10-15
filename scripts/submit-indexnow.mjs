@@ -12,6 +12,7 @@ const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const registryPath = "src/lib/registry.ts";
 
 const { documents, locales } = await tsImport("../src/lib/registry.ts", import.meta.url);
+const { docsUrl } = await tsImport("../src/lib/urls.ts", import.meta.url);
 
 function getIndexNowKey() {
   const key = process.env.INDEXNOW_KEY?.trim();
@@ -23,11 +24,13 @@ function gitOutput(...args) {
   return execFileSync("git", args, { cwd: projectRoot, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
 }
 
-function createIndexNowUrls(definitions = documents, changedSlugs = null) {
+export function createIndexNowUrls(definitions = documents, changedSlugs = null) {
   const publicDocs = definitions.filter(({ isPublic }) => isPublic);
   const selectedDocs = changedSlugs === null ? publicDocs : publicDocs.filter(({ slug }) => changedSlugs.has(slug));
-  const paths = ["/docs"].concat(selectedDocs.map(({ slug }) => `/docs/${slug}`));
-  return [...new Set(paths.flatMap((path) => locales.map((locale) => `${SITE_ORIGIN}/${locale}${path}`)))];
+  return [...new Set([
+    ...locales.map((locale) => docsUrl(locale)),
+    ...selectedDocs.flatMap(({ slug }) => locales.map((locale) => docsUrl(locale, slug))),
+  ])];
 }
 
 async function getChangedSlugs(baseSha) {

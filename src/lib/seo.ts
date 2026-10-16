@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getDocument, isExpandedTemplate, locales, localizedDescription, localizedDocumentTitle, localizedTitle, type Locale } from "./registry";
+import { getDocument, isExpandedTemplate, locales, localizedDescription, localizedDocumentTitle, type Locale } from "./registry";
 import { docsAlternates, docsPath } from "./urls";
 
 export function getDocumentMetadata(locale: string, slug: string): Metadata {
@@ -12,13 +12,13 @@ export function getDocumentMetadata(locale: string, slug: string): Metadata {
   const expandedDescription = doc.slug === "expense-approval-form" && lang === "ko" ? expenseDescriptionKo : localizedDescription(doc, lang);
   const expandedTitle = doc.slug === "expense-approval-form" && lang === "ko" ? "\uC9C0\uCD9C\uACB0\uC758\uC11C \uC591\uC2DD - \uBB34\uB8CC \uC791\uC131\u00B7\uCEE4\uC2A4\uD140 | woori.today" : `${localizedDocumentTitle(doc, lang)} | woori.today`;
   return {
-    title: expanded ? { absolute: expandedTitle } : localizedTitle(doc, lang),
-    description: expanded ? expandedDescription : lang === "ko" ? `${doc.titleKo}\uB97C \uC791\uC131\uD558\uACE0 \uC2E4\uC2DC\uAC04\uC73C\uB85C \uBBF8\uB9AC\uBCF4\uAE30, \uBCF5\uC0AC, \uC778\uC1C4\uD558\uC138\uC694.` : doc.description,
+    title: expanded ? { absolute: expandedTitle } : `${localizedDocumentTitle(doc, lang)} | woori.today`,
+    description: expandedDescription,
     alternates: {
       canonical: path,
       languages: docsAlternates(locales, slug),
     },
     keywords: [...doc.keywords],
-    openGraph: { url: path, title: expanded ? expandedTitle : localizedTitle(doc, lang), description: expanded ? expandedDescription : doc.description, type: "website" },
+    openGraph: { url: path, title: expanded ? expandedTitle : `${localizedDocumentTitle(doc, lang)} | woori.today`, description: expandedDescription, type: "website" },
   };
 }

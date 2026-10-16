@@ -12,6 +12,11 @@ describe("document page content quality", () => {
     for (const locale of locales) {
       const descriptions = publicDocs.map((doc) => localizedDescription(doc, locale));
       expect(new Set(descriptions).size).toBe(descriptions.length);
+      const purposes = publicDocs.map((doc) => {
+        const fields = doc.fields.map((field) => localizeField(field.label, locale));
+        return buildDocumentContent(locale, localizedDocumentTitle(doc, locale), categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired).purpose;
+      });
+      expect(new Set(purposes).size).toBe(purposes.length);
       for (const doc of publicDocs) {
         const title = localizedDocumentTitle(doc, locale);
         const fields = doc.fields.map((field) => localizeField(field.label, locale));
@@ -23,6 +28,10 @@ describe("document page content quality", () => {
           expect(value).not.toMatch(/\{\w+\}|^[a-z][\w-]*(?:\.[a-z][\w-]*)+$/i);
         }
         expect(content.structure).toContain(fields[0]);
+        expect(content.steps).toContain(fields[0]);
+        expect(content.tips).toContain(fields[0]);
+        expect(content.faq[2].answer).toContain(fields[0]);
+        expect(content.purpose).toContain(title);
       }
     }
   });

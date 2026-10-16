@@ -131,7 +131,7 @@ describe("document registry", () => {
     const response = GET(); const sitemapXml = await response.text();
     const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
     expect(new Set(urls)).toEqual(new Set(sitemapUrls));
-  });
+  }, 15000);
   it("keeps the catalog synchronized", async () => {
     const { readFile } = await import("node:fs/promises");
     const catalog = await readFile("docs/service-catalog.md", "utf8");

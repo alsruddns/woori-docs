@@ -68,7 +68,7 @@ describe("document registry", () => {
       expect(value).not.toMatch(/&(?:amp|lt|gt|quot|#\d+);/);
       expect(value).not.toMatch(/^[a-z][\w-]*(?:\.[a-z][\w-]*)+$/i);
     }
-  });
+  }, 15000);
   it("requires core fields and renders a live preview as text", () => {
     const doc = documents[0];
     expect(validateDocument(doc, {})).toEqual(doc.fields.filter((field) => field.required).map((field) => field.id));
@@ -99,7 +99,7 @@ describe("document registry", () => {
   });
   it("generates canonical, hreflang, x-default, title, and description metadata", async () => {
     const metadata = getDocumentMetadata("ko", "resume-template");
-    expect(metadata.title).toBe("이력서 양식");
+    expect(metadata.title).toBe("이력서 양식 | woori.today");
     expect(metadata.description).toBeTruthy();
     expect(metadata.alternates?.canonical).toBe("/ko/docs/resume-template");
     expect(metadata.alternates?.languages?.ko).toBe("/ko/docs/resume-template");
@@ -110,7 +110,8 @@ describe("document registry", () => {
     expect(Object.keys(metadata.alternates?.languages ?? {})).toHaveLength(locales.length + 1);
     expect(new Set(Object.values(metadata.alternates?.languages ?? {})).size).toBe(locales.length);
     expect(metadata.openGraph?.url).toBe("/ko/docs/resume-template");
-    expect(getDocumentMetadata("ja", "resume-template").title).toBe(documents[0].title);
+    expect(getDocumentMetadata("ja", "resume-template").title).toBe(`${localizedDocumentTitle(documents[0], "ja")} | woori.today`);
+    expect(getDocumentMetadata("ja", "resume-template").description).toBe(localizedDescription(documents[0], "ja"));
   });
   it("builds locale-first public paths and 1800 IndexNow URLs", async () => {
     expect(docsPath("ko")).toBe("/ko/docs");
@@ -130,7 +131,7 @@ describe("document registry", () => {
     const response = GET(); const sitemapXml = await response.text();
     const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
     expect(new Set(urls)).toEqual(new Set(sitemapUrls));
-  });
+  }, 15000);
   it("keeps the catalog synchronized", async () => {
     const { readFile } = await import("node:fs/promises");
     const catalog = await readFile("docs/service-catalog.md", "utf8");

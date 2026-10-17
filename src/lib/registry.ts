@@ -1,6 +1,7 @@
 import documentTranslations from "./document-translations.json";
 import additionalTemplates from "./additional-templates.json";
 import categoryTranslations from "./category-translations.json";
+import { buildDocumentContent } from "./document-content";
 import { inferFieldType, locales, type Category, type DocumentTemplate, type Locale, type TemplateField } from "./template-schema";
 export { categories, locales } from "./template-schema";
 export type { Category, Locale } from "./template-schema";
@@ -88,7 +89,32 @@ export const documents: DocumentDefinition[] = [...legacyDocuments, ...expandedD
 
 for (const doc of documents) {
   doc.keywords = [...new Set([...doc.keywords, ...doc.title.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean), ...doc.titleKo.split(/\s+/)])];
-  doc.relatedServices = documents.filter((candidate) => candidate.category === doc.category && candidate.slug !== doc.slug).slice(0, 4).map((candidate) => candidate.slug);
+}
+
+const stopWords = new Set(["template", "form", "document", "record", "list", "report", "plan", "daily", "weekly", "monthly", "simple", "generator", "checklist", "표", "양식", "기록", "관리", "작성", "date", "notes", "note", "owner", "name", "due", "status", "title", "description", "details", "detail", "number", "item", "items", "amount", "total", "target", "type", "contact", "company", "department", "period", "other", "result", "task", "tasks", "goal", "goals", "priority", "completed", "checklist", "comments", "일자", "날짜", "비고", "이름", "담당자", "항목", "내용", "금액", "합계", "번호", "목표"]);
+const relatedPairs = [
+  ["expense-approval-form", "cost-settlement-form"], ["expense-approval-form", "expense-report-template"], ["expense-approval-form", "business-trip-expense-template"], ["expense-approval-form", "corporate-card-log"],
+  ["meeting-minutes-generator", "meeting-action-items"], ["meeting-minutes-generator", "decision-log"], ["meeting-action-items", "decision-log"],
+  ["business-trip-report", "business-trip-plan"], ["business-trip-report", "business-trip-expense-template"], ["business-trip-plan", "travel-planner"], ["business-trip-plan", "travel-budget-template"], ["trip-expense-settlement", "business-trip-expense-template"], ["trip-expense-settlement", "travel-budget-template"],
+  ["bug-report", "issue-report-template"], ["bug-report", "issue-tracker"], ["bug-report", "incident-report"], ["incident-report", "issue-tracker"], ["deployment-checklist", "release-notes-template"], ["test-case-template", "bug-report"],
+  ["quotation-generator", "invoice-generator"], ["quotation-generator", "purchase-order-generator"], ["invoice-generator", "transaction-statement-generator"], ["purchase-order-generator", "purchase-order-tracker"], ["delivery-note-generator", "delivery-confirmation"],
+  ["monthly-budget-template", "household-budget-template"], ["monthly-budget-template", "cash-flow-daily-report"], ["travel-budget-template", "travel-planner"], ["travel-checklist", "travel-planner"], ["travel-checklist", "packing-checklist"],
+  ["project-plan-template", "project-schedule-template"], ["project-plan-template", "project-budget-template"], ["project-retrospective", "sprint-retrospective"], ["requirements-specification", "issue-tracker"],
+  ["customer-call-log", "customer-inquiry-log"], ["customer-call-log", "customer-meeting-notes"], ["customer-complaint-record", "customer-inquiry-log"], ["inventory-count-sheet", "stock-receipt-log"], ["inventory-count-sheet", "stock-issue-log"],
+];
+const curatedRelated = new Map<string, Set<string>>();
+for (const [a, b] of relatedPairs) { curatedRelated.set(a, new Set([...(curatedRelated.get(a) ?? []), b])); curatedRelated.set(b, new Set([...(curatedRelated.get(b) ?? []), a])); }
+function relevance(doc: DocumentDefinition, candidate: DocumentDefinition) {
+  const words = (value: string) => value.toLowerCase().split(/[^a-z0-9가-힣]+/).filter((word) => word.length > 1 && !stopWords.has(word));
+  const source = new Set([...words(doc.slug), ...doc.fields.flatMap((field) => words(field.label))]);
+  const other = new Set([...words(candidate.slug), ...candidate.fields.flatMap((field) => words(field.label))]);
+  return [...source].filter((word) => other.has(word)).length;
+}
+for (const doc of documents) {
+  const selected = new Set(curatedRelated.get(doc.slug) ?? []);
+  documents.filter((candidate) => candidate.slug !== doc.slug && relevance(doc, candidate) >= 2)
+    .sort((a, b) => relevance(doc, b) - relevance(doc, a)).slice(0, Math.max(0, 4 - selected.size)).forEach((candidate) => selected.add(candidate.slug));
+  doc.relatedServices = [...selected].filter((slug) => documents.some((candidate) => candidate.slug === slug));
 }
 
 export const getDocument = (slug: string) => documents.find((doc) => doc.slug === slug);
@@ -97,7 +123,7 @@ export const localizedTitle = (doc: DocumentDefinition, locale: Locale) => local
 const expandedSlugs = new Set((additionalTemplates as Array<{ slug: string }>).map((item) => item.slug));
 export const isExpandedTemplate = (doc: DocumentDefinition) => expandedSlugs.has(doc.slug);
 export const localizedDocumentTitle = (doc: DocumentDefinition, locale: Locale) => locale === "ko" ? doc.titleKo : translatedData[locale].titles[doc.slug] || doc.title;
-export const localizedDescription = (doc: DocumentDefinition, locale: Locale) => translatedData[locale].interface.description.replace("{title}", localizedDocumentTitle(doc, locale));
+export const localizedDescription = (doc: DocumentDefinition, locale: Locale) => buildDocumentContent(locale, localizedDocumentTitle(doc, locale), categoryNames[locale][doc.category], doc.fields.map((field) => localizeField(field.label, locale)), doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired).description;
 export const localizedInterface = (locale: Locale) => translatedData[locale].interface;
 export const localizeField = (field: string, locale: Locale) => {
   return translatedData[locale].fields[field] || field;

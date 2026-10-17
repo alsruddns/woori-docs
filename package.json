@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3004",
     "build": "next build",
+    "check:content-quality": "tsx scripts/check-content-quality.ts",
     "start": "node scripts/start.mjs",
     "lint": "eslint",
     "test": "vitest run"

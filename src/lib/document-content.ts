@@ -50,7 +50,7 @@ export function buildDocumentContent(locale: Locale, title: string, category: st
   const specific = specificCopy[locale];
   const named = { title, category };
   const fieldNames = fields.slice(0, 8).join(locale === "ko" || locale === "ja" || locale === "zh" || locale === "zh-tw" ? " · " : ", ");
-  const focusFields = fields.slice(0, 4).join(locale === "ko" || locale === "ja" || locale === "zh" || locale === "zh-tw" ? " · " : ", ");
+  const focusFields = fields.slice(0, 8).join(locale === "ko" || locale === "ja" || locale === "zh" || locale === "zh-tw" ? " · " : ", ");
   const more = fields.length > 8 ? (locale === "ko" ? ` 외 ${fields.length - 8}개` : ` + ${fields.length - 8}`) : "";
   const purpose = `${format(specific[kind], named)}${format(purposeFocusCopy[locale], { fields: fieldNames })}`;
   const description = format(t.intro, named) + " " + format(t.structure, { fields: fieldNames, more });

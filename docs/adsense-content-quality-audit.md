@@ -1,6 +1,6 @@
 # AdSense Content Quality Audit
 
-- Audited at: 2026-10-17T06:48:31.404Z
+- Audited at: 2026-10-17T06:50:06.416Z
 - Branch: develop (local audit)
 - Public documents: 119
 - Locales: 15 (ko, en, ja, zh, es, pt-br, de, fr, vi, id, th, zh-tw, it, nl, hi)
@@ -10,7 +10,7 @@
 
 ## Signal definitions and results
 
-Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit also checks purpose, instructions, tips, FAQs, field alignment, localized text integrity, related links, duplicate sections, and the presence of editable fields, preview, text download, and print actions.
+Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit also checks purpose, instructions, tips, FAQs, field alignment, localized text integrity, exact English prose fallback, related links, duplicate sections, and the presence of editable fields, preview, text download, and print actions. The fallback detector requires an entire localized prose string to equal an English source string; it does not flag acronyms or individual shared words.
 
 | Signal | Failed count |
 |---|---:|
@@ -21,29 +21,30 @@ Description thresholds are 28 characters for CJK locales and 55 for other locale
 | missingFaq | 0 |
 | downloadOnly | 0 |
 | rawOrDamaged | 0 |
+| exactEnglishFallback | 0 |
 | brokenRelated | 0 |
 | fieldMismatch | 0 |
 | duplicateContent | 0 |
 
 ## Locale results
 
-| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact duplicates (description / usage / how-to / tips / FAQ) |
-|---|---:|---:|---:|---:|---:|---|
-| ko | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| en | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| ja | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| zh | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| es | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| pt-br | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| de | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| fr | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| vi | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| id | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| th | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| zh-tw | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| it | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| nl | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
-| hi | 119 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact English fallback | Exact duplicates (description / usage / how-to / tips / FAQ) |
+|---|---:|---:|---:|---:|---:|---:|---|
+| ko | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| en | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| ja | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| zh | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| es | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| pt-br | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| de | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| fr | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| vi | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| id | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| th | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| zh-tw | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| it | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| nl | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| hi | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
 
 ## Exact duplicates and near-duplicate candidates
 

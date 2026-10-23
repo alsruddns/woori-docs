@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { categories, categoryNames, documents, isPublicLocale, isTargetLocale, localizeField, localizedDescription, localizedDocumentTitle, localeLabels, localePublicationState, locales, targetLocales, ui } from "../src/lib/registry";
 import documentTranslationsJson from "../src/lib/document-translations.json";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
 import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl, portalPath } from "../src/lib/urls";
+import { getLocalePayload } from "../src/lib/locale-payload";
 
 describe("document registry", () => {
   it("contains the complete requested feature set and categories", () => {
@@ -33,6 +35,17 @@ describe("document registry", () => {
     expect(additions.every((locale) => isTargetLocale(locale) && !isPublicLocale(locale))).toBe(true);
     expect(additions.every((locale) => localePublicationState(locale) === "pending")).toBe(true);
     expect(["ar", "ur", "fa", "he"].every((locale) => !isTargetLocale(locale))).toBe(true);
+  });
+  it("passes one selected locale's dictionaries to client components", () => {
+    const payload = getLocalePayload("fr");
+    expect(payload.uiText.search).toBe(ui.fr.search);
+    expect(payload.categoryLabels).toEqual(categoryNames.fr);
+    expect(payload.languages).toHaveLength(locales.length);
+    for (const file of ["src/components/document-workspace.tsx", "src/components/custom-form-hub.tsx", "src/components/site-chrome.tsx"]) {
+      const source = readFileSync(file, "utf8");
+      expect(source).not.toMatch(/from\s+["'][^"']*(?:chrome-i18n|category-translations|editor-translations)\.json["']/);
+      expect(source).not.toMatch(/import\s+\{[^}]*\b(?:ui|localeLabels|locales)\b[^}]*\}\s+from\s+["'][^"']*chrome-i18n["']/);
+    }
   });
   it("uses a display label for every supported locale", () => {
     expect(locales.map((locale) => localeLabels[locale])).toEqual([

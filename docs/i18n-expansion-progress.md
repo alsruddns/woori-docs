@@ -17,6 +17,8 @@ No new locale is currently registered or published. This intentionally keeps inc
 
 The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale` expansion scope from the existing 15-entry `locales` / `Locale` public scope. `LocalizedText` accepts target-locale keys, while routes and publication-facing dictionaries remain restricted to `Locale`. Runtime helpers identify target locales and report new targets as pending. New language dictionaries and content translations have not yet been added.
 
+Client components receive a server-selected locale payload for the active route. They no longer import the complete chrome, category, or custom-editor translation dictionaries. The language picker still receives the small list of published locale labels.
+
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
 | ru | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -39,11 +41,12 @@ The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale`
 
 ## Last verification
 
-- `pnpm lint`: passed after the locale-model change.
-- `pnpm build`: passed after the locale-model change; 1,822 existing localized routes were generated.
-- `pnpm exec vitest run --testTimeout 30000`: passed after the locale-model change; 3 test files, 21 tests.
+- `pnpm lint`: passed after the selected-locale client payload change.
+- `pnpm build`: passed after the selected-locale client payload change; 1,822 existing localized routes were generated.
+- `pnpm exec tsc --noEmit`: passed after the selected-locale client payload change.
+- `pnpm exec vitest run --testTimeout 30000`: passed after the selected-locale client payload change; 3 test files, 22 tests.
 - Added a regression test for the 26-target / 15-public split, pending publication state, and exclusions.
-- Expanded public-locale coverage tests for search, copy/print/download UI, generated section headings, guides, and FAQ content.
+- Expanded public-locale coverage tests for search, copy/print/download UI, generated section headings, guides, and FAQ content; added a check that client components do not import full locale dictionaries.
 - `pnpm test` with the default 5-second per-test timeout: 19 passed, 1 timed out during the 1,822-page content-quality audit. The same suite passed with a 30-second timeout; no test assertion failed.
 - The existing 15-locale sitemap and registry tests passed. No new-locale SEO or route checks can pass until complete translations exist and the locale is wired.
 

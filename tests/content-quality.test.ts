@@ -22,6 +22,7 @@ describe("document page content quality", () => {
         const fields = doc.fields.map((field) => localizeField(field.label, locale));
         const content = buildDocumentContent(locale, title, categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
         expect(content.description).toBe(localizedDescription(doc, locale));
+        expect(Object.values(content.headings).every((heading) => heading.trim().length > 0)).toBe(true);
         for (const value of [content.intro, content.purpose, content.audience, content.structure, content.steps, content.tips, content.source, content.caution, ...content.faq.flatMap((item) => [item.question, item.answer])]) {
           expect(value.trim()).toBeTruthy();
           expect(value).not.toContain("\uFFFD");

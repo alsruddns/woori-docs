@@ -9,6 +9,7 @@
 - Explicit exclusions: `ar`, `ur`, `fa`, `he`
 - Existing document translation dataset contains 119 title entries, 425 field-label entries, and 9 interface-content entries for each of the 15 supported locales.
 - Public document count: 119 (source dataset; verify again against the runtime registry before publishing any locale).
+- Required per-locale coverage includes document titles and descriptions; generated body content; category names and section/contents headings; search and empty-state UI; copy, print, and download actions; usage guides, writing tips, and FAQs; and page metadata.
 
 ## New-locale rollout status
 
@@ -42,6 +43,7 @@ The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale`
 - `pnpm build`: passed after the locale-model change; 1,822 existing localized routes were generated.
 - `pnpm exec vitest run --testTimeout 30000`: passed after the locale-model change; 3 test files, 21 tests.
 - Added a regression test for the 26-target / 15-public split, pending publication state, and exclusions.
+- Expanded public-locale coverage tests for search, copy/print/download UI, generated section headings, guides, and FAQ content.
 - `pnpm test` with the default 5-second per-test timeout: 19 passed, 1 timed out during the 1,822-page content-quality audit. The same suite passed with a 30-second timeout; no test assertion failed.
 - The existing 15-locale sitemap and registry tests passed. No new-locale SEO or route checks can pass until complete translations exist and the locale is wired.
 

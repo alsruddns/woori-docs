@@ -17,9 +17,12 @@ describe("document registry", () => {
     for (const locale of locales) {
       expect(ui[locale].brand).toBeTruthy();
       expect(ui[locale].browser).toBeTruthy();
-      expect(ui[locale].copy).toBeTruthy();
-      expect(ui[locale].print).toBeTruthy();
+      expect(ui[locale].search).toBeTruthy();
       expect(ui[locale].download).toBeTruthy();
+      expect(ui[locale].print).toBeTruthy();
+      expect(ui[locale].copy).toBeTruthy();
+      expect(ui[locale].copied).toBeTruthy();
+      expect(ui[locale].empty).toBeTruthy();
       expect(documents.every((doc) => doc.supportedLocales.includes(locale))).toBe(true);
     }
   });

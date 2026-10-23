@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { categories, categoryNames, documents, localizeField, localizedDescription, localizedDocumentTitle, localeLabels, locales, ui } from "../src/lib/registry";
+import { categories, categoryNames, documents, isPublicLocale, isTargetLocale, localizeField, localizedDescription, localizedDocumentTitle, localeLabels, localePublicationState, locales, targetLocales, ui } from "../src/lib/registry";
 import documentTranslationsJson from "../src/lib/document-translations.json";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/sitemap.xml/route";
@@ -22,6 +22,14 @@ describe("document registry", () => {
       expect(ui[locale].download).toBeTruthy();
       expect(documents.every((doc) => doc.supportedLocales.includes(locale))).toBe(true);
     }
+  });
+  it("separates the 26-locale expansion scope from the 15 published locales", () => {
+    const additions = ["ru", "tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
+    expect(targetLocales).toHaveLength(26);
+    expect(locales).toHaveLength(15);
+    expect(additions.every((locale) => isTargetLocale(locale) && !isPublicLocale(locale))).toBe(true);
+    expect(additions.every((locale) => localePublicationState(locale) === "pending")).toBe(true);
+    expect(["ar", "ur", "fa", "he"].every((locale) => !isTargetLocale(locale))).toBe(true);
   });
   it("uses a display label for every supported locale", () => {
     expect(locales.map((locale) => localeLabels[locale])).toEqual([

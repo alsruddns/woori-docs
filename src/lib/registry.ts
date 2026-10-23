@@ -3,8 +3,8 @@ import additionalTemplates from "./additional-templates.json";
 import categoryTranslations from "./category-translations.json";
 import { buildDocumentContent } from "./document-content";
 import { inferFieldType, locales, type Category, type DocumentTemplate, type Locale, type TemplateField } from "./template-schema";
-export { categories, locales } from "./template-schema";
-export type { Category, Locale } from "./template-schema";
+export { categories, isPublicLocale, isTargetLocale, localePublicationState, locales, targetLocales } from "./template-schema";
+export type { Category, Locale, TargetLocale } from "./template-schema";
 
 const translatedData = documentTranslations as Record<Locale, { titles: Record<string, string>; fields: Record<string, string>; interface: Record<string, string> }>;
 export type DocKind = "form" | "checklist" | "planner";

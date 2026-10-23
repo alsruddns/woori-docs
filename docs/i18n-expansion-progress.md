@@ -14,6 +14,8 @@
 
 No new locale is currently registered or published. This intentionally keeps incomplete translations out of routes, language selectors, canonical/hreflang output, and sitemap.
 
+The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale` expansion scope from the existing 15-entry `locales` / `Locale` public scope. `LocalizedText` accepts target-locale keys, while routes and publication-facing dictionaries remain restricted to `Locale`. Runtime helpers identify target locales and report new targets as pending. New language dictionaries and content translations have not yet been added.
+
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
 | ru | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -36,9 +38,10 @@ No new locale is currently registered or published. This intentionally keeps inc
 
 ## Last verification
 
-- `pnpm lint`: passed.
-- `pnpm build`: passed; 1,822 existing localized routes were generated.
-- `pnpm exec vitest run --testTimeout 30000`: passed; 3 test files, 20 tests.
+- `pnpm lint`: passed after the locale-model change.
+- `pnpm build`: passed after the locale-model change; 1,822 existing localized routes were generated.
+- `pnpm exec vitest run --testTimeout 30000`: passed after the locale-model change; 3 test files, 21 tests.
+- Added a regression test for the 26-target / 15-public split, pending publication state, and exclusions.
 - `pnpm test` with the default 5-second per-test timeout: 19 passed, 1 timed out during the 1,822-page content-quality audit. The same suite passed with a 30-second timeout; no test assertion failed.
 - The existing 15-locale sitemap and registry tests passed. No new-locale SEO or route checks can pass until complete translations exist and the locale is wired.
 

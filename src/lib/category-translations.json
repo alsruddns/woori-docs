@@ -350,5 +350,21 @@
     "checklists": "Senarai semak",
     "planning": "Perancang",
     "records": "Rekod"
+  },
+  "sv": {
+    "work": "Företag och arbete",
+    "finance": "Ekonomi och redovisning",
+    "hr-admin": "Personal och administration",
+    "project-management": "Projektledning",
+    "development-it": "Programvaruutveckling och IT",
+    "sales-customer": "Försäljning och kunder",
+    "inventory-logistics": "Lager och logistik",
+    "education": "Skola och utbildning",
+    "personal": "Privatliv",
+    "health-fitness": "Hälsa och träning",
+    "travel": "Resor",
+    "checklists": "Checklistor",
+    "planning": "Planering",
+    "records": "Register"
   }
 }

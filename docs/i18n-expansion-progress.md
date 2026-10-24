@@ -19,8 +19,8 @@
 | tr | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, and build verified | 120 |
 | pl | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified | 120 |
 | fil | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified | 120 |
-| bn | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified | 120 |
-| uk | 699/699 | 0/699 | draft only; unpublished | 0 |
+| bn | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified; pushed as `058e193` | 120 |
+| uk | 699/699 | 274/699 | 119 titles and 155 shared UI/document-content units reviewed; fields pending; unpublished | 0 |
 | ms | 699/699 | 0/699 | draft only; unpublished | 0 |
 | sv | 699/699 | 0/699 | draft only; unpublished | 0 |
 | cs | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -29,10 +29,12 @@
 
 ## Current verification
 
-- Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): the seven remaining unpublished locale drafts have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches. This structural audit does not establish linguistic quality.
+- Ukrainian work is in progress: 274/699 units have been corrected and reviewed (all 119 titles and 155 shared UI/document-content units). Fields remain pending, so no Ukrainian UI, route, selector, canonical, hreflang, or sitemap entry is public. Source drafts for other unpublished locales pass structural completeness checks only; sampled machine wording remains unsuitable for publication.
+
+- Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): remaining unpublished locale drafts have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches. This structural audit does not establish linguistic quality.
 - Repeated-word cleanup removed 27 obvious runs such as duplicated UI labels; the draft test now rejects three-or-more consecutive duplicate words. This mechanical cleanup does not count as editorial review.
 - `pnpm exec tsc --noEmit`: passed.
-- `pnpm exec vitest run --testTimeout 30000`: latest run passed, 38 tests across 5 files, including Bengali locale/runtime coverage and responsive CSS coverage.
+- `pnpm exec vitest run --testTimeout 30000`: latest run passed, 39 tests across 5 files, including partial Ukrainian draft review tracking, Bengali locale/runtime coverage, and responsive CSS coverage.
 - `pnpm lint`: passed.
 - Turkish production smoke check: `/tr/docs` and `/tr/docs/resume-template` returned 200; rendered `<html lang="tr">`, Turkish canonical and hreflang, localized page title/content; sitemap has 2,040 total URLs including 120 Turkish URLs.
 - Latest production build after Turkish wiring: passed; generated 2,064 routes using the existing static/partial-prerender strategy. (The 2,064 Next route entries include generated static and partial-prerender route variants; the sitemap lists 2,040 URLs.)
@@ -45,4 +47,4 @@
 
 ## Next start point
 
-Turkish is public at `9cf3f86`; Polish, Filipino, and Bengali have passed production verification and are on `develop`. Begin Ukrainian (`uk`) review and runtime wiring next. Six locales remain. Do not merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish is public at `9cf3f86`; Polish, Filipino, and Bengali are also public on `develop`. Continue Ukrainian (`uk`) by reviewing all 425 field labels, then run structural/linguistic checks, connect runtime/SEO, verify production build and mobile behavior, and push. Six locales remain before the 26-locale release gate. Do not merge/deploy to `main` before all 26 locales meet the release conditions.

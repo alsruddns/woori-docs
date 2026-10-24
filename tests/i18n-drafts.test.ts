@@ -99,10 +99,10 @@ describe("unpublished Russian translation draft", () => {
     expect(bnDraft.reviewStatus).toContain("unpublished pending Bengali runtime connection");
     expect(bnDraft.reviewStatus).toContain("unpublished");
   });
-  it("tracks reviewed Ukrainian titles and shared copy without exposing the incomplete locale", () => {
+  it("tracks all reviewed Ukrainian units without exposing the locale before runtime verification", () => {
     expect(ukDraft.reviewedCounts).toMatchObject({ titles: 119, interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
-    expect(Object.values(ukDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(274);
-    expect(ukDraft.reviewStatus).toContain("274/699");
+    expect(Object.values(ukDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(ukDraft.reviewStatus).toContain("translation review complete (699/699 units)");
     expect(ukDraft.reviewStatus).toContain("unpublished");
   });
 
@@ -193,7 +193,7 @@ describe("unpublished Russian translation draft", () => {
       else if (locale === "pl") expect(String(target.reviewStatus)).toContain("unpublished pending Polish runtime connection");
       else if (locale === "fil") expect(String(target.reviewStatus)).toContain("unpublished pending Filipino runtime connection");
       else if (locale === "bn") expect(String(target.reviewStatus)).toContain("unpublished pending Bengali runtime connection");
-      else if (locale === "uk") expect(String(target.reviewStatus)).toContain("274/699");
+      else if (locale === "uk") expect(String(target.reviewStatus)).toContain("unpublished pending route, runtime");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

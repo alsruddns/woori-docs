@@ -74,7 +74,17 @@ jobs:
           printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
-          ssh "$SERVER_USER@$SERVER_HOST" 'cd /opt/services/compose && docker compose --env-file .env.moneybook pull docs && docker compose --env-file .env.moneybook up -d docs'
+          ssh "$SERVER_USER@$SERVER_HOST" '
+            set -e
+            cd /opt/services/compose
+            export DATABASE_URL=docs-deploy-placeholder
+            export DB_TARGET=docs-deploy-placeholder
+            export PRODUCTION_DB_ALLOWED_HOSTS=localhost
+            export WORLD_BANK_DATA_SOURCE=disabled
+            export WORLD_BANK_DB_PRODUCTION_ENABLED=false
+            docker compose --env-file .env.moneybook pull docs
+            docker compose --env-file .env.moneybook up -d docs
+          '
 
       - name: Check production health
         if: ${{ vars.DOCS_PRODUCTION_HEALTHCHECK_ENABLED == 'true' }}

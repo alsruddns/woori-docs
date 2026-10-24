@@ -366,5 +366,21 @@
     "checklists": "Checklistor",
     "planning": "Planering",
     "records": "Register"
+  },
+  "cs": {
+    "work": "Podnikání a práce",
+    "finance": "Finance a účetnictví",
+    "hr-admin": "Lidské zdroje a administrativa",
+    "project-management": "Řízení projektů",
+    "development-it": "Vývoj softwaru a IT",
+    "sales-customer": "Prodej a zákazníci",
+    "inventory-logistics": "Zásoby a logistika",
+    "education": "Škola a vzdělávání",
+    "personal": "Osobní život",
+    "health-fitness": "Zdraví a kondice",
+    "travel": "Cestování",
+    "checklists": "Kontrolní seznamy",
+    "planning": "Plánování",
+    "records": "Evidence"
   }
 }

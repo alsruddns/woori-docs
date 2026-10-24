@@ -19,7 +19,7 @@
 | tr | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, and build verified | 120 |
 | pl | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified | 120 |
 | fil | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, mobile UI, and build verified | 120 |
-| bn | 699/699 | 0/699 | draft only; unpublished | 0 |
+| bn | 699/699 | 119/699 | titles reviewed; 580 units remain; runtime/SEO not connected; unpublished | 0 |
 | uk | 699/699 | 0/699 | draft only; unpublished | 0 |
 | ms | 699/699 | 0/699 | draft only; unpublished | 0 |
 | sv | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -44,4 +44,4 @@
 
 ## Next start point
 
-Turkish is public at `9cf3f86`; Polish and Filipino have passed production verification. Commit/push Filipino, then proceed with Bengali (`bn`) in the requested order. Seven requested locales remain incomplete. Do not merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish is public at `9cf3f86`; Polish and Filipino have passed production verification, and Filipino is on `develop`. Bengali has 119/699 reviewed titles; continue its fields and remaining UI/content batches before wiring. Six further locales follow Bengali in the requested order. Do not merge/deploy to `main` before all 26 locales meet the release conditions.

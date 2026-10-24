@@ -334,5 +334,21 @@
     "checklists": "Контрольні списки",
     "planning": "Планування",
     "records": "Облік і журнали"
+  },
+  "ms": {
+    "work": "Perniagaan dan kerja",
+    "finance": "Kewangan dan perakaunan",
+    "hr-admin": "Sumber manusia dan pentadbiran",
+    "project-management": "Pengurusan projek",
+    "development-it": "Pembangunan perisian dan IT",
+    "sales-customer": "Jualan dan pelanggan",
+    "inventory-logistics": "Inventori dan logistik",
+    "education": "Sekolah dan pendidikan",
+    "personal": "Kehidupan peribadi",
+    "health-fitness": "Kesihatan dan kecergasan",
+    "travel": "Perjalanan",
+    "checklists": "Senarai semak",
+    "planning": "Perancang",
+    "records": "Rekod"
   }
 }

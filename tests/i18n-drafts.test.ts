@@ -119,6 +119,7 @@ describe("unpublished Russian translation draft", () => {
         } else expect(value, path).toBe("");
         expect(placeholders(value), path).toEqual(placeholders(expected));
         expect(value, path).not.toMatch(/\?{2,}|<(?:\/?(?:g|bx|ex))\b|<\s*x\d+\s*>/i);
+        expect(value, path).not.toMatch(/(^|[^\p{L}\p{N}])([\p{L}\p{N}]+)(?:\s+\2){2,}(?=$|[^\p{L}\p{N}])/iu);
       }
     };
     const expected = {

@@ -86,6 +86,12 @@ const corrections = {
   },
 };
 
+Object.assign(corrections.tr.categories, { records: "\u004b\u0061\u0079\u0131\u0074\u006c\u0061\u0072" });
+Object.assign(corrections.tr.ui, { close: "\u004b\u0061\u0070\u0061\u0074" });
+Object.assign(corrections.tr.chrome, { close: "\u004b\u0061\u0070\u0061\u0074" });
+Object.assign(corrections.tr.editor, { open: "\u0041\u00e7" });
+Object.assign(corrections.sv.fields, { Manager: "\u0041\u006e\u0073\u0076\u0061\u0072\u0069\u0067", Server: "\u0053\u0065\u0072\u0076\u0065\u0072\u0064\u0061\u0074\u006f\u0072" });
+
 let changed = 0;
 for (const [locale, sections] of Object.entries(corrections)) {
   const path = `docs/i18n-drafts/${locale}.json`;

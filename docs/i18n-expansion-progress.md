@@ -30,6 +30,7 @@
 ## Current verification
 
 - Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): all 10 unpublished locales have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches.
+- Repeated-word cleanup removed 27 obvious runs such as duplicated UI labels; the draft test now rejects three-or-more consecutive duplicate words. This mechanical cleanup does not count as editorial review.
 - `pnpm exec tsc --noEmit`: passed.
 - `pnpm exec vitest run --testTimeout 30000`: passed, 30 tests across 4 files.
 - `pnpm lint`: passed.

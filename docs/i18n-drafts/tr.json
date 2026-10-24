@@ -534,7 +534,7 @@
     "customer-call-log": "Müşteri çağrısı günlük",
     "customer-inquiry-log": "Müşteri soruşturması günlük",
     "sales-activity-report": "Satış faaliyetleri raporu",
-    "sales-daily-log": "Satış günlük günlük günlük günlük satış",
+    "sales-daily-log": "Satış günlük satış",
     "customer-meeting-notes": "Müşteri toplantısı notları",
     "customer-complaint-record": "Müşteri şikayet kayıtları",
     "inventory-count-sheet": "Inventory count",
@@ -554,8 +554,8 @@
     "travel-itinerary": "Seyahat Itinerary",
     "trip-expense-settlement": "Gezi Maliyeti",
     "personal-record-form": "Kişisel kayıt formu formu",
-    "payment-record-log": "Ödeme kaydı log log log log",
-    "service-history-log": "Service date log log log log"
+    "payment-record-log": "Ödeme kaydı log",
+    "service-history-log": "Service date log"
   },
   "interface": {
     "description": "Create and önizleme {title} doğrudan tarayıcınızda.",
@@ -564,7 +564,7 @@
     "faqLegal": "Bunu yasal olarak bağlayıcı bir form olarak kullanabilir miyim?",
     "draftSaved": "draftınız bu tarayıcıda kaydedilir.",
     "clipboardError": "Clipboard bu tarayıcıda mevcut değildir.",
-    "requiredLabel": "Gerekli Gerekli Gerekli Gerekli Gerekli Gerekli Gerekli",
+    "requiredLabel": "Gerekli",
     "searchLabel": "Arama belgeleri",
     "examplesBody": "Koncise kullanın, gerçek ayrıntıları. Tarihler, isimler, miktarlar ve paylaşım veya baskı yapmadan önce yerel gereksinimler."
   },
@@ -579,10 +579,10 @@
     "education": "Okul ve eğitim",
     "personal": "Kişisel hayat",
     "health-fitness": "Sağlık ve Spor",
-    "travel": "Seyahat Seyahat Seyahat Seyahat Seyahat",
+    "travel": "Seyahat",
     "checklists": "Kontrol listeleri",
     "planning": "Planlayıcılar",
-    "records": "Records Records Records"
+    "records": "Kayıtlar"
   },
   "ui": {
     "brand": "Dokümanlar",
@@ -621,7 +621,7 @@
     "contact": "İletişim",
     "contactTitle": "Bize ulaşın",
     "email": "E-posta e-posta e-posta",
-    "close": "Close Close Close Close Close",
+    "close": "Kapat",
     "empty": "Uygun belgeler yok.",
     "checked": "Tamamlandı",
     "adHidden": "",
@@ -650,10 +650,10 @@
     "email": "E-posta e-posta e-posta",
     "copy": "Kopyalama e-postası",
     "copied": "E-posta adresi kopyalandı.",
-    "close": "Close Close Close Close Close",
+    "close": "Kapat",
     "types": [
       "General / özellik",
-      "İşbirliği İşbirliği İşbirliği İşbirliği",
+      "İşbirliği",
       "Reklam / teklif",
       "Bug raporu"
     ]
@@ -661,7 +661,7 @@
   "editor": {
     "myForms": "Benim formlarım",
     "newForm": "Yeni bir form oluşturun",
-    "open": "Open Open Open Open",
+    "open": "Aç",
     "rename": "Yeniden adlandır",
     "duplicate": "Kopyasını oluştur",
     "delete": "Sil",
@@ -670,7 +670,7 @@
     "addField": "Ek alan ekleyin",
     "fieldName": "Alan adı",
     "fieldType": "Alan türü",
-    "required": "Gerekli Gerekli Gerekli Gerekli Gerekli Gerekli Gerekli",
+    "required": "Gerekli",
     "moveUp": "Move up up",
     "moveDown": "Move down down",
     "removeField": "Kaldır alanı",
@@ -681,7 +681,7 @@
     "textarea": "Uzun metin",
     "number": "Sayı Numarası Sayı Numarası",
     "date": "Tarih Tarihi",
-    "time": "Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman Zaman",
+    "time": "Zaman",
     "checkbox": "Onay kutusu",
     "select": "Seçim Seçenekleri",
     "currency": "$",

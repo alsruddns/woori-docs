@@ -70,6 +70,10 @@ const roDraft = JSON.parse(readFileSync("docs/i18n-drafts/ro.json", "utf8")) as 
   reviewStatus: string;
   reviewedCounts: Record<string, number>;
 };
+const elDraft = JSON.parse(readFileSync("docs/i18n-drafts/el.json", "utf8")) as {
+  reviewStatus: string;
+  reviewedCounts: Record<string, number>;
+};
 const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
 execFileSync(process.execPath, ["scripts/prepare-i18n-source.mjs", englishSourcePath], { stdio: "ignore" });
@@ -144,6 +148,12 @@ describe("unpublished Russian translation draft", () => {
     expect(Object.values(roDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
     expect(roDraft.reviewStatus).toContain("translation review complete (699/699 units)");
     expect(roDraft.reviewStatus).toContain("unpublished pending runtime");
+  });
+  it("tracks all reviewed Greek units before runtime verification", () => {
+    expect(elDraft.reviewedCounts).toMatchObject({ titles: 119, fields: 425, interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
+    expect(Object.values(elDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(elDraft.reviewStatus).toContain("translation review complete (699/699 units)");
+    expect(elDraft.reviewStatus).toContain("unpublished pending runtime");
   });
 
   it("tracks all 699 reviewed Turkish units before runtime publication", () => {
@@ -238,6 +248,7 @@ describe("unpublished Russian translation draft", () => {
       else if (locale === "sv") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else if (locale === "cs") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else if (locale === "ro") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
+      else if (locale === "el") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

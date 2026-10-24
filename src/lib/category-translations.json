@@ -398,5 +398,21 @@
     "checklists": "Liste de verificare",
     "planning": "Planificare",
     "records": "Evidențe"
+  },
+  "el": {
+    "work": "Επιχειρήσεις και εργασία",
+    "finance": "Οικονομικά και λογιστική",
+    "hr-admin": "Ανθρώπινο δυναμικό και διοίκηση",
+    "project-management": "Διαχείριση έργων",
+    "development-it": "Ανάπτυξη λογισμικού και πληροφορική",
+    "sales-customer": "Πωλήσεις και εξυπηρέτηση πελατών",
+    "inventory-logistics": "Αποθέματα και εφοδιαστική",
+    "education": "Σχολείο και εκπαίδευση",
+    "personal": "Προσωπική ζωή",
+    "health-fitness": "Υγεία και άσκηση",
+    "travel": "Ταξίδια",
+    "checklists": "Λίστες ελέγχου",
+    "planning": "Προγραμματισμός",
+    "records": "Αρχεία και καταγραφές"
   }
 }

@@ -36,6 +36,7 @@ const trDraft = JSON.parse(readFileSync("docs/i18n-drafts/tr.json", "utf8")) as 
   fieldsTranslated: number;
   failures: unknown[];
   reviewStatus: string;
+  reviewedCounts: Record<string, number>;
 };
 const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
@@ -63,6 +64,9 @@ describe("unpublished Russian translation draft", () => {
     expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
     expect(trDraft.failures).toHaveLength(0);
     expect(trDraft.reviewStatus).toContain("unpublished");
+    expect(trDraft.reviewedCounts).toMatchObject({ interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33 });
+    expect(Object.values(trDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(121);
+    expect(trDraft.reviewStatus).toContain("remaining editorial review required");
   });
 
   it("covers every document title, field, interface string, and category without English copies", () => {

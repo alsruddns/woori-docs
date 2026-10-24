@@ -21,7 +21,7 @@ Client components receive a server-selected locale payload for the active route.
 
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
-| ru | 0/119 | 0/425 reviewed (425/425 machine draft) | 0 | 0 | pending | 0 |
+| ru | 0/119 reviewed (119 draft) | 0/425 reviewed (425 draft) | 0 reviewed (56 draft) | 0 body (14 category drafts) | pending | 0 |
 | tr | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | pl | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | fil | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -41,7 +41,7 @@ Client components receive a server-selected locale payload for the active route.
 
 ## Russian translation draft
 
-- `docs/i18n-drafts/ru.json` contains draft translations for all 425 distinct field labels. 421 came from the free anonymous MyMemory API; 4 untranslated/failed responses were filled as draft wording manually.
+- `docs/i18n-drafts/ru.json` contains draft translations for all 119 document titles, 425 distinct field labels, 9 document interface strings, 14 categories, and 47 shared UI strings. Title, UI, category, and interface drafts were written directly; 421 field labels came from the free anonymous MyMemory API and 4 failed responses were filled as draft wording manually.
 - This is not counted as reviewed or complete. Standalone machine translations include context-sensitive wording that needs review against each form (for example, field labels such as “Closing”, “Provider”, and “Due date”). The draft is not imported by runtime code and is not exposed in routes, selectors, metadata, or sitemap.
 - The draft-generation helper is `scripts/translate-draft.mjs`. It calls only the free anonymous endpoint without credentials or an email address. The service documents a 5,000-character daily anonymous limit and a 500-byte request limit. No paid translation or AI API was used.
 
@@ -49,7 +49,7 @@ Client components receive a server-selected locale payload for the active route.
 
 - `pnpm lint`: passed after adding the Russian draft helper.
 - `pnpm exec tsc --noEmit`: passed after adding the Russian draft helper.
-- `pnpm exec vitest run --testTimeout 30000`: passed; 3 test files, 22 tests.
+- `pnpm exec vitest run --testTimeout 30000`: passed; 4 test files, 24 tests, including exact Russian draft key coverage, no English copies, placeholder preservation, and unpublished status.
 - `pnpm build`: passed; 1,822 existing localized document pages generated. No new locales were routed or published.
 - `pnpm lint`: passed after the selected-locale client payload change.
 - `pnpm build`: passed after the selected-locale client payload change; 1,822 existing localized routes were generated.
@@ -62,4 +62,4 @@ Client components receive a server-selected locale payload for the active route.
 
 ## Next start point
 
-Continue with `ru`: review all 425 field-label drafts in document context, then translate all 119 titles, shared UI, generated document guidance/SEO content, category labels, select options, table labels, and metadata. The anonymous translation endpoint has exhausted today's source-character allowance after the Russian field-label batch; continue without paid APIs. Only publish after the complete locale passes route, selector, alternate, sitemap, test, lint, type, and production-build checks. Then proceed to `tr` in the requested order.
+Continue with `ru`: review the current title, field, category, interface, and shared UI drafts; translate the generated guidance/FAQ/SEO copy, select options, table labels, editor and site chrome; then wire and verify the complete locale. The anonymous translation endpoint has exhausted today's source-character allowance after the Russian field-label batch; continue without paid APIs. Only publish after the complete locale passes route, selector, alternate, sitemap, test, lint, type, and production-build checks. Then proceed to `tr` in the requested order.

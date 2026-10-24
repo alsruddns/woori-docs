@@ -59,15 +59,16 @@ const leafCount = (value: unknown): number => value && typeof value === "object"
   : 1;
 
 describe("unpublished Russian translation draft", () => {
-  it("keeps the partial Turkish field batch complete by key and unpublished", () => {
+  it("tracks all 699 reviewed Turkish units before runtime publication", () => {
     sameKeys(trDraft.fields, documentTranslations.en.fields);
     expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
     expect(trDraft.failures).toHaveLength(0);
     expect(trDraft.reviewStatus).toContain("unpublished");
     expect(trDraft.reviewedCounts).toMatchObject({ titles: 119, interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33 });
+    expect(trDraft.reviewedCounts.fields).toBe(425);
     expect(trDraft.reviewedCounts.documentContent).toBe(34);
-    expect(Object.values(trDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(274);
-    expect(trDraft.reviewStatus).toContain("remaining editorial review required");
+    expect(Object.values(trDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(trDraft.reviewStatus).toContain("runtime verification required");
   });
 
   it("covers every document title, field, interface string, and category without English copies", () => {
@@ -105,7 +106,7 @@ describe("unpublished Russian translation draft", () => {
     expect(draft.reviewStatus).toBe("translation review complete; unpublished pending runtime verification");
   });
 
-  it("covers all 699 translation keys in the ten unpublished machine drafts", () => {
+  it("covers all 699 translation keys across the ten unpublished locale drafts", () => {
     const compareTree = (actual: unknown, expected: unknown, path: string) => {
       if (Array.isArray(expected)) {
         expect(actual, path).toBeInstanceOf(Array);
@@ -141,7 +142,8 @@ describe("unpublished Russian translation draft", () => {
       const target = JSON.parse(readFileSync(`docs/i18n-drafts/${locale}.json`, "utf8")) as Record<string, unknown>;
       for (const [section, source] of Object.entries(expected)) compareTree(target[section], source, `${locale}.${section}`);
       expect(String(target.reviewStatus)).toContain("unpublished");
-      expect(String(target.reviewStatus)).toContain("editorial review required");
+      if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
+      else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });
 

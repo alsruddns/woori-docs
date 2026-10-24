@@ -16,7 +16,7 @@
 | Locale | Draft coverage (units) | Reviewed units | UI/routes/SEO | Public pages |
 |---|---:|---:|---|---:|
 | ru | 699/699 | 699/699 | complete; runtime tests and build previously passed | 120 |
-| tr | 699/699 | 274/699 | Titles, generated document copy, UI, site chrome, editor, interface, and categories reviewed; runtime/routes/SEO pending; unpublished | 0 |
+| tr | 699/699 | 699/699 | Translation review complete; runtime, locale HTML language, routes, and SEO pending; unpublished | 0 |
 | pl | 699/699 | 0/699 | draft only; unpublished | 0 |
 | fil | 699/699 | 0/699 | draft only; unpublished | 0 |
 | bn | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -32,7 +32,7 @@
 - Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): all 10 unpublished locales have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches.
 - Repeated-word cleanup removed 27 obvious runs such as duplicated UI labels; the draft test now rejects three-or-more consecutive duplicate words. This mechanical cleanup does not count as editorial review.
 - `pnpm exec tsc --noEmit`: passed.
-- `pnpm exec vitest run --testTimeout 30000`: passed, 30 tests across 4 files.
+- `pnpm exec vitest run --testTimeout 30000`: passed, 30 tests across 4 files after Turkish content review.
 - `pnpm lint`: passed.
 - `pnpm build`: passed after the latest Russian placeholder correction; compiled successfully and generated 1,943 routes using the existing static/partial-prerender strategy.
 - Translation quality: the ten offline drafts are unreviewed and sample inspection found unnatural or incorrect machine output. They remain excluded from UI, selectors, routes, SEO, and sitemap. Structural completeness is not a language-quality signoff.
@@ -40,4 +40,4 @@
 
 ## Next start point
 
-Continue in the requested order with the remaining 425 Turkish field labels. Then validate runtime payload, locale selection, route, canonical/hreflang, sitemap, functionality, tests, lint, TypeScript, and production build before publishing Turkish. Proceed to Polish only after Turkish meets those checks. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish content review is complete (699/699). Continue by wiring Turkish dictionaries into the active-locale runtime payload, locale selector, document routes, canonical/hreflang, sitemap, and correct HTML language tags. Add locale-level tests and verify document rendering and existing editor behavior, then run lint, TypeScript, and production build before publishing Turkish. Proceed to Polish only after Turkish meets those checks. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.

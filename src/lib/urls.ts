@@ -24,14 +24,15 @@ export function docsPathForLocale(currentPath: string, locale: Locale): string {
   return docsPath(locale, segments[1] === DOCS_SERVICE ? segments.slice(2).join("/") || undefined : undefined);
 }
 
+export const localeLanguageTags: Record<Locale, string> = {
+  ko: "ko", en: "en", ja: "ja", zh: "zh", es: "es", "pt-br": "pt-BR",
+  de: "de", fr: "fr", vi: "vi", id: "id", th: "th", "zh-tw": "zh-TW",
+  it: "it", nl: "nl", hi: "hi", ru: "ru", tr: "tr",
+};
+
 export function docsAlternates(locales: readonly Locale[], slug?: string) {
-  const languageTags: Record<Locale, string> = {
-    ko: "ko", en: "en", ja: "ja", zh: "zh", es: "es", "pt-br": "pt-BR",
-    de: "de", fr: "fr", vi: "vi", id: "id", th: "th", "zh-tw": "zh-TW",
-    it: "it", nl: "nl", hi: "hi", ru: "ru",
-  };
   return Object.fromEntries([
-    ...locales.map((locale) => [languageTags[locale], docsPath(locale, slug)]),
+    ...locales.map((locale) => [localeLanguageTags[locale], docsPath(locale, slug)]),
     ["x-default", docsPath("en", slug)],
   ]);
 }

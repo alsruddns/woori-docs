@@ -6,7 +6,7 @@
 - Existing supported locales: `ko`, `en`, `ja`, `zh`, `es`, `pt-br`, `de`, `fr`, `vi`, `id`, `th`, `zh-tw`, `it`, `nl`, `hi` (15).
 - Requested additions in order: `ru`, `tr`, `pl`, `fil`, `bn`, `uk`, `ms`, `sv`, `cs`, `ro`, `el` (11). Excluded: `ar`, `ur`, `fa`, `he`.
 - Runtime registry has 119 public documents. Translation scope per new locale: 699 keyed units (119 titles, 425 field labels, 9 document-interface strings, 14 categories, 47 shared UI strings, 18 site-chrome entries, 33 editor strings, 34 generated document/guide/FAQ strings). One chrome entry is intentionally empty; there are 701 non-empty visible text values across 702 leaves.
-- Russian is the only new locale currently public. Its 119 documents plus library route yield 120 sitemap URLs. Total public locales: 16; target locales: 26.
+- Russian and Turkish are public. Each has 119 document routes plus its library route (120 sitemap URLs). Total public locales: 17; target locales: 26.
 - Offline machine translation is used only to prepare unpublished drafts; there are no paid translation or AI API calls. Draft completeness checks verify shape, non-empty values, changed text, markup, and interpolation tokens, but do not establish linguistic quality.
 
 ## Per-locale status
@@ -16,7 +16,7 @@
 | Locale | Draft coverage (units) | Reviewed units | UI/routes/SEO | Public pages |
 |---|---:|---:|---|---:|
 | ru | 699/699 | 699/699 | complete; runtime tests and build previously passed | 120 |
-| tr | 699/699 | 699/699 | Translation review complete; runtime, locale HTML language, routes, and SEO pending; unpublished | 0 |
+| tr | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, and build verified | 120 |
 | pl | 699/699 | 0/699 | draft only; unpublished | 0 |
 | fil | 699/699 | 0/699 | draft only; unpublished | 0 |
 | bn | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -32,12 +32,14 @@
 - Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): all 10 unpublished locales have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches.
 - Repeated-word cleanup removed 27 obvious runs such as duplicated UI labels; the draft test now rejects three-or-more consecutive duplicate words. This mechanical cleanup does not count as editorial review.
 - `pnpm exec tsc --noEmit`: passed.
-- `pnpm exec vitest run --testTimeout 30000`: passed, 30 tests across 4 files after Turkish content review.
+- `pnpm exec vitest run --testTimeout 30000`: passed, 32 tests across 5 files, including locale runtime and responsive CSS coverage.
 - `pnpm lint`: passed.
-- `pnpm build`: passed after the latest Russian placeholder correction; compiled successfully and generated 1,943 routes using the existing static/partial-prerender strategy.
+- Turkish production smoke check: `/tr/docs` and `/tr/docs/resume-template` returned 200; rendered `<html lang="tr">`, Turkish canonical and hreflang, localized page title/content; sitemap has 2,040 total URLs including 120 Turkish URLs.
+- Latest production build after Turkish wiring: passed; generated 2,064 routes using the existing static/partial-prerender strategy. (The 2,064 Next route entries include generated static and partial-prerender route variants; the sitemap lists 2,040 URLs.)
+- `pnpm exec tsc --noEmit`: passed after Turkish route/layout changes.
 - Translation quality: the ten offline drafts are unreviewed and sample inspection found unnatural or incorrect machine output. They remain excluded from UI, selectors, routes, SEO, and sitemap. Structural completeness is not a language-quality signoff.
-- Mobile-specific visual browser automation is not configured; responsive layout has not been visually inspected in this continuation.
+- Mobile visual inspection at a 390 × 844 viewport found the document grid reduced to one column. The language selector still appeared clipped at the viewport edge; a fixed-width selector adjustment is being rechecked before the Turkish commit.
 
 ## Next start point
 
-Turkish content review is complete (699/699). Continue by wiring Turkish dictionaries into the active-locale runtime payload, locale selector, document routes, canonical/hreflang, sitemap, and correct HTML language tags. Add locale-level tests and verify document rendering and existing editor behavior, then run lint, TypeScript, and production build before publishing Turkish. Proceed to Polish only after Turkish meets those checks. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish is connected and public after the final responsive selector check and develop commit/push. Proceed with Polish (`pl`) editorial review next, covering all 699 keyed units, then connect and verify it before continuing with Filipino (`fil`), Bengali (`bn`), Ukrainian (`uk`), Malay (`ms`), Swedish (`sv`), Czech (`cs`), Romanian (`ro`), and Greek (`el`). Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.

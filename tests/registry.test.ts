@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { categories, categoryNames, documents, isPublicLocale, isTargetLocale, localizeField, localizedDescription, localizedDocumentTitle, localeLabels, localePublicationState, locales, targetLocales, ui } from "../src/lib/registry";
 import documentTranslationsJson from "../src/lib/document-translations.json";
+import editorTranslationsJson from "../src/lib/editor-translations.json";
 import { renderDocumentText, validateDocument } from "../src/lib/engine";
 import { GET } from "../src/app/sitemap.xml/route";
 import { getDocumentMetadata } from "../src/lib/seo";
-import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl, portalPath } from "../src/lib/urls";
+import { docsPath, docsPathForLocale, docsUrl, familyServiceUrl, localeLanguageTags, portalPath } from "../src/lib/urls";
 import { getLocalePayload } from "../src/lib/locale-payload";
 import { buildDocumentContent, buildLibraryContent } from "../src/lib/document-content";
 
@@ -16,7 +17,7 @@ describe("document registry", () => {
     expect(new Set(documents.map((doc) => doc.slug)).size).toBe(documents.length);
   });
   it("declares locale labels and supported document locales", () => {
-    expect(locales).toHaveLength(16);
+    expect(locales).toHaveLength(17);
     for (const locale of locales) {
       expect(ui[locale].brand).toBeTruthy();
       expect(ui[locale].browser).toBeTruthy();
@@ -29,14 +30,16 @@ describe("document registry", () => {
       expect(documents.every((doc) => doc.supportedLocales.includes(locale))).toBe(true);
     }
   });
-  it("separates the 26-locale expansion scope from the 16 published locales", () => {
+  it("separates the 26-locale expansion scope from the 17 published locales", () => {
     const additions = ["ru", "tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
     expect(targetLocales).toHaveLength(26);
-    expect(locales).toHaveLength(16);
+    expect(locales).toHaveLength(17);
     expect(additions.every((locale) => isTargetLocale(locale))).toBe(true);
     expect(isPublicLocale("ru")).toBe(true);
+    expect(isPublicLocale("tr")).toBe(true);
     expect(localePublicationState("ru")).toBe("published");
-    expect(additions.slice(1).every((locale) => !isPublicLocale(locale) && localePublicationState(locale) === "pending")).toBe(true);
+    expect(localePublicationState("tr")).toBe("published");
+    expect(additions.slice(2).every((locale) => !isPublicLocale(locale) && localePublicationState(locale) === "pending")).toBe(true);
     expect(["ar", "ur", "fa", "he"].every((locale) => !isTargetLocale(locale))).toBe(true);
   });
   it("passes one selected locale's dictionaries to client components", () => {
@@ -53,6 +56,25 @@ describe("document registry", () => {
   it("uses a display label for every supported locale", () => {
     expect(locales.map((locale) => localeLabels[locale])).toHaveLength(locales.length);
     expect(localeLabels.ru).toBe("Русский");
+    expect(localeLabels.tr).toBe("Türkçe");
+  });
+  it("renders Turkish documents, active-locale payload, and SEO alternates", () => {
+    const document = documents.find((item) => item.slug === "resume-template")!;
+    const metadata = getDocumentMetadata("tr", document.slug);
+    expect(docsPath("tr", document.slug)).toBe(`/tr/docs/${document.slug}`);
+    expect(metadata.alternates?.canonical).toBe(`/tr/docs/${document.slug}`);
+    expect(metadata.alternates?.languages?.tr).toBe(`/tr/docs/${document.slug}`);
+    expect(String(metadata.title)).toContain("Özgeçmiş şablonu");
+    expect(localeLanguageTags.tr).toBe("tr");
+    expect(docsPathForLocale("/ru/docs/resume-template", "tr")).toBe("/tr/docs/resume-template");
+    expect(localizeField("Profile summary", "tr")).toBe("Profil özeti");
+    expect(buildDocumentContent("tr", "Özgeçmiş şablonu", "Kariyer", ["Ad", "E-posta"], "form", false, false).description).toContain("düzenlenebilir bir şablondur");
+    expect(buildLibraryContent("tr", "Şirket ve çalışma").recent).toBe("Yeni eklenen şablonlar");
+    const payload = getLocalePayload("tr");
+    expect(payload.uiText.search).toBe(ui.tr.search);
+    expect(payload.editorTranslations).toEqual(editorTranslationsJson.tr);
+    expect(payload.languages).toHaveLength(locales.length);
+    expect(payload).not.toHaveProperty("ui.ru");
   });
   it("renders Russian documents and exposes Russian SEO alternates", () => {
     const document = documents.find((item) => item.isPublic)!;
@@ -127,7 +149,8 @@ describe("document registry", () => {
     expect(sitemapUrls).toHaveLength(expectedCount);
     expect(new Set(sitemapUrls).size).toBe(sitemapUrls.length);
     expect(sitemapUrls.filter((url) => url.startsWith("https://www.woori.today/ru/docs")).length).toBe(120);
-    expect(sitemapUrls.every((url) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi|ru)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
+    expect(sitemapUrls.filter((url) => url.startsWith("https://www.woori.today/tr/docs")).length).toBe(120);
+    expect(sitemapUrls.every((url) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi|ru|tr)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
     expect(sitemapUrls).toContain("https://www.woori.today/ko/docs");
     expect(xml).toContain("https://www.woori.today/ko/docs/resume-template");
     expect(xml).toContain("https://www.woori.today/pt-br/docs");
@@ -154,7 +177,7 @@ describe("document registry", () => {
     expect(getDocumentMetadata("ja", "resume-template").title).toBe(`${localizedDocumentTitle(documents[0], "ja")} | woori.today`);
     expect(getDocumentMetadata("ja", "resume-template").description).toBe(localizedDescription(documents[0], "ja"));
   });
-  it("builds locale-first public paths and 1800 IndexNow URLs", async () => {
+  it("builds locale-first public paths and 2040 IndexNow URLs", async () => {
     expect(docsPath("ko")).toBe("/ko/docs");
     expect(docsPath("en", "resume-template")).toBe("/en/docs/resume-template");
     expect(docsUrl("zh-tw")).toBe("https://www.woori.today/zh-tw/docs");
@@ -168,7 +191,7 @@ describe("document registry", () => {
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain("https://www.woori.today/ko/docs");
     expect(urls).toContain("https://www.woori.today/pt-br/docs/resume-template");
-    expect(urls.every((url: string) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi|ru)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
+    expect(urls.every((url: string) => /^https:\/\/www\.woori\.today\/(?:ko|en|ja|zh|es|pt-br|de|fr|vi|id|th|zh-tw|it|nl|hi|ru|tr)\/docs(?:\/[^/]+)?$/.test(url))).toBe(true);
     const response = GET(); const sitemapXml = await response.text();
     const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
     expect(new Set(urls)).toEqual(new Set(sitemapUrls));

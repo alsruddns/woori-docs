@@ -254,5 +254,21 @@
     "checklists": "Контрольные списки",
     "planning": "Планирование",
     "records": "Записи"
+  },
+  "tr": {
+    "work": "Şirket ve çalışma",
+    "finance": "Finans ve muhasebe",
+    "hr-admin": "İnsan kaynakları ve yönetim",
+    "project-management": "Proje yönetimi",
+    "development-it": "Yazılım geliştirme ve BT",
+    "sales-customer": "Satış ve müşteri yönetimi",
+    "inventory-logistics": "Stok ve lojistik",
+    "education": "Okul ve eğitim",
+    "personal": "Kişisel yaşam",
+    "health-fitness": "Sağlık ve fitness",
+    "travel": "Seyahat",
+    "checklists": "Kontrol listeleri",
+    "planning": "Planlayıcılar",
+    "records": "Kayıtlar"
   }
 }

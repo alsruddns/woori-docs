@@ -13,7 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!locales.includes(locale as Locale)) return {};
   const lang = locale as Locale;
   const description=buildLibraryContent(lang,categoryNames[lang].work).intro;
-  return { title: ui[lang].brand, description, alternates: { canonical: docsPath(lang), languages: docsAlternates(locales) }, openGraph: { url: docsPath(lang), title: ui[lang].brand, description, type: "website" } };
+  const title = `${ui[lang].brand} | woori.today`;
+  return { title, description, alternates: { canonical: docsPath(lang), languages: docsAlternates(locales) }, openGraph: { url: docsPath(lang), title, description, type: "website" } };
 }
 export default async function Page({ params }: Props) {
   const { locale } = await params; if (!locales.includes(locale as Locale)) notFound(); const lang=locale as Locale;

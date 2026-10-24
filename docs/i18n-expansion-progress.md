@@ -21,7 +21,7 @@ Client components receive a server-selected locale payload for the active route.
 
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
-| ru | 0/119 reviewed (119 draft) | 184/425 manually corrected; 241 machine drafts pending review | 0 reviewed (107 draft) | 0 body reviewed (32 copy + 14 category drafts) | pending | 0 |
+| ru | 119/119 reviewed (0 public) | 184/425 reviewed; 241 machine drafts pending review | 107/107 reviewed (0 public) | 48/48 reviewed drafts (34 copy + 14 categories; 0 public) | pending | 0 |
 | tr | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | pl | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | fil | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -41,8 +41,8 @@ Client components receive a server-selected locale payload for the active route.
 
 ## Russian translation draft
 
-- `docs/i18n-drafts/ru.json` contains draft translations for all 119 document titles, 425 distinct field labels, 9 document interface strings, 14 categories, 47 shared UI strings, 18 site-chrome strings, 33 custom-editor strings, and 32 generated document / guide / FAQ / section strings. Title, UI, category, interface, chrome, editor, and content drafts were written directly; 421 field labels came from the free anonymous MyMemory API. 184 field labels have been manually corrected; 241 machine draft values remain pending review.
-- The title/UI/content drafts remain unreviewed and the locale is not complete. The draft is not imported by runtime code and is not exposed in routes, selectors, metadata, or sitemap. A regression test rejects damaged Unicode, raw translation markup, missing keys, English copies in the checked translation groups, and malformed interpolation tokens.
+- `docs/i18n-drafts/ru.json` contains draft translations for all 119 document titles, 425 distinct field labels, 9 document interface strings, 14 categories, 47 shared UI strings, 18 site-chrome strings, 33 custom-editor strings, and 34 generated document / guide / FAQ / section strings. The titles, common UI groups, categories, and generated content have been reviewed in source. 421 field labels came from the free anonymous MyMemory API; 184 field labels have been manually corrected and reviewed; 241 machine draft values remain pending review.
+- The draft is not imported by runtime code and is not exposed in routes, selectors, metadata, or sitemap. A regression test rejects damaged Unicode, raw translation markup, missing keys, English copies in the checked translation groups, and malformed interpolation tokens.
 - The draft-generation helper is `scripts/translate-draft.mjs`. It calls only the free anonymous endpoint without credentials or an email address. The service documents a 5,000-character daily anonymous limit and a 500-byte request limit. No paid translation or AI API was used.
 
 ## Last verification

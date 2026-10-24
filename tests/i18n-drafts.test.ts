@@ -18,6 +18,13 @@ const draft = JSON.parse(readFileSync("docs/i18n-drafts/ru.json", "utf8")) as {
   contentDrafted: number;
   fieldReviewed: string[];
   fieldReviewedCount: number;
+  titlesReviewedCount: number;
+  uiReviewedCount: number;
+  chromeReviewedCount: number;
+  editorReviewedCount: number;
+  interfaceReviewedCount: number;
+  categoriesReviewedCount: number;
+  documentContentReviewedCount: number;
   reviewStatus: string;
 };
 const sameKeys = (actual: Record<string, unknown>, expected: Record<string, unknown>) =>
@@ -41,6 +48,7 @@ describe("unpublished Russian translation draft", () => {
     sameKeys(draft.fields, documentTranslations.en.fields);
     sameKeys(draft.interface, enInterface);
     sameKeys(draft.categories, categories.en);
+    expect(draft.titlesReviewedCount).toBe(Object.keys(draft.titles).length);
     expect(draft.fieldReviewedCount).toBe(draft.fieldReviewed.length);
     expect(draft.fieldReviewed.length).toBeGreaterThan(0);
     for (const key of draft.fieldReviewed) expect(draft.fields[key]?.trim()).toBeTruthy();
@@ -56,6 +64,11 @@ describe("unpublished Russian translation draft", () => {
     sameKeys(draft.ui, ui.en);
     sameKeys(draft.chrome, chromeText.en);
     sameKeys(draft.editor, enEditor);
+    expect(draft.uiReviewedCount).toBe(Object.keys(draft.ui).length);
+    expect(draft.chromeReviewedCount).toBe(Object.keys(draft.chrome).length);
+    expect(draft.editorReviewedCount).toBe(Object.keys(draft.editor).length);
+    expect(draft.interfaceReviewedCount).toBe(Object.keys(draft.interface).length);
+    expect(draft.categoriesReviewedCount).toBe(Object.keys(draft.categories).length);
     expect(draft.ui.adHidden).toBe("");
     for (const [key, value] of Object.entries(draft.ui)) {
       if (key !== "adHidden") expect(value.trim()).not.toBe(ui.en[key]);
@@ -70,11 +83,12 @@ describe("unpublished Russian translation draft", () => {
     const specific = draft.documentContent.specific as Record<string, string>;
     sameKeys(copy, {
       intro: "", purpose: "", audience: "", structure: "", steps: "", tips: "", source: "", caution: "",
-      faq1: "", faq2: "", faqA1: "", faqA2: "", library: "", libraryUse: "", category: "",
+      more: "", tableNote: "", faq1: "", faq2: "", faqA1: "", faqA2: "", library: "", libraryUse: "", category: "",
     });
     sameKeys(specific, { form: "", checklist: "", planner: "", audience: "", stepFocus: "", tipFocus: "", faqFields: "", faqFieldsAnswer: "" });
     expect(Object.keys(draft.documentContent)).toEqual(["copy", "specific", "purposeFocus", "sectionLabels", "recent"]);
     expect(draft.contentDrafted).toBe(leafCount(draft.documentContent));
+    expect(draft.documentContentReviewedCount).toBe(draft.contentDrafted);
     const intro = copy.intro;
     expect(placeholders(intro)).toEqual(["{category}", "{title}"].sort());
   });

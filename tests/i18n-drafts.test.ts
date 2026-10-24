@@ -64,8 +64,9 @@ describe("unpublished Russian translation draft", () => {
     expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
     expect(trDraft.failures).toHaveLength(0);
     expect(trDraft.reviewStatus).toContain("unpublished");
-    expect(trDraft.reviewedCounts).toMatchObject({ interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33 });
-    expect(Object.values(trDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(121);
+    expect(trDraft.reviewedCounts).toMatchObject({ titles: 119, interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33 });
+    expect(trDraft.reviewedCounts.documentContent).toBe(34);
+    expect(Object.values(trDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(274);
     expect(trDraft.reviewStatus).toContain("remaining editorial review required");
   });
 

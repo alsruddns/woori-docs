@@ -16,7 +16,7 @@
 | Locale | Draft coverage (units) | Reviewed units | UI/routes/SEO | Public pages |
 |---|---:|---:|---|---:|
 | ru | 699/699 | 699/699 | complete; runtime tests and build previously passed | 120 |
-| tr | 699/699 | 121/699 | UI, site chrome, editor, interface, and categories reviewed; runtime/routes/SEO pending; unpublished | 0 |
+| tr | 699/699 | 274/699 | Titles, generated document copy, UI, site chrome, editor, interface, and categories reviewed; runtime/routes/SEO pending; unpublished | 0 |
 | pl | 699/699 | 0/699 | draft only; unpublished | 0 |
 | fil | 699/699 | 0/699 | draft only; unpublished | 0 |
 | bn | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -40,4 +40,4 @@
 
 ## Next start point
 
-Continue in the requested order with the remaining 578 Turkish units: 119 titles, 425 field labels, and 34 generated document/guide/FAQ strings. Then validate runtime payload, locale selection, route, canonical/hreflang, sitemap, functionality, tests, lint, TypeScript, and production build before publishing Turkish. Proceed to Polish only after Turkish meets those checks. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.
+Continue in the requested order with the remaining 425 Turkish field labels. Then validate runtime payload, locale selection, route, canonical/hreflang, sitemap, functionality, tests, lint, TypeScript, and production build before publishing Turkish. Proceed to Polish only after Turkish meets those checks. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.

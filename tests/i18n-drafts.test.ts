@@ -66,8 +66,10 @@ describe("unpublished Russian translation draft", () => {
   it("tracks the reviewed Polish title batch without exposing the incomplete locale", () => {
     expect(plDraft.reviewedCounts.titles).toBe(119);
     expect(plDraft.reviewedCounts.fields).toBe(425);
-    expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(544);
+    expect(plDraft.reviewedCounts).toMatchObject({ interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
+    expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
     expect(plDraft.reviewStatus).toContain("unpublished");
+    expect(plDraft.reviewStatus).toContain("unpublished pending Polish runtime connection");
   });
 
   it("tracks all 699 reviewed Turkish units before runtime publication", () => {
@@ -154,7 +156,7 @@ describe("unpublished Russian translation draft", () => {
       for (const [section, source] of Object.entries(expected)) compareTree(target[section], source, `${locale}.${section}`);
       expect(String(target.reviewStatus)).toContain("unpublished");
       if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
-      else if (locale === "pl") expect(String(target.reviewStatus)).toContain("544/699 units editorially reviewed");
+      else if (locale === "pl") expect(String(target.reviewStatus)).toContain("unpublished pending Polish runtime connection");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

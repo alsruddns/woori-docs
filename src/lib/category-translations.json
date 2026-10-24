@@ -270,5 +270,21 @@
     "checklists": "Kontrol listeleri",
     "planning": "Planlayıcılar",
     "records": "Kayıtlar"
+  },
+  "pl": {
+    "work": "Firma i praca",
+    "finance": "Finanse i księgowość",
+    "hr-admin": "Kadry i administracja",
+    "project-management": "Zarządzanie projektami",
+    "development-it": "Programowanie i IT",
+    "sales-customer": "Sprzedaż i obsługa klienta",
+    "inventory-logistics": "Zapasy i logistyka",
+    "education": "Szkoła i edukacja",
+    "personal": "Życie prywatne",
+    "health-fitness": "Zdrowie i aktywność fizyczna",
+    "travel": "Podróże",
+    "checklists": "Listy kontrolne",
+    "planning": "Plany",
+    "records": "Rejestry"
   }
 }

@@ -29,7 +29,8 @@ export const localeLanguageTags: Record<Locale, string> = {
   de: "de", fr: "fr", vi: "vi", id: "id", th: "th", "zh-tw": "zh-TW",
   it: "it", nl: "nl", hi: "hi", ru: "ru", tr: "tr",
   pl:"pl",
-  fil:"fil"
+  fil:"fil",
+  bn:"bn"
 };
 
 export function docsAlternates(locales: readonly Locale[], slug?: string) {

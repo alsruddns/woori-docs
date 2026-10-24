@@ -89,8 +89,10 @@ describe("unpublished Russian translation draft", () => {
   });
   it("tracks the reviewed Bengali title batch without exposing the incomplete locale", () => {
     expect(bnDraft.reviewedCounts.titles).toBe(119);
-    expect(Object.values(bnDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(119);
-    expect(bnDraft.reviewStatus).toContain("119/699 units editorially reviewed");
+    expect(bnDraft.reviewedCounts.fields).toBe(425);
+    expect(bnDraft.reviewedCounts).toMatchObject({ interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
+    expect(Object.values(bnDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(bnDraft.reviewStatus).toContain("unpublished pending Bengali runtime connection");
     expect(bnDraft.reviewStatus).toContain("unpublished");
   });
 
@@ -180,7 +182,7 @@ describe("unpublished Russian translation draft", () => {
       if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
       else if (locale === "pl") expect(String(target.reviewStatus)).toContain("unpublished pending Polish runtime connection");
       else if (locale === "fil") expect(String(target.reviewStatus)).toContain("unpublished pending Filipino runtime connection");
-      else if (locale === "bn") expect(String(target.reviewStatus)).toContain("119/699 units editorially reviewed");
+      else if (locale === "bn") expect(String(target.reviewStatus)).toContain("unpublished pending Bengali runtime connection");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

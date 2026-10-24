@@ -13,7 +13,7 @@ class MemoryStorage {
 }
 
 describe("expanded template engine", () => {
-  it("keeps public slugs unique and localized across 19 locales", () => {
+  it("keeps public slugs unique and localized across 20 locales", () => {
     expect(documents.length).toBeGreaterThanOrEqual(100);
     expect(new Set(documents.map(doc=>doc.slug)).size).toBe(documents.length);
     expect(new Set(documents.map(doc=>doc.category))).toEqual(new Set(categories));
@@ -21,9 +21,9 @@ describe("expanded template engine", () => {
       expect(doc.title.trim()).toBeTruthy(); expect(doc.description.trim()).toBeTruthy();
       expect(new Set(doc.fields.map(field=>field.id)).size).toBe(doc.fields.length);
       expect(doc.fields.every(field=>field.label.trim())).toBe(true);
-      expect(doc.supportedLocales).toHaveLength(19);
+      expect(doc.supportedLocales).toHaveLength(20);
     }
-    expect(locales).toHaveLength(19);
+    expect(locales).toHaveLength(20);
   });
   it("has localized editor controls and exact expense SEO metadata",()=>{
     for(const locale of locales){for(const [key,value] of Object.entries(editorTranslations[locale])){expect(value.trim(),`${locale}.${key}`).toBeTruthy();expect(value,`${locale}.${key}`).not.toContain("\uFFFD");expect(value,`${locale}.${key}`).not.toBe(key)}}

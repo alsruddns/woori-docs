@@ -10,7 +10,7 @@
 
 ## Localization and accessibility
 
-- Supported locale identifiers are `ko`, `en`, `ja`, `zh`, `es`, `pt-br`, `de`, `fr`, `vi`, `id`, `th`, `zh-tw`, `it`, `nl`, `hi`, `ru`, `tr`, `pl`, and `fil`.
+- Supported locale identifiers are `ko`, `en`, `ja`, `zh`, `es`, `pt-br`, `de`, `fr`, `vi`, `id`, `th`, `zh-tw`, `it`, `nl`, `hi`, `ru`, `tr`, `pl`, `fil`, and `bn`.
 - A locale is complete only when public UI, navigation, document names, fields, help text, metadata, and validation messages are translated and reviewed. English fallback does not count as translation completion.
 - Keep controls keyboard accessible, label inputs, expose status updates, and retain readable contrast and responsive layouts.
 

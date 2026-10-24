@@ -302,5 +302,21 @@
     "checklists": "Mga checklist",
     "planning": "Mga planner",
     "records": "Mga talaan"
+  },
+  "bn": {
+    "work": "ব্যবসা ও কাজ",
+    "finance": "অর্থ ও হিসাবরক্ষণ",
+    "hr-admin": "মানবসম্পদ ও প্রশাসন",
+    "project-management": "প্রকল্প ব্যবস্থাপনা",
+    "development-it": "সফটওয়্যার উন্নয়ন ও তথ্যপ্রযুক্তি",
+    "sales-customer": "বিক্রয় ও গ্রাহক ব্যবস্থাপনা",
+    "inventory-logistics": "মজুত ও সরবরাহব্যবস্থা",
+    "education": "স্কুল ও শিক্ষা",
+    "personal": "ব্যক্তিগত জীবন",
+    "health-fitness": "স্বাস্থ্য ও শরীরচর্চা",
+    "travel": "ভ্রমণ",
+    "checklists": "চেকলিস্ট",
+    "planning": "পরিকল্পনা",
+    "records": "রেকর্ড"
   }
 }

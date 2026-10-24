@@ -1,4 +1,8 @@
 import { readFileSync } from "node:fs";
+import { rmSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { ui } from "../src/lib/chrome-i18n";
 import { chromeText } from "../src/lib/site-chrome-i18n";
@@ -33,6 +37,11 @@ const trDraft = JSON.parse(readFileSync("docs/i18n-drafts/tr.json", "utf8")) as 
   failures: unknown[];
   reviewStatus: string;
 };
+const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
+const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
+execFileSync(process.execPath, ["scripts/prepare-i18n-source.mjs", englishSourcePath], { stdio: "ignore" });
+const englishDocumentContent = JSON.parse(readFileSync(englishSourcePath, "utf8")).documentContent as Record<string, unknown>;
+rmSync(englishSourcePath, { force: true });
 const sameKeys = (actual: Record<string, unknown>, expected: Record<string, unknown>) =>
   expect(Object.keys(actual).sort()).toEqual(Object.keys(expected).sort());
 const placeholders = (value: string) => [...value.matchAll(/\{\w+\}/g)].map(([token]) => token).sort();
@@ -53,7 +62,7 @@ describe("unpublished Russian translation draft", () => {
     sameKeys(trDraft.fields, documentTranslations.en.fields);
     expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
     expect(trDraft.failures).toHaveLength(0);
-    expect(trDraft.reviewStatus).toBe("unreviewed; unpublished");
+    expect(trDraft.reviewStatus).toContain("unpublished");
   });
 
   it("covers every document title, field, interface string, and category without English copies", () => {
@@ -91,6 +100,55 @@ describe("unpublished Russian translation draft", () => {
     expect(draft.reviewStatus).toBe("translation review complete; unpublished pending runtime verification");
   });
 
+  it("covers all 699 translation keys in the ten unpublished machine drafts", () => {
+    const compareTree = (actual: unknown, expected: unknown, path: string) => {
+      if (Array.isArray(expected)) {
+        expect(actual, path).toBeInstanceOf(Array);
+        expect(actual).toHaveLength(expected.length);
+        expected.forEach((value, index) => compareTree((actual as unknown[])[index], value, `${path}[${index}]`));
+      } else if (expected && typeof expected === "object") {
+        expect(actual, path).toBeTruthy();
+        sameKeys(actual as Record<string, unknown>, expected as Record<string, unknown>);
+        for (const [key, value] of Object.entries(expected)) compareTree((actual as Record<string, unknown>)[key], value, `${path}.${key}`);
+      } else if (typeof expected === "string") {
+        expect(typeof actual, path).toBe("string");
+        const value = actual as string;
+        if (expected.trim()) {
+          expect(value.trim(), path).toBeTruthy();
+          expect(value.trim(), path).not.toBe(expected.trim());
+        } else expect(value, path).toBe("");
+        expect(placeholders(value), path).toEqual(placeholders(expected));
+        expect(value, path).not.toMatch(/\?{2,}|<(?:\/?(?:g|bx|ex))\b|<\s*x\d+\s*>/i);
+      }
+    };
+    const expected = {
+      titles: documentTranslations.en.titles,
+      fields: documentTranslations.en.fields,
+      interface: documentTranslations.en.interface,
+      categories: categories.en,
+      ui: ui.en,
+      chrome: chromeText.en,
+      editor: enEditor,
+      documentContent: englishDocumentContent,
+    };
+    for (const locale of targetLocales) {
+      const target = JSON.parse(readFileSync(`docs/i18n-drafts/${locale}.json`, "utf8")) as Record<string, unknown>;
+      for (const [section, source] of Object.entries(expected)) compareTree(target[section], source, `${locale}.${section}`);
+      expect(String(target.reviewStatus)).toContain("unpublished");
+      expect(String(target.reviewStatus)).toContain("editorial review required");
+    }
+  });
+
+  it("preserves all Russian document-content interpolation tokens", () => {
+    const comparePlaceholders = (actual: unknown, expected: unknown) => {
+      if (Array.isArray(expected)) expected.forEach((value, index) => comparePlaceholders((actual as unknown[])[index], value));
+      else if (expected && typeof expected === "object") {
+        for (const [key, value] of Object.entries(expected)) comparePlaceholders((actual as Record<string, unknown>)[key], value);
+      } else if (typeof expected === "string") expect(placeholders(String(actual))).toEqual(placeholders(expected));
+    };
+    comparePlaceholders(draft.documentContent, englishDocumentContent);
+  });
+
   it("contains generated document, guide, FAQ, category, and section copy", () => {
     const copy = draft.documentContent.copy as Record<string, string>;
     const specific = draft.documentContent.specific as Record<string, string>;
@@ -109,7 +167,7 @@ describe("unpublished Russian translation draft", () => {
   it("contains no damaged Unicode or translation markup", () => {
     for (const value of stringsIn(draft)) {
       expect(value).not.toMatch(/\?{2,}/);
-      expect(value).not.toMatch(/<(?:g|bx|ex)\b/i);
+      expect(value).not.toMatch(/<(?:g|bx|ex)\b|<\s*x\d+\s*>/i);
     }
   });
 });

@@ -50,7 +50,7 @@ describe("unpublished Russian translation draft", () => {
     sameKeys(draft.categories, categories.en);
     expect(draft.titlesReviewedCount).toBe(Object.keys(draft.titles).length);
     expect(draft.fieldReviewedCount).toBe(draft.fieldReviewed.length);
-    expect(draft.fieldReviewed.length).toBeGreaterThan(0);
+    expect(new Set(draft.fieldReviewed)).toEqual(new Set(Object.keys(draft.fields)));
     for (const key of draft.fieldReviewed) expect(draft.fields[key]?.trim()).toBeTruthy();
     for (const [key, value] of Object.entries(draft.titles)) expect(value.trim()).not.toBe(enTitles[key]);
     for (const [key, value] of Object.entries(draft.fields)) expect(value.trim()).not.toBe(key);
@@ -75,7 +75,7 @@ describe("unpublished Russian translation draft", () => {
     }
     expect((draft.chrome.types as string[])).toHaveLength(chromeText.en.types.length);
     for (const [key, value] of Object.entries(draft.editor)) expect(value.trim()).not.toBe(enEditor[key]);
-    expect(draft.reviewStatus).toBe("unreviewed; unpublished");
+    expect(draft.reviewStatus).toBe("translation review complete; unpublished pending runtime verification");
   });
 
   it("contains generated document, guide, FAQ, category, and section copy", () => {

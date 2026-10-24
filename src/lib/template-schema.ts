@@ -1,11 +1,11 @@
 export const categories = ["work", "finance", "hr-admin", "project-management", "development-it", "sales-customer", "inventory-logistics", "education", "personal", "health-fitness", "travel", "checklists", "planning", "records"] as const;
 export type Category = (typeof categories)[number];
 /** Locales with complete content that may appear in routes, selectors, metadata, and sitemaps. */
-export const locales = ["ko", "en", "ja", "zh", "es", "pt-br", "de", "fr", "vi", "id", "th", "zh-tw", "it", "nl", "hi"] as const;
+export const locales = ["ko", "en", "ja", "zh", "es", "pt-br", "de", "fr", "vi", "id", "th", "zh-tw", "it", "nl", "hi", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
 /** Full expansion scope; adding a target here does not publish it. */
-export const targetLocales = [...locales, "ru", "tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
+export const targetLocales = [...locales, "tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 export type TargetLocale = (typeof targetLocales)[number];
 
 export function isTargetLocale(value: string): value is TargetLocale {

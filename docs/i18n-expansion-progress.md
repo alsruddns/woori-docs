@@ -17,7 +17,7 @@
 |---|---:|---:|---|---:|
 | ru | 699/699 | 699/699 | complete; runtime tests and build previously passed | 120 |
 | tr | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, and build verified | 120 |
-| pl | 699/699 | 0/699 | draft only; unpublished | 0 |
+| pl | 699/699 | 119/699 | titles reviewed; 580 units remain; runtime/SEO not connected; unpublished | 0 |
 | fil | 699/699 | 0/699 | draft only; unpublished | 0 |
 | bn | 699/699 | 0/699 | draft only; unpublished | 0 |
 | uk | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -32,7 +32,7 @@
 - Draft audit (`node scripts/audit-translation-drafts.mjs <English-source.json>`): all 10 unpublished locales have 0 missing keys, 0 empty values, 0 exact-English copies, and 0 interpolation-token mismatches.
 - Repeated-word cleanup removed 27 obvious runs such as duplicated UI labels; the draft test now rejects three-or-more consecutive duplicate words. This mechanical cleanup does not count as editorial review.
 - `pnpm exec tsc --noEmit`: passed.
-- `pnpm exec vitest run --testTimeout 30000`: passed, 32 tests across 5 files, including locale runtime and responsive CSS coverage.
+- `pnpm exec vitest run --testTimeout 30000`: latest run passed, 33 tests across 5 files, including partial-review tracking and responsive CSS coverage.
 - `pnpm lint`: passed.
 - Turkish production smoke check: `/tr/docs` and `/tr/docs/resume-template` returned 200; rendered `<html lang="tr">`, Turkish canonical and hreflang, localized page title/content; sitemap has 2,040 total URLs including 120 Turkish URLs.
 - Latest production build after Turkish wiring: passed; generated 2,064 routes using the existing static/partial-prerender strategy. (The 2,064 Next route entries include generated static and partial-prerender route variants; the sitemap lists 2,040 URLs.)
@@ -42,4 +42,4 @@
 
 ## Next start point
 
-Turkish is connected and public after the final responsive selector check and develop commit/push. Proceed with Polish (`pl`) editorial review next, covering all 699 keyed units, then connect and verify it before continuing with Filipino (`fil`), Bengali (`bn`), Ukrainian (`uk`), Malay (`ms`), Swedish (`sv`), Czech (`cs`), Romanian (`ro`), and Greek (`el`). Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish is connected and public at `9cf3f86` on `origin/develop`; the mobile selector has an explicit 140px width, but the final post-build visual confirmation still needs a fresh browser capture. Polish has 119/699 editorially reviewed document titles; continue with its 425 field labels, then the interface, category, shared UI, site chrome, editor, and generated content batches before runtime wiring. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.

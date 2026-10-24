@@ -38,6 +38,10 @@ const trDraft = JSON.parse(readFileSync("docs/i18n-drafts/tr.json", "utf8")) as 
   reviewStatus: string;
   reviewedCounts: Record<string, number>;
 };
+const plDraft = JSON.parse(readFileSync("docs/i18n-drafts/pl.json", "utf8")) as {
+  reviewStatus: string;
+  reviewedCounts: Record<string, number>;
+};
 const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
 execFileSync(process.execPath, ["scripts/prepare-i18n-source.mjs", englishSourcePath], { stdio: "ignore" });
@@ -59,6 +63,12 @@ const leafCount = (value: unknown): number => value && typeof value === "object"
   : 1;
 
 describe("unpublished Russian translation draft", () => {
+  it("tracks the reviewed Polish title batch without exposing the incomplete locale", () => {
+    expect(plDraft.reviewedCounts.titles).toBe(119);
+    expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(119);
+    expect(plDraft.reviewStatus).toContain("unpublished");
+  });
+
   it("tracks all 699 reviewed Turkish units before runtime publication", () => {
     sameKeys(trDraft.fields, documentTranslations.en.fields);
     expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
@@ -143,6 +153,7 @@ describe("unpublished Russian translation draft", () => {
       for (const [section, source] of Object.entries(expected)) compareTree(target[section], source, `${locale}.${section}`);
       expect(String(target.reviewStatus)).toContain("unpublished");
       if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
+      else if (locale === "pl") expect(String(target.reviewStatus)).toContain("119/699 units editorially reviewed");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

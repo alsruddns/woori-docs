@@ -10,7 +10,7 @@ describe("mobile layout", () => {
     expect(css).toContain(".document-grid{grid-template-columns:1fr;gap:8px}");
     expect(css).toContain(".workspace{grid-template-columns:1fr;gap:12px}");
     expect(css).toContain(".related-grid{grid-template-columns:1fr}");
-    expect(css).toContain(".language-picker select{max-width:140px");
+    expect(css).toContain(".language-picker select{width:140px;max-width:140px");
     expect(css).toContain(".repeating-table-scroll{max-width:100%;overflow-x:auto}");
   });
 });

@@ -66,6 +66,10 @@ const csDraft = JSON.parse(readFileSync("docs/i18n-drafts/cs.json", "utf8")) as 
   reviewStatus: string;
   reviewedCounts: Record<string, number>;
 };
+const roDraft = JSON.parse(readFileSync("docs/i18n-drafts/ro.json", "utf8")) as {
+  reviewStatus: string;
+  reviewedCounts: Record<string, number>;
+};
 const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
 execFileSync(process.execPath, ["scripts/prepare-i18n-source.mjs", englishSourcePath], { stdio: "ignore" });
@@ -135,6 +139,12 @@ describe("unpublished Russian translation draft", () => {
     expect(csDraft.reviewStatus).toContain("translation review complete (699/699 units)");
     expect(csDraft.reviewStatus).toContain("unpublished");
   });
+  it("tracks all reviewed Romanian units before runtime verification", () => {
+    expect(roDraft.reviewedCounts).toMatchObject({ titles: 119, fields: 425, interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
+    expect(Object.values(roDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(roDraft.reviewStatus).toContain("translation review complete (699/699 units)");
+    expect(roDraft.reviewStatus).toContain("unpublished pending runtime");
+  });
 
   it("tracks all 699 reviewed Turkish units before runtime publication", () => {
     sameKeys(trDraft.fields, documentTranslations.en.fields);
@@ -183,7 +193,7 @@ describe("unpublished Russian translation draft", () => {
     expect(draft.reviewStatus).toBe("translation review complete; unpublished pending runtime verification");
   });
 
-  it("covers all 699 translation keys across the ten unpublished locale drafts", () => {
+  it("covers all 699 translation keys across the eleven target locale drafts", () => {
     const compareTree = (actual: unknown, expected: unknown, path: string) => {
       if (Array.isArray(expected)) {
         expect(actual, path).toBeInstanceOf(Array);
@@ -227,6 +237,7 @@ describe("unpublished Russian translation draft", () => {
       else if (locale === "ms") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else if (locale === "sv") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else if (locale === "cs") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
+      else if (locale === "ro") expect(String(target.reviewStatus)).toContain("unpublished pending runtime");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

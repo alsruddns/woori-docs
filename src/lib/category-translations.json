@@ -382,5 +382,21 @@
     "checklists": "Kontrolní seznamy",
     "planning": "Plánování",
     "records": "Evidence"
+  },
+  "ro": {
+    "work": "Companie și muncă",
+    "finance": "Finanțe și contabilitate",
+    "hr-admin": "Resurse umane și administrație",
+    "project-management": "Management de proiect",
+    "development-it": "Dezvoltare și IT",
+    "sales-customer": "Vânzări și relații cu clienții",
+    "inventory-logistics": "Stocuri și logistică",
+    "education": "Școală și educație",
+    "personal": "Viață personală",
+    "health-fitness": "Sănătate și fitness",
+    "travel": "Călătorii",
+    "checklists": "Liste de verificare",
+    "planning": "Planificare",
+    "records": "Evidențe"
   }
 }

@@ -34,7 +34,8 @@ export const localeLanguageTags: Record<Locale, string> = {
   uk:"uk",
   ms:"ms",
   sv:"sv",
-  cs:"cs"
+  cs:"cs",
+  ro:"ro"
 };
 
 export function docsAlternates(locales: readonly Locale[], slug?: string) {

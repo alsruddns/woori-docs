@@ -65,7 +65,8 @@ const leafCount = (value: unknown): number => value && typeof value === "object"
 describe("unpublished Russian translation draft", () => {
   it("tracks the reviewed Polish title batch without exposing the incomplete locale", () => {
     expect(plDraft.reviewedCounts.titles).toBe(119);
-    expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(119);
+    expect(plDraft.reviewedCounts.fields).toBe(425);
+    expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(544);
     expect(plDraft.reviewStatus).toContain("unpublished");
   });
 
@@ -153,7 +154,7 @@ describe("unpublished Russian translation draft", () => {
       for (const [section, source] of Object.entries(expected)) compareTree(target[section], source, `${locale}.${section}`);
       expect(String(target.reviewStatus)).toContain("unpublished");
       if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
-      else if (locale === "pl") expect(String(target.reviewStatus)).toContain("119/699 units editorially reviewed");
+      else if (locale === "pl") expect(String(target.reviewStatus)).toContain("544/699 units editorially reviewed");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

@@ -17,7 +17,7 @@
 |---|---:|---:|---|---:|
 | ru | 699/699 | 699/699 | complete; runtime tests and build previously passed | 120 |
 | tr | 699/699 | 699/699 | complete; production routes, locale HTML language, canonical/hreflang, sitemap, tests, and build verified | 120 |
-| pl | 699/699 | 119/699 | titles reviewed; 580 units remain; runtime/SEO not connected; unpublished | 0 |
+| pl | 699/699 | 544/699 | all titles and field labels reviewed; 155 units remain; runtime/SEO not connected; unpublished | 0 |
 | fil | 699/699 | 0/699 | draft only; unpublished | 0 |
 | bn | 699/699 | 0/699 | draft only; unpublished | 0 |
 | uk | 699/699 | 0/699 | draft only; unpublished | 0 |
@@ -42,4 +42,4 @@
 
 ## Next start point
 
-Turkish is connected and public at `9cf3f86` on `origin/develop`; the mobile selector has an explicit 140px width, but the final post-build visual confirmation still needs a fresh browser capture. Polish has 119/699 editorially reviewed document titles; continue with its 425 field labels, then the interface, category, shared UI, site chrome, editor, and generated content batches before runtime wiring. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.
+Turkish is connected and public at `9cf3f86` on `origin/develop`; the mobile selector has an explicit 140px width, but the final post-build visual confirmation still needs a fresh browser capture. Polish has 544/699 editorially reviewed units (119 titles and 425 field labels); continue with its 9 document-interface strings, 14 categories, 47 shared UI strings, 18 site-chrome entries, 33 editor strings, and 34 generated-content strings before runtime wiring. Do not expose any unpublished draft or merge/deploy to `main` before all 26 locales meet the release conditions.

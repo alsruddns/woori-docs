@@ -48,6 +48,7 @@
 - Latest production build after Romanian wiring: passed; generated 3,032 static/partial-prerender route entries. Production smoke checks returned 200 for `/ro/docs` and `/ro/docs/expense-approval-form`; verified `<html lang="ro">`, canonical and `hrefLang="ro"`, localized title, UI and field labels, 120 Romanian sitemap URLs, 3,000 total sitemap URLs, and CSS served through the Docker/Nginx asset path. At a true 390×844 mobile viewport, the language selector stayed inside the header (`x=238..378`) with no horizontal overflow; the localized library and document cards rendered in one column.
 - Latest production build after Greek wiring: passed; generated 3,153 static/partial-prerender route entries. Production smoke checks returned 200 for `/el/docs` and `/el/docs/expense-approval-form`; verified `<html lang="el">`, canonical and `hrefLang="el"`, localized title, UI and field labels, 120 Greek sitemap URLs, 3,120 total sitemap URLs, CSS and logo served through the Docker/Nginx asset path. At a true 390×844 mobile viewport, the language selector stayed inside the header (`x=238..378`) with no horizontal overflow; document cards rendered in one column, and changing the language selector navigated to `/ro/docs`.
 - Final 26-locale production audit: 52/52 library and resume-detail routes returned 200 with the matching HTML language, locale canonical, hreflang and selector option. Sitemap contained exactly 3,120 URLs (120 for each locale) and none for excluded `ar`, `ur`, `fa`, or `he`.
+- After merging the six `origin/main`-only commits into `develop`, the combined release candidate passed all 50 tests, lint, TypeScript, and production build again (3,153 route entries). Repeated the 52-route locale, SEO, language-picker and 3,120-URL sitemap audit successfully on that combined tree.
 - `pnpm lint`: passed after Greek wiring.
 - `pnpm exec tsc --noEmit`: passed after Greek wiring.
 - Translation draft audit: all ten remaining non-Russian target draft files have 0 missing keys, 0 empty values, 0 exact-English copies and 0 interpolation-token mismatches. Each of the eleven new locales has a recorded editorial review count of 699/699; no paid translation or AI APIs were used.
@@ -60,4 +61,4 @@
 
 ## Next start point
 
-The requested 26 locales and all 11 additions are public and production-verified on `develop`. Final release audit passed. Merge `develop` to `main` and carry out the requested release.
+The requested 26 locales and all 11 additions are public and production-verified on `develop`. The merged release candidate passed the final audit. Push `develop` to `main` to complete the requested merge and trigger the repository's production deployment workflow.

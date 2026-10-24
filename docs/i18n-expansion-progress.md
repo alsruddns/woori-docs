@@ -15,13 +15,13 @@
 
 No new locale is currently registered or published. This intentionally keeps incomplete translations out of routes, language selectors, canonical/hreflang output, and sitemap.
 
-The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale` expansion scope from the existing 15-entry `locales` / `Locale` public scope. `LocalizedText` accepts target-locale keys, while routes and publication-facing dictionaries remain restricted to `Locale`. Runtime helpers identify target locales and report new targets as pending. New language dictionaries and content translations have not yet been added.
+The locale model now distinguishes the 26-entry `targetLocales` / `TargetLocale` expansion scope from the existing 15-entry `locales` / `Locale` public scope. `LocalizedText` accepts target-locale keys, while routes and publication-facing dictionaries remain restricted to `Locale`. Runtime helpers identify target locales and report new targets as pending. Russian translation material exists only as an unpublished draft and is not connected to runtime dictionaries.
 
 Client components receive a server-selected locale payload for the active route. They no longer import the complete chrome, category, or custom-editor translation dictionaries. The language picker still receives the small list of published locale labels.
 
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
-| ru | 0/119 reviewed (119 draft) | 0/425 reviewed (425 draft) | 0 reviewed (107 draft) | 0 body reviewed (24 copy + 14 category drafts) | pending | 0 |
+| ru | 0/119 reviewed (119 draft) | 184/425 manually corrected; 241 machine drafts pending review | 0 reviewed (107 draft) | 0 body reviewed (32 copy + 14 category drafts) | pending | 0 |
 | tr | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | pl | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | fil | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -41,15 +41,15 @@ Client components receive a server-selected locale payload for the active route.
 
 ## Russian translation draft
 
-- `docs/i18n-drafts/ru.json` contains draft translations for all 119 document titles, 425 distinct field labels, 9 document interface strings, 14 categories, 47 shared UI strings, 18 site-chrome strings, 33 custom-editor strings, and 24 generated document / guide / FAQ / section strings. Title, UI, category, interface, chrome, editor, and content drafts were written directly; 421 field labels came from the free anonymous MyMemory API and 4 failed responses were filled as draft wording manually.
-- This is not counted as reviewed or complete. Standalone machine translations include context-sensitive wording that needs review against each form (for example, field labels such as “Closing”, “Provider”, and “Due date”). The draft is not imported by runtime code and is not exposed in routes, selectors, metadata, or sitemap.
+- `docs/i18n-drafts/ru.json` contains draft translations for all 119 document titles, 425 distinct field labels, 9 document interface strings, 14 categories, 47 shared UI strings, 18 site-chrome strings, 33 custom-editor strings, and 32 generated document / guide / FAQ / section strings. Title, UI, category, interface, chrome, editor, and content drafts were written directly; 421 field labels came from the free anonymous MyMemory API. 184 field labels have been manually corrected; 241 machine draft values remain pending review.
+- The title/UI/content drafts remain unreviewed and the locale is not complete. The draft is not imported by runtime code and is not exposed in routes, selectors, metadata, or sitemap. A regression test rejects damaged Unicode, raw translation markup, missing keys, English copies in the checked translation groups, and malformed interpolation tokens.
 - The draft-generation helper is `scripts/translate-draft.mjs`. It calls only the free anonymous endpoint without credentials or an email address. The service documents a 5,000-character daily anonymous limit and a 500-byte request limit. No paid translation or AI API was used.
 
 ## Last verification
 
 - `pnpm lint`: passed after adding the Russian draft data checks.
 - `pnpm exec tsc --noEmit`: passed after adding the Russian draft data checks.
-- `pnpm exec vitest run --testTimeout 30000`: passed; 4 test files, 25 tests, including Russian title/field/interface/category/UI/editor/chrome coverage, no English copies in checked groups, placeholder preservation, and unpublished status.
+- `pnpm exec vitest run --testTimeout 30000`: passed; 4 test files, 26 tests, including Russian title/field/interface/category/UI/editor/chrome coverage, damaged Unicode detection, no English copies in checked groups, placeholder preservation, and unpublished status.
 - `pnpm build`: passed; 1,822 existing localized document pages generated. No new locales were routed or published.
 - `pnpm lint`: passed after the selected-locale client payload change.
 - `pnpm build`: passed after the selected-locale client payload change; 1,822 existing localized routes were generated.
@@ -62,4 +62,4 @@ Client components receive a server-selected locale payload for the active route.
 
 ## Next start point
 
-Continue with `ru`: review the current title, field, category, interface, shared UI, chrome, editor, and generated-content drafts; translate remaining select options, table labels, any document-specific metadata, then wire and verify the complete locale. The anonymous translation endpoint has exhausted today's source-character allowance after the Russian field-label batch; continue without paid APIs. Only publish after the complete locale passes route, selector, alternate, sitemap, test, lint, type, and production-build checks. Then proceed to `tr` in the requested order.
+Continue with `ru`: review the remaining 241 machine-translated field labels and all title, category, interface, UI, chrome, editor, and generated-content drafts; translate/verify the one table's labels and metadata, then wire and validate the complete locale. The anonymous translation endpoint used its daily source-character allowance for the Russian field batch; continue without paid APIs. Only publish after the complete locale passes route, selector, alternate, sitemap, test, lint, type, and production-build checks. Then proceed to `tr` in the requested order.

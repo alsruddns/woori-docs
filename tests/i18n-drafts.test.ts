@@ -42,6 +42,10 @@ const plDraft = JSON.parse(readFileSync("docs/i18n-drafts/pl.json", "utf8")) as 
   reviewStatus: string;
   reviewedCounts: Record<string, number>;
 };
+const filDraft = JSON.parse(readFileSync("docs/i18n-drafts/fil.json", "utf8")) as {
+  reviewStatus: string;
+  reviewedCounts: Record<string, number>;
+};
 const targetLocales = ["tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"] as const;
 const englishSourcePath = join(tmpdir(), `woori-docs-i18n-en-${process.pid}.json`);
 execFileSync(process.execPath, ["scripts/prepare-i18n-source.mjs", englishSourcePath], { stdio: "ignore" });
@@ -70,6 +74,14 @@ describe("unpublished Russian translation draft", () => {
     expect(Object.values(plDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
     expect(plDraft.reviewStatus).toContain("unpublished");
     expect(plDraft.reviewStatus).toContain("unpublished pending Polish runtime connection");
+  });
+  it("tracks the reviewed Filipino title batch without exposing the incomplete locale", () => {
+    expect(filDraft.reviewedCounts.titles).toBe(119);
+    expect(filDraft.reviewedCounts.fields).toBe(425);
+    expect(filDraft.reviewedCounts).toMatchObject({ interface: 9, categories: 14, ui: 47, chrome: 18, editor: 33, documentContent: 34 });
+    expect(Object.values(filDraft.reviewedCounts).reduce((sum, value) => sum + value, 0)).toBe(699);
+    expect(filDraft.reviewStatus).toContain("unpublished pending Filipino runtime connection");
+    expect(filDraft.reviewStatus).toContain("unpublished");
   });
 
   it("tracks all 699 reviewed Turkish units before runtime publication", () => {
@@ -157,6 +169,7 @@ describe("unpublished Russian translation draft", () => {
       expect(String(target.reviewStatus)).toContain("unpublished");
       if (locale === "tr") expect(String(target.reviewStatus)).toContain("runtime verification required");
       else if (locale === "pl") expect(String(target.reviewStatus)).toContain("unpublished pending Polish runtime connection");
+      else if (locale === "fil") expect(String(target.reviewStatus)).toContain("unpublished pending Filipino runtime connection");
       else expect(String(target.reviewStatus)).toContain("editorial review required");
     }
   });

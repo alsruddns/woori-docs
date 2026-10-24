@@ -2,7 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 // Free, anonymous MyMemory requests are limited to 5,000 source characters/day.
 // This writes unpublished review drafts only; runtime locale data is untouched.
-const [locale, section] = process.argv.slice(2);
+const [locale, section, mode] = process.argv.slice(2);
+const refresh = mode === "--refresh";
 const targets = new Set(["ru", "tr", "pl", "fil", "bn", "uk", "ms", "sv", "cs", "ro", "el"]);
 if (!targets.has(locale) || section !== "fields") {
   throw new Error("Usage: node scripts/translate-draft.mjs <target-locale> fields");
@@ -15,7 +16,7 @@ await mkdir("docs/i18n-drafts", { recursive: true });
 let draft = {};
 try { draft = JSON.parse(await readFile(outputPath, "utf8")); } catch {}
 draft.fields ??= {};
-const todo = sourceValues.filter((key) => !draft.fields[key]);
+const todo = refresh ? sourceValues : sourceValues.filter((key) => !draft.fields[key]);
 let cursor = 0;
 let failures = [];
 async function worker() {
@@ -52,4 +53,4 @@ draft.fieldsTranslated = Object.keys(draft.fields).length;
 draft.fieldsTotal = sourceValues.length;
 draft.failures = failures;
 await writeFile(outputPath, `${JSON.stringify(draft, null, 2)}\n`, "utf8");
-console.log(`${locale}: ${draft.fieldsTranslated}/${draft.fieldsTotal} fields drafted; ${failures.length} failures; unpublished`);
+console.log(`${locale}: ${draft.fieldsTranslated}/${draft.fieldsTotal} fields drafted; ${failures.length} failures; ${refresh ? "free translation refresh" : "draft"}; unpublished`);

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
 const locale = process.argv[2];
-const localeLabels = { tr: 'Türkçe', pl: 'Polski' };
+const localeLabels = { tr: 'Türkçe', pl: 'Polski', fil: 'Filipino' };
 if (!(locale in localeLabels)) throw new Error(`No reviewed runtime wiring batch is configured for ${locale}.`);
 const draft = JSON.parse(fs.readFileSync(`docs/i18n-drafts/${locale}.json`, 'utf8'));
 if (!String(draft.reviewStatus).toLowerCase().includes('review complete')) throw new Error(`${locale} editorial translation review is incomplete.`);

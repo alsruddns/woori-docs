@@ -286,5 +286,21 @@
     "checklists": "Listy kontrolne",
     "planning": "Plany",
     "records": "Rejestry"
+  },
+  "fil": {
+    "work": "Negosyo at trabaho",
+    "finance": "Pananalapi at accounting",
+    "hr-admin": "Human resources at administrasyon",
+    "project-management": "Pamamahala ng proyekto",
+    "development-it": "Software development at IT",
+    "sales-customer": "Sales at pamamahala ng customer",
+    "inventory-logistics": "Imbentaryo at logistics",
+    "education": "Paaralan at edukasyon",
+    "personal": "Personal na buhay",
+    "health-fitness": "Kalusugan at fitness",
+    "travel": "Paglalakbay",
+    "checklists": "Mga checklist",
+    "planning": "Mga planner",
+    "records": "Mga talaan"
   }
 }

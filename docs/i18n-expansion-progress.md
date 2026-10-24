@@ -61,4 +61,6 @@
 
 ## Next start point
 
-The requested 26 locales and all 11 additions are public and production-verified on `develop`. The merged release candidate passed the final audit. Push `develop` to `main` to complete the requested merge and trigger the repository's production deployment workflow.
+No language expansion work remains. The 26-locale release was merged to `main` and deployed by GitHub Actions run [40119890467](https://github.com/alsruddns/woori-docs/actions/runs/40119890467) from commit `512ba8c` (success). Production verification after deployment returned 200 for `/el/docs`, `/el/docs/resume-template`, and `/ro/docs`; `/docs-sitemap.xml` returned 200 with 3,120 URLs (120 for each locale), and the live CSS asset returned 200. Excluded locales `ar`, `ur`, `fa`, and `he` are absent. `main` and `develop` point to the same release commit.
+
+Final release status: all 26 locales and 11 additions are public and production-verified. No next start point remains.

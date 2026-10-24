@@ -20,7 +20,7 @@ The locale model keeps the target expansion scope separate from publication. Cli
 | Locale | Titles | Fields | Common UI | Content | UI/routing/SEO | Public pages |
 |---|---:|---:|---:|---:|---|---:|
 | ru | 119/119 reviewed | 425/425 reviewed | 107/107 reviewed | 48/48 reviewed (34 generated copy + 14 categories) | complete and verified | 120 |
-| tr | 0/119 | 0/425 | 0 | 0 | pending | 0 |
+| tr | 0/119 | 425/425 machine draft, 0 reviewed | 0 | 0 | unpublished | 0 |
 | pl | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | fil | 0/119 | 0/425 | 0 | 0 | pending | 0 |
 | bn | 0/119 | 0/425 | 0 | 0 | pending | 0 |
@@ -50,12 +50,12 @@ Translation scope per locale: 699 units (119 titles, 425 field labels, 9 documen
 ## Last verification
 
 - pnpm exec tsc --noEmit: passed.
-- pnpm exec vitest run --testTimeout 30000: passed, 27 tests across 4 files, including locale coverage, Russian generated content, canonical/hreflang, routing, and draft quality.
+- pnpm exec vitest run --testTimeout 30000: passed, 28 tests across 4 files, including Russian runtime coverage and Turkish partial-draft key coverage.
 - pnpm lint: passed.
 - pnpm build: passed; Next.js generated 1,943 static/partial-prerender routes. The Russian locale contributes 120 sitemap URLs.
 - Mobile-specific visual automation is not configured in the current test suite; responsive components use the existing responsive layout and have not been visually browser-tested in this run.
-- Branch: develop. These changes are not yet committed or pushed.
+- Russian runtime rollout is committed and pushed as `c158973`. The Turkish field draft and its coverage test are in progress on `develop`.
 
 ## Next start point
 
-Continue with `tr`: translate and review all 699 target units, then connect and validate the locale end to end before marking it public. Keep `pl`, `fil`, `bn`, `uk`, `ms`, `sv`, `cs`, `ro`, and `el` pending until each independently satisfies the same checks. The anonymous translation endpoint used its daily source-character allowance for the Russian field batch; continue without paid APIs. Only publish after the complete locale passes route, selector, alternate, sitemap, test, lint, type, and production-build checks. Then proceed to `tr` in the requested order.
+Turkish has a 425/425 field-label machine draft saved in `docs/i18n-drafts/tr.json`; 422 came from the free anonymous MyMemory endpoint and 3 API echoes were manually translated. The batch has not been editorially reviewed and must not be published. Continue with Turkish titles (119), document interface strings (9), categories (14), shared UI (47), site chrome (18), editor controls (33), and generated document content (34); then review the complete 699-unit set before runtime wiring. Keep `pl`, `fil`, `bn`, `uk`, `ms`, `sv`, `cs`, `ro`, and `el` pending. Only publish after route, selector, alternate, sitemap, test, lint, type, and production-build checks pass.

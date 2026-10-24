@@ -27,6 +27,12 @@ const draft = JSON.parse(readFileSync("docs/i18n-drafts/ru.json", "utf8")) as {
   documentContentReviewedCount: number;
   reviewStatus: string;
 };
+const trDraft = JSON.parse(readFileSync("docs/i18n-drafts/tr.json", "utf8")) as {
+  fields: Record<string, string>;
+  fieldsTranslated: number;
+  failures: unknown[];
+  reviewStatus: string;
+};
 const sameKeys = (actual: Record<string, unknown>, expected: Record<string, unknown>) =>
   expect(Object.keys(actual).sort()).toEqual(Object.keys(expected).sort());
 const placeholders = (value: string) => [...value.matchAll(/\{\w+\}/g)].map(([token]) => token).sort();
@@ -43,6 +49,13 @@ const leafCount = (value: unknown): number => value && typeof value === "object"
   : 1;
 
 describe("unpublished Russian translation draft", () => {
+  it("keeps the partial Turkish field batch complete by key and unpublished", () => {
+    sameKeys(trDraft.fields, documentTranslations.en.fields);
+    expect(trDraft.fieldsTranslated).toBe(Object.keys(trDraft.fields).length);
+    expect(trDraft.failures).toHaveLength(0);
+    expect(trDraft.reviewStatus).toBe("unreviewed; unpublished");
+  });
+
   it("covers every document title, field, interface string, and category without English copies", () => {
     sameKeys(draft.titles, enTitles);
     sameKeys(draft.fields, documentTranslations.en.fields);

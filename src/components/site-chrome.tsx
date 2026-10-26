@@ -13,7 +13,9 @@ type SiteChromeProps = { locale: Locale; uiText: Record<string, string>; chromeT
 
 export function SiteHeader({ locale, uiText, chromeText, languages }: SiteChromeProps) {
   const t = chromeText; const router = useRouter();
-  const items = [[t.portal, `/${locale}`], [t.calculators, `/${locale}/calculators`], [t.tools, `/${locale}/tools`], [t.money, `/${locale}/money`], [t.docs, `/${locale}/docs`], [t.quiz, `/${locale}/quiz`]];
+  const enabledFamilyServices = ["portal", "calculator", "tools", "docs", "quiz"] as const;
+  const siteDefinitions = { portal: [t.portal, `/${locale}`], calculator: [t.calculators, `/${locale}/calculators`], tools: [t.tools, `/${locale}/tools`], docs: [t.docs, `/${locale}/docs`], quiz: [t.quiz, `/${locale}/quiz`] };
+  const items = enabledFamilyServices.map((service) => siteDefinitions[service]);
   const nav = (mobile = false) => <nav aria-label={t.family} className={mobile ? "family-links mobile-family-links" : "family-links desktop-family-links"}>{items.map(([label, href], index) => <Link key={href} href={href} aria-current={index === 4 ? "page" : undefined} className={index === 4 ? "family-active" : undefined}>{label}</Link>)}</nav>;
   return <header className="site-header"><Link className="brand" href={portalPath(locale)}><Image src="/_assets/docs/woori-logo.png" alt="woori.today" width={126} height={30} unoptimized/><span>{uiText.brand}</span></Link>{nav()}<details className="mobile-family-menu"><summary aria-label={t.family}><span aria-hidden="true">☰</span></summary>{nav(true)}</details><label className="language-picker"><span className="sr-only">{uiText.language}</span><select aria-label={uiText.language} value={locale} onChange={e => router.push(docsPathForLocale(window.location.pathname, e.target.value as Locale))}>{languages.map(({code,label}) => <option key={code} value={code}>{label}</option>)}</select></label></header>;
 }

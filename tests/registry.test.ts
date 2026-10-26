@@ -351,7 +351,7 @@ describe("document registry", () => {
   });
   it("generates canonical, hreflang, x-default, title, and description metadata", async () => {
     const metadata = getDocumentMetadata("ko", "resume-template");
-    expect(metadata.title).toBe("이력서 양식 | woori.today");
+    expect(metadata.title).toBe("이력서 양식");
     expect(metadata.description).toBeTruthy();
     expect(metadata.alternates?.canonical).toBe("/ko/docs/resume-template");
     expect(metadata.alternates?.languages?.ko).toBe("/ko/docs/resume-template");
@@ -362,7 +362,7 @@ describe("document registry", () => {
     expect(Object.keys(metadata.alternates?.languages ?? {})).toHaveLength(locales.length + 1);
     expect(new Set(Object.values(metadata.alternates?.languages ?? {})).size).toBe(locales.length);
     expect(metadata.openGraph?.url).toBe("/ko/docs/resume-template");
-    expect(getDocumentMetadata("ja", "resume-template").title).toBe(`${localizedDocumentTitle(documents[0], "ja")} | woori.today`);
+    expect(getDocumentMetadata("ja", "resume-template").title).toBe(localizedDocumentTitle(documents[0], "ja"));
     expect(getDocumentMetadata("ja", "resume-template").description).toBe(localizedDescription(documents[0], "ja"));
   });
   it("builds locale-first public paths and 3120 IndexNow URLs", async () => {

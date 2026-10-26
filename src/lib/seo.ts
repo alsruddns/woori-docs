@@ -11,7 +11,7 @@ export function getDocumentMetadata(locale: string, slug: string): Metadata {
   const expandedDescription = doc.slug === "expense-approval-form" && lang === "ko" ? expenseDescriptionKo : localizedDescription(doc, lang);
   const expandedTitle = doc.slug === "expense-approval-form" && lang === "ko" ? "\uC9C0\uCD9C\uACB0\uC758\uC11C \uC591\uC2DD - \uBB34\uB8CC \uC791\uC131\u00B7\uCEE4\uC2A4\uD140" : localizedDocumentTitle(doc, lang);
   return {
-    title: { absolute: expandedTitle },
+    title: expandedTitle,
     description: expandedDescription,
     alternates: {
       canonical: path,

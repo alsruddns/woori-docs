@@ -27,7 +27,7 @@ describe("expanded template engine", () => {
   });
   it("has localized editor controls and exact expense SEO metadata",()=>{
     for(const locale of locales){for(const [key,value] of Object.entries(editorTranslations[locale])){expect(value.trim(),`${locale}.${key}`).toBeTruthy();expect(value,`${locale}.${key}`).not.toContain("\uFFFD");expect(value,`${locale}.${key}`).not.toBe(key)}}
-    const metadata=getDocumentMetadata("ko","expense-approval-form");expect(metadata.title).toEqual({absolute:"\uC9C0\uCD9C\uACB0\uC758\uC11C \uC591\uC2DD - \uBB34\uB8CC \uC791\uC131\u00B7\uCEE4\uC2A4\uD140 | woori.today"});expect(metadata.description).toBe("무료 지출결의서 양식을 바로 작성하고 필요한 항목을 추가·삭제해 업무에 맞게 커스텀할 수 있습니다.");expect(metadata.alternates?.canonical).toBe("/ko/docs/expense-approval-form");
+    const metadata=getDocumentMetadata("ko","expense-approval-form");expect(metadata.title).toBe("\uC9C0\uCD9C\uACB0\uC758\uC11C \uC591\uC2DD - \uBB34\uB8CC \uC791\uC131\u00B7\uCEE4\uC2A4\uD140");expect(metadata.description).toBe("무료 지출결의서 양식을 바로 작성하고 필요한 항목을 추가·삭제해 업무에 맞게 커스텀할 수 있습니다.");expect(metadata.alternates?.canonical).toBe("/ko/docs/expense-approval-form");
   });
   it("includes the expense approval template and repeatable calculated items",()=>{
     const expense=getDocument("expense-approval-form");

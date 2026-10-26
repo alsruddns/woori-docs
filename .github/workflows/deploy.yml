@@ -4,10 +4,16 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - .github/workflows/deploy.yml
 
 permissions:
   contents: read
   packages: write
+
+concurrency:
+  group: docs-production-deploy
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -55,40 +61,89 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
+        id: image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ghcr.io/alsruddns/woori-docs:latest
+          tags: |
+            ghcr.io/alsruddns/woori-docs:latest
+            ghcr.io/alsruddns/woori-docs:sha-${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_GA_ID=G-ZJSJW06SCX
             NEXT_PUBLIC_ADS_ENABLED=false
 
+      - name: Record immutable Docs image digest
+        run: |
+          echo "Docs image digest: ${{ steps.image.outputs.digest }}" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Deploy on iwinv
+        id: deploy
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          IMAGE_SHA: ${{ github.sha }}
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
-          ssh "$SERVER_USER@$SERVER_HOST" '
-            set -e
+          OLD_IMAGE_ID="$(ssh "$SERVER_USER@$SERVER_HOST" 'docker inspect --format "{{.Image}}" docs')"
+          echo "old_image_id=$OLD_IMAGE_ID" >> "$GITHUB_OUTPUT"
+          ssh "$SERVER_USER@$SERVER_HOST" "bash -s -- '$IMAGE_SHA'" <<'REMOTE'
+            set -euo pipefail
+            image_sha="$1"
             cd /opt/services/compose
-            export DATABASE_URL=docs-deploy-placeholder
-            export DB_TARGET=docs-deploy-placeholder
-            export PRODUCTION_DB_ALLOWED_HOSTS=localhost
-            export WORLD_BANK_DATA_SOURCE=disabled
-            export WORLD_BANK_DB_PRODUCTION_ENABLED=false
-            docker compose --env-file .env.moneybook pull docs
-            docker compose --env-file .env.moneybook up -d docs
-          '
+            compose=(docker compose --env-file .env.moneybook --env-file .env.portal)
+            image="ghcr.io/alsruddns/woori-docs:sha-${image_sha}"
+            latest="ghcr.io/alsruddns/woori-docs:latest"
+            docker exec nginx nginx -t
+            "${compose[@]}" config --quiet
+            docker pull "$image"
+            docker image tag "$image" "$latest"
+            "${compose[@]}" up -d --no-deps --pull never --wait --wait-timeout 120 docs
+            expected="$(docker image inspect "$image" --format '{{.Id}}')"
+            running="$(docker inspect docs --format '{{.Image}}')"
+            test "$running" = "$expected"
+            docker exec docs node -e 'fetch("http://127.0.0.1:3004/ko/docs").then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'
+            docker exec nginx nginx -t
+            docker exec nginx nginx -s reload
+            echo "Docs image verified at $running; Nginx validated and gracefully reloaded."
+          REMOTE
 
       - name: Check production health
-        if: ${{ vars.DOCS_PRODUCTION_HEALTHCHECK_ENABLED == 'true' }}
-        run: curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/ko/docs
+        id: health
+        run: |
+          curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/ko/docs > /dev/null
+          curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/docs-sitemap.xml > /dev/null
+
+      - name: Roll back Docs after failed deployment or public health check
+        if: failure() && steps.deploy.outputs.old_image_id != '' && (steps.deploy.outcome == 'failure' || steps.health.outcome == 'failure')
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          OLD_IMAGE_ID: ${{ steps.deploy.outputs.old_image_id }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+          ssh "$SERVER_USER@$SERVER_HOST" "bash -s -- '$OLD_IMAGE_ID'" <<'REMOTE'
+            set -euo pipefail
+            old_image_id="$1"
+            cd /opt/services/compose
+            compose=(docker compose --env-file .env.moneybook --env-file .env.portal)
+            docker image tag "$old_image_id" ghcr.io/alsruddns/woori-docs:latest
+            "${compose[@]}" up -d --no-deps --pull never --wait --wait-timeout 120 docs
+            test "$(docker inspect docs --format '{{.Image}}')" = "$old_image_id"
+            docker exec nginx nginx -t
+            docker exec nginx nginx -s reload
+            docker exec docs node -e 'fetch("http://127.0.0.1:3004/ko/docs").then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'
+            echo "Docs rollback verified; Nginx was validated and gracefully reloaded."
+          REMOTE
+          curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/ko/docs > /dev/null
 
       - name: Submit URLs to IndexNow
         if: ${{ hashFiles('scripts/submit-indexnow.mjs') != '' }}

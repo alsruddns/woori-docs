@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { AdSlot } from "../src/components/ad-slot";
+import { DocumentDetailCards } from "../src/components/document-detail-cards";
+import { detailHeadings } from "../src/lib/document-detail-copy";
 import { buildDocumentContent } from "../src/lib/document-content";
 import { categoryNames, documents, getRelated, localizedDescription, localizedDocumentTitle, localizeField, locales } from "../src/lib/registry";
 
@@ -17,13 +19,18 @@ describe("document page content quality", () => {
         return buildDocumentContent(locale, localizedDocumentTitle(doc, locale), categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired).purpose;
       });
       expect(new Set(purposes).size).toBe(purposes.length);
+      const examples = publicDocs.map((doc) => {
+        const fields = doc.fields.map((field) => localizeField(field.label, locale));
+        return buildDocumentContent(locale, localizedDocumentTitle(doc, locale), categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired).example;
+      });
+      expect(new Set(examples).size).toBe(examples.length);
       for (const doc of publicDocs) {
         const title = localizedDocumentTitle(doc, locale);
         const fields = doc.fields.map((field) => localizeField(field.label, locale));
         const content = buildDocumentContent(locale, title, categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
         expect(content.description).toBe(localizedDescription(doc, locale));
         expect(Object.values(content.headings).every((heading) => heading.trim().length > 0)).toBe(true);
-        for (const value of [content.intro, content.purpose, content.audience, content.structure, content.steps, content.tips, content.source, content.caution, ...content.faq.flatMap((item) => [item.question, item.answer])]) {
+        for (const value of [content.intro, content.purpose, content.audience, content.structure, content.steps, content.tips, content.source, content.caution, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer])]) {
           expect(value.trim()).toBeTruthy();
           expect(value).not.toContain("\uFFFD");
           expect(value).not.toMatch(/\{\w+\}|^[a-z][\w-]*(?:\.[a-z][\w-]*)+$/i);
@@ -33,8 +40,26 @@ describe("document page content quality", () => {
         expect(content.tips).toContain(fields[0]);
         expect(content.faq[2].answer).toContain(fields[0]);
         expect(content.purpose).toContain(title);
+        expect(content.example).toContain(title);
+        expect(content.input).toContain(fields[0]);
+        expect(detailHeadings[locale].faq.trim()).toBeTruthy();
       }
     }
+  });
+
+  it("renders the complete informational cards in initial HTML without collapsed FAQ controls", () => {
+    const doc = documents.find((item) => item.isPublic && item.slug === "meeting-minutes-generator");
+    if (!doc) throw new Error("Representative public document is missing");
+    const locale = "en";
+    const fields = doc.fields.map((field) => localizeField(field.label, locale));
+    const content = buildDocumentContent(locale, localizedDocumentTitle(doc, locale), categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
+    const html = renderToStaticMarkup(createElement(DocumentDetailCards, { content, locale }));
+    expect(html).toContain("Practical example");
+    expect(html).toContain("Troubleshooting");
+    expect(html).toContain("Frequently asked questions");
+    expect(html).toContain("Meeting minutes generator");
+    expect(html).not.toContain("<details");
+    expect(html).not.toContain("hidden");
   });
 
   it("keeps related links valid and only includes documents with shared subject matter", () => {

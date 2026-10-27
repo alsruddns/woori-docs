@@ -6,6 +6,7 @@ import { locales, type Locale } from "../src/lib/template-schema";
 
 const publicDocs = documents.filter((doc) => doc.isPublic);
 const detailSource = readFileSync(resolve("src/components/document-workspace.tsx"), "utf8");
+const cardsSource = readFileSync(resolve("src/components/document-detail-cards.tsx"), "utf8");
 const sitemapSource = readFileSync(resolve("src/app/sitemap.xml/route.ts"), "utf8");
 const indexPageSource = readFileSync(resolve("src/components/document-workspace.tsx"), "utf8");
 const minChars = (locale: Locale, text: string) => [...text.trim()].length >= (["ko", "ja", "zh", "zh-tw", "th"].includes(locale) ? 28 : 55);
@@ -13,7 +14,7 @@ const localeAudit: Record<string, { checked: number; signals: number; shortDescr
 const slugRows: Array<{ slug: string; title: string; fields: string; localeSignals: string[]; related: string; source: string }> = [];
 const noindexCandidates: string[] = [];
 const exactDuplicates = new Map<string, Map<string, string[]>>();
-const signalCount = { shortDescription: 0, missingUsage: 0, missingHowTo: 0, missingTips: 0, missingFaq: 0, downloadOnly: 0, rawOrDamaged: 0, exactEnglishFallback: 0, brokenRelated: 0, fieldMismatch: 0, duplicateContent: 0 };
+const signalCount = { shortDescription: 0, missingUsage: 0, missingHowTo: 0, missingTips: 0, missingExample: 0, missingInputOutput: 0, missingLimitations: 0, missingTroubleshooting: 0, missingFaq: 0, missingServerRenderedCards: 0, downloadOnly: 0, rawOrDamaged: 0, exactEnglishFallback: 0, brokenRelated: 0, fieldMismatch: 0, duplicateContent: 0 };
 
 function addDuplicate(locale: Locale, kind: string, value: string, slug: string) {
   const groups = exactDuplicates.get(`${locale}:${kind}`) ?? new Map<string, string[]>();
@@ -47,17 +48,22 @@ for (const locale of locales) {
     const englishTitle = localizedDocumentTitle(doc, "en");
     const englishFields = doc.fields.map((field) => localizeField(field.label, "en"));
     const englishContent = buildDocumentContent("en", englishTitle, categoryNames.en[doc.category], englishFields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
-    const englishCopy = [localizedDescription(doc, "en"), englishContent.purpose, englishContent.steps, englishContent.tips, ...englishContent.faq.flatMap((item) => [item.question, item.answer])];
-    const localizedCopy = [description, content.purpose, content.steps, content.tips, ...content.faq.flatMap((item) => [item.question, item.answer])];
+    const englishCopy = [localizedDescription(doc, "en"), englishContent.purpose, englishContent.steps, englishContent.tips, englishContent.example, englishContent.input, englishContent.output, englishContent.limitations, englishContent.troubleshooting, ...englishContent.faq.flatMap((item) => [item.question, item.answer])];
+    const localizedCopy = [description, content.purpose, content.steps, content.tips, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer])];
     const hasExactEnglishFallback = locale !== "en" && localizedCopy.some((value) => englishCopy.includes(value));
     const checks: Array<[keyof typeof signalCount, boolean]> = [
       ["shortDescription", !minChars(locale, description)],
       ["missingUsage", !content.purpose.trim()],
       ["missingHowTo", !minChars(locale, content.steps)],
       ["missingTips", !minChars(locale, content.tips)],
+      ["missingExample", !minChars(locale, content.example) || !content.example.includes(title)],
+      ["missingInputOutput", !minChars(locale, content.input) || !content.input.includes(fields[0]) || !minChars(locale, content.output)],
+      ["missingLimitations", !minChars(locale, content.limitations)],
+      ["missingTroubleshooting", !minChars(locale, content.troubleshooting)],
       ["missingFaq", content.faq.length === 0 || content.faq.some((item) => !item.question.trim() || !item.answer.trim())],
+      ["missingServerRenderedCards", !cardsSource.includes("export function DocumentDetailCards") || !cardsSource.includes("content.faq.map") || cardsSource.includes("<details")],
       ["downloadOnly", doc.fields.length === 0 || !detailSource.includes("function downloadText()") || !detailSource.includes("window.print()")],
-      ["rawOrDamaged", brokenLocaleText([title, description, content.purpose, content.audience, content.structure, content.steps, content.tips, content.source, content.caution, ...content.faq.flatMap((item) => [item.question, item.answer]), ...fields])],
+      ["rawOrDamaged", brokenLocaleText([title, description, content.purpose, content.audience, content.structure, content.steps, content.tips, content.source, content.caution, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer]), ...fields])],
       ["exactEnglishFallback", hasExactEnglishFallback],
       ["fieldMismatch", fields.length === 0 || !content.structure.includes(fields[0]) || !content.steps.includes(fields[0]) || !content.tips.includes(fields[0]) || !content.faq[2]?.answer.includes(fields[0])],
     ];
@@ -69,14 +75,14 @@ for (const locale of locales) {
     if (checks.some(([key, bad]) => bad && ["missingUsage", "missingHowTo", "missingTips", "missingFaq"].includes(key))) missingSections++;
     if (checks.find(([key]) => key === "rawOrDamaged")?.[1]) damaged++;
     descriptions.set(description, [...(descriptions.get(description) ?? []), doc.slug]);
-    contentBySlug.set(doc.slug, [content.intro, content.purpose, content.audience, content.structure, content.steps, content.tips, ...content.faq.flatMap((item) => [item.question, item.answer])].join(" "));
-    for (const kind of ["description", "usage", "how-to", "tips", "faq-set"] as const) {
-      const value = kind === "description" ? description : kind === "usage" ? content.purpose : kind === "how-to" ? content.steps : kind === "tips" ? content.tips : content.faq.map((item) => `${item.question} ${item.answer}`).join(" ");
+    contentBySlug.set(doc.slug, [content.intro, content.purpose, content.audience, content.structure, content.steps, content.tips, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer])].join(" "));
+    for (const kind of ["description", "usage", "how-to", "tips", "example", "faq-set"] as const) {
+      const value = kind === "description" ? description : kind === "usage" ? content.purpose : kind === "how-to" ? content.steps : kind === "tips" ? content.tips : kind === "example" ? content.example : content.faq.map((item) => `${item.question} ${item.answer}`).join(" ");
       addDuplicate(locale, kind, value, doc.slug);
     }
   }
   const duplicateGroups: Record<string, number> = {};
-  for (const kind of ["description", "usage", "how-to", "tips", "faq-set"]) {
+  for (const kind of ["description", "usage", "how-to", "tips", "example", "faq-set"]) {
     duplicateGroups[kind] = [...(exactDuplicates.get(`${locale}:${kind}`)?.values() ?? [])].filter((slugs) => slugs.length > 1).length;
   }
   const nearCandidates: string[] = [];
@@ -115,14 +121,14 @@ for (const doc of publicDocs) {
     const content = buildDocumentContent(locale, title, categoryNames[locale][doc.category], fields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
     const englishTitle = localizedDocumentTitle(doc, "en"); const englishFields = doc.fields.map((field) => localizeField(field.label, "en"));
     const englishContent = buildDocumentContent("en", englishTitle, categoryNames.en[doc.category], englishFields, doc.kind, Boolean(doc.tables?.length), doc.policyReviewRequired);
-    const localizedCopy = [localizedDescription(doc, locale), content.purpose, content.steps, content.tips, ...content.faq.flatMap((item) => [item.question, item.answer])];
-    const englishCopy = [localizedDescription(doc, "en"), englishContent.purpose, englishContent.steps, englishContent.tips, ...englishContent.faq.flatMap((item) => [item.question, item.answer])];
+    const localizedCopy = [localizedDescription(doc, locale), content.purpose, content.steps, content.tips, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer])];
+    const englishCopy = [localizedDescription(doc, "en"), englishContent.purpose, englishContent.steps, englishContent.tips, englishContent.example, englishContent.input, englishContent.output, englishContent.limitations, englishContent.troubleshooting, ...englishContent.faq.flatMap((item) => [item.question, item.answer])];
     const hasExactEnglishFallback = locale !== "en" && localizedCopy.some((value) => englishCopy.includes(value));
-    return !minChars(locale, localizedDescription(doc, locale)) || brokenLocaleText([title, content.purpose, content.steps, content.tips, ...content.faq.flatMap((item) => [item.question, item.answer])]) || hasExactEnglishFallback || duplicatedSlugsByLocale.get(locale)?.has(doc.slug) === true;
+    return !minChars(locale, localizedDescription(doc, locale)) || brokenLocaleText([title, content.purpose, content.steps, content.tips, content.example, content.input, content.output, content.limitations, content.troubleshooting, ...content.faq.flatMap((item) => [item.question, item.answer])]) || hasExactEnglishFallback || duplicatedSlugsByLocale.get(locale)?.has(doc.slug) === true;
   });
   slugRows.push({ slug: doc.slug, title: primaryTitle, fields: primaryFields.slice(0, 8).join(", "), localeSignals: failedLocales, related: related.map((item) => item.slug).join(", ") || "None", source: "Internal editable template; no per-slug external citation or license recorded" });
   if (failedLocales.length) noindexCandidates.push(doc.slug);
-  if (!page.purpose || !page.structure || !page.steps || !page.tips || !page.caution || !page.faq.length) noindexCandidates.push(doc.slug);
+  if (!page.purpose || !page.structure || !page.steps || !page.tips || !page.example || !page.input || !page.output || !page.limitations || !page.troubleshooting || !page.caution || !page.faq.length) noindexCandidates.push(doc.slug);
 }
 
 const indexChecklist = {
@@ -153,7 +159,7 @@ const md: string[] = [
   "",
   "## Signal definitions and results",
   "",
-  "Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit also checks purpose, instructions, tips, FAQs, field alignment, localized text integrity, exact English prose fallback, related links, duplicate sections, and the presence of editable fields, preview, text download, and print actions. The fallback detector requires an entire localized prose string to equal an English source string; it does not flag acronyms or individual shared words.",
+  "Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit checks localized usage steps, practical examples tied to each title, input/output details, limitations, troubleshooting, FAQ content, field alignment, damaged text, exact English prose fallback, duplicate sections, related links, and server-rendered always-open cards. It also confirms editable fields, preview, text download, and print actions. The fallback detector requires an entire localized prose string to equal an English source string; it does not flag acronyms or individual shared words.",
   "",
   "| Signal | Failed count |",
   "|---|---:|",
@@ -161,7 +167,7 @@ const md: string[] = [
   "",
   "## Locale results",
   "",
-  "| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact English fallback | Exact duplicates (description / usage / how-to / tips / FAQ) |",
+  "| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact English fallback | Exact duplicates (description / usage / how-to / tips / example / FAQ) |",
   "|---|---:|---:|---:|---:|---:|---:|---|",
   ...locales.map((locale) => { const result = localeAudit[locale]; const dup = result.exactDuplicateGroups; return `| ${locale} | ${result.checked} | ${result.signals} | ${result.shortDescriptions} | ${result.missingSections} | ${result.rawOrDamaged} | ${result.exactEnglishFallback} | ${dup.description} / ${dup.usage} / ${dup["how-to"]} / ${dup.tips} / ${dup["faq-set"]} |`; }),
   "",
@@ -179,7 +185,7 @@ const md: string[] = [
   "The registry, template catalog, and public assets contain no per-slug external source URL, distributed PDF/DOCX original, or license field. The pages describe editable reference templates assembled by woori.today. This inventory alone cannot prove the provenance of every original field or phrase. Do not present a template as an official or standard form unless its source and license are verified and recorded for that slug.",
   "",
   `- Documents without recorded source metadata: ${publicDocs.length} (manual provenance review required).`,
-  "- Legal/tax policy-review flags are preserved for relevant pages.",
+  "- Legal/tax policy-review flags are preserved for relevant pages. Policy-flagged templates state that they are general drafts and make no jurisdictional legal-effect claim.",
   "- Confirmed copied external templates: none identified by this metadata scan; missing provenance records prevent a definitive originality finding.",
   "",
   "## Docs list page",
@@ -190,6 +196,7 @@ const md: string[] = [
   "",
   `- Broken related links: ${relatedBroken.length}`,
   `- Text download/print renderer: ${detailSource.includes("function downloadText()") && detailSource.includes("window.print()") ? "present" : "missing"}`,
+  `- Initial server-rendered informational cards: ${cardsSource.includes("export function DocumentDetailCards") && cardsSource.includes("content.faq.map") && !cardsSource.includes("<details") ? "present; FAQ is always visible" : "missing or collapsed"}`,
   `- Sitemap locale lists + public details: ${sitemapCount} URLs; IndexNow: ${indexNowCount} URLs. Sitemap source read: ${Boolean(sitemapSource)}`,
   `- Noindex recommendation: ${new Set(noindexCandidates).size ? [...new Set(noindexCandidates)].join(", ") : "none; no page excluded automatically"}`,
   "",

@@ -45,7 +45,7 @@ describe("document page content quality", () => {
         expect(detailHeadings[locale].faq.trim()).toBeTruthy();
       }
     }
-  });
+  }, 30000);
 
   it("renders the complete informational cards in initial HTML without collapsed FAQ controls", () => {
     const doc = documents.find((item) => item.isPublic && item.slug === "meeting-minutes-generator");

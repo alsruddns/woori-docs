@@ -32,7 +32,9 @@
     "blankTitle": "새로운 양식",
     "saved": "이 브라우저에 저장됨",
     "defaultValue": "기본값",
-    "options": "선택 옵션"
+    "options": "선택 옵션",
+    "unsavedConfirm": "저장되지 않은 변경 사항이 있습니다. 페이지를 나가시겠습니까?",
+    "unsavedStatus": "저장되지 않은 변경 사항이 있습니다."
   },
   "en": {
     "myForms": "My forms",
@@ -67,7 +69,9 @@
     "blankTitle": "New form",
     "saved": "Saved in this browser",
     "defaultValue": "Default value",
-    "options": "Choice options"
+    "options": "Choice options",
+    "unsavedConfirm": "You have unsaved changes. Leave this page?",
+    "unsavedStatus": "You have unsaved changes."
   },
   "ja": {
     "myForms": "私のフォーム",
@@ -102,7 +106,9 @@
     "blankTitle": "新しい形",
     "saved": "このブラウザに保存されました",
     "defaultValue": "既定値",
-    "options": "選択肢"
+    "options": "選択肢",
+    "unsavedConfirm": "保存されていない変更があります。このページを離れますか？",
+    "unsavedStatus": "保存されていない変更があります。"
   },
   "zh": {
     "myForms": "我的表格",
@@ -137,7 +143,9 @@
     "blankTitle": "新形式",
     "saved": "已保存在此浏览器中",
     "defaultValue": "默认值",
-    "options": "选项"
+    "options": "选项",
+    "unsavedConfirm": "有未保存的更改。要离开此页面吗？",
+    "unsavedStatus": "有未保存的更改。"
   },
   "es": {
     "myForms": "mis formularios",
@@ -172,7 +180,9 @@
     "blankTitle": "Nueva forma",
     "saved": "Guardado en este navegador",
     "defaultValue": "Valor predeterminado",
-    "options": "Opciones"
+    "options": "Opciones",
+    "unsavedConfirm": "Hay cambios sin guardar. ¿Salir de esta página?",
+    "unsavedStatus": "Hay cambios sin guardar."
   },
   "pt-br": {
     "myForms": "Meus formulários",
@@ -207,7 +217,9 @@
     "blankTitle": "Novo formulário",
     "saved": "Salvo neste navegador",
     "defaultValue": "Valor padrão",
-    "options": "Opções"
+    "options": "Opções",
+    "unsavedConfirm": "Há alterações não salvas. Sair desta página?",
+    "unsavedStatus": "Há alterações não salvas."
   },
   "de": {
     "myForms": "Meine Formulare",
@@ -242,7 +254,9 @@
     "blankTitle": "Neues Formular",
     "saved": "In diesem Browser gespeichert",
     "defaultValue": "Standardwert",
-    "options": "Auswahloptionen"
+    "options": "Auswahloptionen",
+    "unsavedConfirm": "Es gibt ungespeicherte Änderungen. Seite verlassen?",
+    "unsavedStatus": "Es gibt ungespeicherte Änderungen."
   },
   "fr": {
     "myForms": "Mes formulaires",
@@ -277,7 +291,9 @@
     "blankTitle": "Nouveau formulaire",
     "saved": "Enregistré dans ce navigateur",
     "defaultValue": "Valeur par défaut",
-    "options": "Options de choix"
+    "options": "Options de choix",
+    "unsavedConfirm": "Des modifications ne sont pas enregistrées. Quitter cette page ?",
+    "unsavedStatus": "Des modifications ne sont pas enregistrées."
   },
   "vi": {
     "myForms": "biểu mẫu của tôi",
@@ -312,7 +328,9 @@
     "blankTitle": "Hình thức mới",
     "saved": "Đã lưu trong trình duyệt này",
     "defaultValue": "Giá trị mặc định",
-    "options": "Tùy chọn"
+    "options": "Tùy chọn",
+    "unsavedConfirm": "Có thay đổi chưa được lưu. Rời khỏi trang này?",
+    "unsavedStatus": "Có thay đổi chưa được lưu."
   },
   "id": {
     "myForms": "Formulir saya",
@@ -347,7 +365,9 @@
     "blankTitle": "Bentuk baru",
     "saved": "Disimpan di browser ini",
     "defaultValue": "Nilai default",
-    "options": "Opsi pilihan"
+    "options": "Opsi pilihan",
+    "unsavedConfirm": "Ada perubahan yang belum disimpan. Tinggalkan halaman ini?",
+    "unsavedStatus": "Ada perubahan yang belum disimpan."
   },
   "th": {
     "myForms": "แบบฟอร์มของฉัน",
@@ -382,7 +402,9 @@
     "blankTitle": "แบบฟอร์มใหม่",
     "saved": "บันทึกไว้ในเบราว์เซอร์นี้",
     "defaultValue": "ค่าเริ่มต้น",
-    "options": "ตัวเลือก"
+    "options": "ตัวเลือก",
+    "unsavedConfirm": "มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก ต้องการออกจากหน้านี้หรือไม่",
+    "unsavedStatus": "มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก"
   },
   "zh-tw": {
     "myForms": "我的表格",
@@ -417,7 +439,9 @@
     "blankTitle": "新形式",
     "saved": "已儲存在此瀏覽器中",
     "defaultValue": "預設值",
-    "options": "選項"
+    "options": "選項",
+    "unsavedConfirm": "有未儲存的變更。要離開此頁面嗎？",
+    "unsavedStatus": "有未儲存的變更。"
   },
   "it": {
     "myForms": "Le mie forme",
@@ -452,7 +476,9 @@
     "blankTitle": "Nuova forma",
     "saved": "Salvato in questo browser",
     "defaultValue": "Valore predefinito",
-    "options": "Opzioni"
+    "options": "Opzioni",
+    "unsavedConfirm": "Ci sono modifiche non salvate. Vuoi lasciare la pagina?",
+    "unsavedStatus": "Ci sono modifiche non salvate."
   },
   "nl": {
     "myForms": "Mijn formulieren",
@@ -487,7 +513,9 @@
     "blankTitle": "Nieuw formulier",
     "saved": "Opgeslagen in deze browser",
     "defaultValue": "Standaardwaarde",
-    "options": "Keuzeopties"
+    "options": "Keuzeopties",
+    "unsavedConfirm": "Er zijn niet-opgeslagen wijzigingen. Deze pagina verlaten?",
+    "unsavedStatus": "Er zijn niet-opgeslagen wijzigingen."
   },
   "hi": {
     "myForms": "मेरे रूप",
@@ -522,7 +550,9 @@
     "blankTitle": "नया रूप",
     "saved": "इस ब्राउज़र में सहेजा गया",
     "defaultValue": "डिफ़ॉल्ट मान",
-    "options": "विकल्प"
+    "options": "विकल्प",
+    "unsavedConfirm": "कुछ बदलाव सहेजे नहीं गए हैं। क्या यह पेज छोड़ें?",
+    "unsavedStatus": "कुछ बदलाव सहेजे नहीं गए हैं।"
   },
   "ru": {
     "myForms": "Мои формы",
@@ -557,7 +587,9 @@
     "blankTitle": "Новая форма",
     "saved": "Сохранено в этом браузере",
     "defaultValue": "Значение по умолчанию",
-    "options": "Варианты ответа"
+    "options": "Варианты ответа",
+    "unsavedConfirm": "Есть несохраненные изменения. Покинуть эту страницу?",
+    "unsavedStatus": "Есть несохраненные изменения."
   },
   "tr": {
     "myForms": "Formlarım",
@@ -592,7 +624,9 @@
     "blankTitle": "Yeni form",
     "saved": "Bu tarayıcıya kaydedildi",
     "defaultValue": "Varsayılan değer",
-    "options": "Seçenekler"
+    "options": "Seçenekler",
+    "unsavedConfirm": "Kaydedilmemiş değişiklikler var. Sayfadan ayrılmak istiyor musunuz?",
+    "unsavedStatus": "Kaydedilmemiş değişiklikler var."
   },
   "pl": {
     "myForms": "Moje formularze",
@@ -627,7 +661,9 @@
     "blankTitle": "Nowy formularz",
     "saved": "Zapisano w tej przeglądarce",
     "defaultValue": "Wartość domyślna",
-    "options": "Opcje wyboru"
+    "options": "Opcje wyboru",
+    "unsavedConfirm": "Są niezapisane zmiany. Opuścić tę stronę?",
+    "unsavedStatus": "Są niezapisane zmiany."
   },
   "fil": {
     "myForms": "Mga form ko",
@@ -662,7 +698,9 @@
     "blankTitle": "Bagong form",
     "saved": "Naka-save sa browser na ito",
     "defaultValue": "Default na halaga",
-    "options": "Mga pagpipilian"
+    "options": "Mga pagpipilian",
+    "unsavedConfirm": "May hindi pa na-save na pagbabago. Umalis sa pahinang ito?",
+    "unsavedStatus": "May mga pagbabagong hindi pa nase-save."
   },
   "bn": {
     "myForms": "আমার ফর্ম",
@@ -697,7 +735,9 @@
     "blankTitle": "নতুন ফর্ম",
     "saved": "এই ব্রাউজারে সংরক্ষিত",
     "defaultValue": "ডিফল্ট মান",
-    "options": "বিকল্পসমূহ"
+    "options": "বিকল্পসমূহ",
+    "unsavedConfirm": "কিছু পরিবর্তন সংরক্ষণ করা হয়নি। এই পৃষ্ঠা ছেড়ে যাবেন?",
+    "unsavedStatus": "কিছু পরিবর্তন সংরক্ষণ করা হয়নি।"
   },
   "uk": {
     "myForms": "Мої форми",
@@ -732,7 +772,9 @@
     "blankTitle": "Нова форма",
     "saved": "Збережено у цьому браузері",
     "defaultValue": "Значення за замовчуванням",
-    "options": "Варіанти"
+    "options": "Варіанти",
+    "unsavedConfirm": "Є незбережені зміни. Залишити цю сторінку?",
+    "unsavedStatus": "Є незбережені зміни."
   },
   "ms": {
     "myForms": "Borang saya",
@@ -767,7 +809,9 @@
     "blankTitle": "Borang baharu",
     "saved": "Disimpan dalam pelayar ini",
     "defaultValue": "Nilai lalai",
-    "options": "Pilihan"
+    "options": "Pilihan",
+    "unsavedConfirm": "Terdapat perubahan yang belum disimpan. Tinggalkan halaman ini?",
+    "unsavedStatus": "Terdapat perubahan yang belum disimpan."
   },
   "sv": {
     "myForms": "Mina formulär",
@@ -802,7 +846,9 @@
     "blankTitle": "Nytt formulär",
     "saved": "Sparat i den här webbläsaren",
     "defaultValue": "Standardvärde",
-    "options": "Alternativ"
+    "options": "Alternativ",
+    "unsavedConfirm": "Det finns osparade ändringar. Lämna sidan?",
+    "unsavedStatus": "Det finns osparade ändringar."
   },
   "cs": {
     "myForms": "Moje formuláře",
@@ -837,7 +883,9 @@
     "blankTitle": "Nový formulář",
     "saved": "Uloženo v tomto prohlížeči",
     "defaultValue": "Výchozí hodnota",
-    "options": "Možnosti"
+    "options": "Možnosti",
+    "unsavedConfirm": "Máte neuložené změny. Opustit tuto stránku?",
+    "unsavedStatus": "Máte neuložené změny."
   },
   "ro": {
     "myForms": "Formularele mele",
@@ -872,7 +920,9 @@
     "blankTitle": "Formular nou",
     "saved": "Salvat în acest browser",
     "defaultValue": "Valoare implicită",
-    "options": "Opțiuni"
+    "options": "Opțiuni",
+    "unsavedConfirm": "Există modificări nesalvate. Părăsiți pagina?",
+    "unsavedStatus": "Există modificări nesalvate."
   },
   "el": {
     "myForms": "Οι φόρμες μου",
@@ -907,6 +957,8 @@
     "blankTitle": "Νέα φόρμα",
     "saved": "Αποθηκεύτηκε σε αυτό το πρόγραμμα περιήγησης",
     "defaultValue": "Προεπιλεγμένη τιμή",
-    "options": "Επιλογές"
+    "options": "Επιλογές",
+    "unsavedConfirm": "Υπάρχουν μη αποθηκευμένες αλλαγές. Να φύγετε από αυτή τη σελίδα;",
+    "unsavedStatus": "Υπάρχουν μη αποθηκευμένες αλλαγές."
   }
 }

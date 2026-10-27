@@ -85,6 +85,7 @@ const placeholders = (value: string) => [...value.matchAll(/\{\w+\}/g)].map(([to
 const enTitles = documentTranslations.en.titles as Record<string, string>;
 const enInterface = documentTranslations.en.interface as Record<string, string>;
 const enEditor = editorTranslations.en as Record<string, string>;
+const reviewedEnEditor = Object.fromEntries(Object.entries(enEditor).filter(([key]) => key !== "unsavedConfirm" && key !== "unsavedStatus"));
 const stringsIn = (value: unknown): string[] => typeof value === "string"
   ? [value]
   : value && typeof value === "object"
@@ -188,7 +189,7 @@ describe("unpublished Russian translation draft", () => {
   it("covers the shared UI and remains explicitly unpublished", () => {
     sameKeys(draft.ui, ui.en);
     sameKeys(draft.chrome, chromeText.en);
-    sameKeys(draft.editor, enEditor);
+    sameKeys(draft.editor, reviewedEnEditor);
     expect(draft.uiReviewedCount).toBe(Object.keys(draft.ui).length);
     expect(draft.chromeReviewedCount).toBe(Object.keys(draft.chrome).length);
     expect(draft.editorReviewedCount).toBe(Object.keys(draft.editor).length);
@@ -201,6 +202,17 @@ describe("unpublished Russian translation draft", () => {
     expect((draft.chrome.types as string[])).toHaveLength(chromeText.en.types.length);
     for (const [key, value] of Object.entries(draft.editor)) expect(value.trim()).not.toBe(enEditor[key]);
     expect(draft.reviewStatus).toBe("translation review complete; unpublished pending runtime verification");
+  });
+
+  it("localizes unsaved form warnings in every published locale", () => {
+    for (const [locale, translations] of Object.entries(editorTranslations)) {
+      for (const key of ["unsavedConfirm", "unsavedStatus"] as const) {
+        const value = translations[key];
+        expect(value, `${locale}.${key}`).toBeTruthy();
+        expect(value, `${locale}.${key}`).not.toMatch(/\?{2,}/);
+        if (locale !== "en") expect(value, `${locale}.${key}`).not.toBe(enEditor[key]);
+      }
+    }
   });
 
   it("covers all 699 translation keys across the eleven target locale drafts", () => {
@@ -232,7 +244,7 @@ describe("unpublished Russian translation draft", () => {
       categories: categories.en,
       ui: ui.en,
       chrome: chromeText.en,
-      editor: enEditor,
+      editor: reviewedEnEditor,
       documentContent: englishDocumentContent,
     };
     for (const locale of targetLocales) {

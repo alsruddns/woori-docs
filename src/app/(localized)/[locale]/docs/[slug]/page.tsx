@@ -18,8 +18,9 @@ export default function Page({ params }: Props) {
 async function DocumentDetailPage({ params }: Props) {
   const { locale, slug } = await params; const doc = getDocument(slug); if (!doc || !doc.isPublic || !locales.includes(locale as Locale)) notFound(); const lang=locale as Locale;
   const localePayload = getLocalePayload(lang);
+  const sidebarCatalog=documents.filter(item=>item.isPublic&&item.supportedLocales.includes(lang)).map(item=>({slug:item.slug,title:localizedDocumentTitle(item,lang),description:localizedDescription(item,lang),category:item.category,categoryLabel:categoryNames[lang][item.category]}));
   const displayTitle=localizedDocumentTitle(doc,lang); const categoryLabel=categoryNames[lang][doc.category]; const fields=doc.fields.map(field=>({...field,label:localizeField(field.label,lang)}));
   const content=buildDocumentContent(lang,displayTitle,categoryLabel,fields.map(field=>field.label),doc.kind,Boolean(doc.tables?.length),doc.policyReviewRequired);
   const localizedDoc={...doc,displayTitle,displayDescription:localizedDescription(doc,lang),categoryLabel,fields,tables:doc.tables?.map(table=>({...table,label:localizeField(table.label,lang),columns:table.columns.map(column=>({...column,label:localizeField(column.label,lang)})),summaryLabels:{subtotal:localizeField("Subtotal",lang),vat:localizeField("VAT",lang),total:localizeField("Total",lang)}})),related:getRelated(doc).map(item=>({slug:item.slug,category:item.category,categoryLabel:categoryNames[lang][item.category],title:localizedDocumentTitle(item,lang)})),interfaceContent:localizedInterface(lang)};
-  return <DocumentWorkspace doc={localizedDoc} locale={lang} {...localePayload}><DocumentDetailCards content={content} locale={lang}/></DocumentWorkspace>;
+  return <DocumentWorkspace doc={localizedDoc} locale={lang} sidebarCatalog={sidebarCatalog} {...localePayload}><DocumentDetailCards content={content} locale={lang}/></DocumentWorkspace>;
 }

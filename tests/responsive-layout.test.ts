@@ -14,5 +14,11 @@ describe("mobile layout", () => {
     expect(css).toContain(".related-grid{grid-template-columns:1fr}");
     expect(css).toContain(".language-picker select{display:block;width:100%;min-width:0;max-width:100%");
     expect(css).toContain(".repeating-table-scroll{max-width:100%;overflow-x:auto}");
+    expect(css).toContain(".sidebar.docs-sidebar{position:fixed;inset:0 auto 0 0");
+    expect(css).toContain("width:min(340px,calc(100vw - 48px))");
+    expect(css).toContain(".docs-sidebar.drawer-open{transform:translateX(0)}");
+    expect(css).toContain(".sidebar.docs-sidebar{visibility:hidden;pointer-events:none}.sidebar.docs-sidebar.drawer-open{visibility:visible;pointer-events:auto}");
+    expect(css).toContain(".template-field-grid{grid-template-columns:minmax(0,1fr);gap:10px}");
+    expect(css).toContain("@media(max-width:380px){.brand img{width:88px}.brand span{display:none}}");
   });
 });

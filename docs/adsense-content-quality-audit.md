@@ -1,16 +1,16 @@
 # AdSense Content Quality Audit
 
-- Audited at: 2026-10-17T06:50:06.416Z
+- Audited at: 2026-10-27T04:49:58.866Z
 - Branch: develop (local audit)
 - Public documents: 119
-- Locales: 15 (ko, en, ja, zh, es, pt-br, de, fr, vi, id, th, zh-tw, it, nl, hi)
+- Locales: 26 (ko, en, ja, zh, es, pt-br, de, fr, vi, id, th, zh-tw, it, nl, hi, ru, tr, pl, fil, bn, uk, ms, sv, cs, ro, el)
 - Current thin-content signals: 0
 - Noindex/sitemap exclusion candidates: 0
-- Expected sitemap URLs: 1800; IndexNow URLs: 1800
+- Expected sitemap URLs: 3120; IndexNow URLs: 3120
 
 ## Signal definitions and results
 
-Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit also checks purpose, instructions, tips, FAQs, field alignment, localized text integrity, exact English prose fallback, related links, duplicate sections, and the presence of editable fields, preview, text download, and print actions. The fallback detector requires an entire localized prose string to equal an English source string; it does not flag acronyms or individual shared words.
+Description thresholds are 28 characters for CJK locales and 55 for other locales. The audit checks localized usage steps, practical examples tied to each title, input/output details, limitations, troubleshooting, FAQ content, field alignment, damaged text, exact English prose fallback, duplicate sections, related links, and server-rendered always-open cards. It also confirms editable fields, preview, text download, and print actions. The fallback detector requires an entire localized prose string to equal an English source string; it does not flag acronyms or individual shared words.
 
 | Signal | Failed count |
 |---|---:|
@@ -18,7 +18,12 @@ Description thresholds are 28 characters for CJK locales and 55 for other locale
 | missingUsage | 0 |
 | missingHowTo | 0 |
 | missingTips | 0 |
+| missingExample | 0 |
+| missingInputOutput | 0 |
+| missingLimitations | 0 |
+| missingTroubleshooting | 0 |
 | missingFaq | 0 |
+| missingServerRenderedCards | 0 |
 | downloadOnly | 0 |
 | rawOrDamaged | 0 |
 | exactEnglishFallback | 0 |
@@ -28,7 +33,7 @@ Description thresholds are 28 characters for CJK locales and 55 for other locale
 
 ## Locale results
 
-| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact English fallback | Exact duplicates (description / usage / how-to / tips / FAQ) |
+| Locale | Documents checked | Thin signals | Short descriptions | Missing sections | Damaged/raw text | Exact English fallback | Exact duplicates (description / usage / how-to / tips / example / FAQ) |
 |---|---:|---:|---:|---:|---:|---:|---|
 | ko | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
 | en | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
@@ -45,6 +50,17 @@ Description thresholds are 28 characters for CJK locales and 55 for other locale
 | it | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
 | nl | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
 | hi | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| ru | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| tr | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| pl | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| fil | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| bn | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| uk | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| ms | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| sv | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| cs | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| ro | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
+| el | 119 | 0 | 0 | 0 | 0 | 0 | 0 / 0 / 0 / 0 / 0 |
 
 ## Exact duplicates and near-duplicate candidates
 
@@ -56,130 +72,218 @@ Exact duplicates are groups of distinct slugs whose complete localized section t
 
 ### ko
 
+- 0.99 living-alone-checklist vs newlywed-home-checklist
 - 0.98 resume-template vs simple-resume-template
-- 0.98 living-alone-checklist vs newlywed-home-checklist
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs moving-out-checklist
-- 0.97 travel-checklist vs international-travel-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs moving-out-checklist
+- 0.98 travel-checklist vs international-travel-checklist
 
 ### en
 
-- 0.98 resume-template vs simple-resume-template
-- 0.98 travel-checklist vs international-travel-checklist
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs travel-checklist
-- 0.97 moving-checklist vs moving-out-checklist
+- 0.99 resume-template vs simple-resume-template
+- 0.99 travel-checklist vs international-travel-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs moving-out-checklist
 
 ### ja
 
-- 0.95 moving-checklist vs moving-out-checklist
-- 0.88 moving-checklist vs wedding-checklist
-- 0.88 travel-checklist vs international-travel-checklist
-- 0.88 living-alone-checklist vs newlywed-home-checklist
-- 0.86 resume-template vs simple-resume-template
+- 0.97 moving-checklist vs moving-out-checklist
+- 0.86 moving-checklist vs wedding-checklist
+- 0.86 travel-checklist vs international-travel-checklist
+- 0.86 living-alone-checklist vs newlywed-home-checklist
+- 0.85 resume-template vs simple-resume-template
 
 ### zh
 
 - 0.83 moving-checklist vs wedding-checklist
 - 0.83 travel-checklist vs international-travel-checklist
 - 0.83 living-alone-checklist vs newlywed-home-checklist
-- 0.81 task-list-template vs newborn-checklist
-- 0.80 resume-template vs simple-resume-template
+- 0.82 task-list-template vs newborn-checklist
+- 0.81 resume-template vs simple-resume-template
 
 ### es
 
+- 0.99 travel-checklist vs moving-out-checklist
 - 0.98 resume-template vs simple-resume-template
-- 0.98 travel-checklist vs moving-out-checklist
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs travel-checklist
-- 0.97 moving-checklist vs moving-out-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs moving-out-checklist
 
 ### pt-br
 
-- 0.98 resume-template vs simple-resume-template
-- 0.98 moving-checklist vs moving-out-checklist
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs living-alone-checklist
-- 0.97 living-alone-checklist vs moving-out-checklist
+- 0.99 resume-template vs simple-resume-template
+- 0.99 moving-checklist vs moving-out-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs living-alone-checklist
 
 ### de
 
-- 0.97 resume-template vs simple-resume-template
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 travel-checklist vs international-travel-checklist
-- 0.97 travel-checklist vs living-alone-checklist
-- 0.97 travel-checklist vs moving-out-checklist
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs living-alone-checklist
+- 0.98 moving-checklist vs moving-out-checklist
 
 ### fr
 
+- 0.99 resume-template vs simple-resume-template
 - 0.99 moving-checklist vs moving-out-checklist
-- 0.98 resume-template vs simple-resume-template
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs travel-checklist
-- 0.97 wedding-checklist vs moving-out-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 wedding-checklist vs moving-out-checklist
 
 ### vi
 
+- 0.99 travel-checklist vs international-travel-checklist
+- 0.99 living-alone-checklist vs moving-out-checklist
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs living-alone-checklist
 - 0.98 moving-checklist vs moving-out-checklist
-- 0.98 travel-checklist vs international-travel-checklist
-- 0.98 living-alone-checklist vs moving-out-checklist
-- 0.97 resume-template vs simple-resume-template
-- 0.97 moving-checklist vs living-alone-checklist
 
 ### id
 
 - 0.99 travel-checklist vs international-travel-checklist
-- 0.97 resume-template vs simple-resume-template
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 living-alone-checklist vs moving-out-checklist
-- 0.97 cooperation-request-form vs approval-request-form
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs moving-out-checklist
 
 ### th
 
 - 0.97 resume-template vs simple-resume-template
 - 0.97 travel-checklist vs international-travel-checklist
-- 0.95 resume-template vs career-resume-template
-- 0.94 moving-checklist vs moving-out-checklist
-- 0.94 travel-checklist vs moving-out-checklist
+- 0.96 resume-template vs career-resume-template
+- 0.95 project-retrospective vs sprint-retrospective
+- 0.94 simple-resume-template vs career-resume-template
 
 ### zh-tw
 
 - 0.83 moving-checklist vs wedding-checklist
 - 0.83 travel-checklist vs international-travel-checklist
 - 0.83 living-alone-checklist vs newlywed-home-checklist
+- 0.81 resume-template vs simple-resume-template
 - 0.81 task-list-template vs newborn-checklist
-- 0.80 resume-template vs simple-resume-template
 
 ### it
 
 - 0.98 resume-template vs simple-resume-template
-- 0.97 moving-checklist vs wedding-checklist
-- 0.97 moving-checklist vs moving-out-checklist
-- 0.97 living-alone-checklist vs moving-out-checklist
-- 0.97 cooperation-request-form vs approval-request-form
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs moving-out-checklist
+- 0.98 wedding-checklist vs travel-checklist
 
 ### nl
 
-- 0.98 travel-checklist vs international-travel-checklist
-- 0.97 resume-template vs simple-resume-template
-- 0.96 moving-checklist vs wedding-checklist
-- 0.96 moving-checklist vs travel-checklist
-- 0.96 moving-checklist vs car-purchase-checklist
+- 0.99 travel-checklist vs international-travel-checklist
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs moving-out-checklist
+- 0.97 moving-checklist vs wedding-checklist
+- 0.97 moving-checklist vs travel-checklist
 
 ### hi
 
+- 1.00 travel-checklist vs international-travel-checklist
+- 0.99 resume-template vs simple-resume-template
+- 0.99 moving-checklist vs wedding-checklist
+- 0.99 payment-confirmation-template vs payment-record-log
+- 0.99 project-retrospective vs sprint-retrospective
+
+### ru
+
 - 0.98 resume-template vs simple-resume-template
+- 0.98 travel-checklist vs international-travel-checklist
+- 0.97 moving-checklist vs wedding-checklist
+- 0.97 moving-checklist vs travel-checklist
+- 0.97 travel-checklist vs moving-out-checklist
+
+### tr
+
+- 0.98 resume-template vs simple-resume-template
+- 0.98 quotation-generator vs invoice-generator
 - 0.98 moving-checklist vs wedding-checklist
 - 0.98 travel-checklist vs international-travel-checklist
-- 0.98 payment-confirmation-template vs payment-record-log
-- 0.98 project-retrospective vs sprint-retrospective
+- 0.98 living-alone-checklist vs moving-out-checklist
+
+### pl
+
+- 0.99 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 travel-checklist vs international-travel-checklist
+- 0.98 travel-checklist vs moving-out-checklist
+- 0.97 job-application-checklist vs interview-preparation-checklist
+
+### fil
+
+- 0.99 resume-template vs simple-resume-template
+- 0.99 moving-checklist vs moving-out-checklist
+- 0.99 travel-checklist vs moving-out-checklist
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+
+### bn
+
+- 1.00 moving-checklist vs wedding-checklist
+- 0.99 resume-template vs simple-resume-template
+- 0.99 moving-checklist vs moving-out-checklist
+- 0.99 wedding-checklist vs moving-out-checklist
+- 0.99 travel-checklist vs international-travel-checklist
+
+### uk
+
+- 0.98 resume-template vs simple-resume-template
+- 0.97 moving-checklist vs wedding-checklist
+- 0.97 moving-checklist vs travel-checklist
+- 0.97 moving-checklist vs living-alone-checklist
+- 0.97 moving-checklist vs moving-out-checklist
+
+### ms
+
+- 0.99 resume-template vs simple-resume-template
+- 0.99 travel-checklist vs international-travel-checklist
+- 0.98 business-trip-expense-template vs travel-budget-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs moving-out-checklist
+
+### sv
+
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs moving-out-checklist
+- 0.98 travel-checklist vs international-travel-checklist
+- 0.98 cooperation-request-form vs approval-request-form
+
+### cs
+
+- 0.98 resume-template vs simple-resume-template
+- 0.98 travel-checklist vs international-travel-checklist
+- 0.97 moving-checklist vs wedding-checklist
+- 0.97 moving-checklist vs travel-checklist
+- 0.97 moving-checklist vs newborn-checklist
+
+### ro
+
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 travel-checklist vs international-travel-checklist
+- 0.98 living-alone-checklist vs moving-out-checklist
+
+### el
+
+- 0.99 travel-checklist vs international-travel-checklist
+- 0.98 resume-template vs simple-resume-template
+- 0.98 moving-checklist vs wedding-checklist
+- 0.98 moving-checklist vs travel-checklist
+- 0.98 moving-checklist vs living-alone-checklist
 
 ## Sources, copyright, and usage conditions
 
 The registry, template catalog, and public assets contain no per-slug external source URL, distributed PDF/DOCX original, or license field. The pages describe editable reference templates assembled by woori.today. This inventory alone cannot prove the provenance of every original field or phrase. Do not present a template as an official or standard form unless its source and license are verified and recorded for that slug.
 
 - Documents without recorded source metadata: 119 (manual provenance review required).
-- Legal/tax policy-review flags are preserved for relevant pages.
+- Legal/tax policy-review flags are preserved for relevant pages. Policy-flagged templates state that they are general drafts and make no jurisdictional legal-effect claim.
 - Confirmed copied external templates: none identified by this metadata scan; missing provenance records prevent a definitive originality finding.
 
 ## Docs list page
@@ -194,7 +298,8 @@ The registry, template catalog, and public assets contain no per-slug external s
 
 - Broken related links: 0
 - Text download/print renderer: present
-- Sitemap locale lists + public details: 1800 URLs; IndexNow: 1800 URLs. Sitemap source read: true
+- Initial server-rendered informational cards: present; FAQ is always visible
+- Sitemap locale lists + public details: 3120 URLs; IndexNow: 3120 URLs. Sitemap source read: true
 - Noindex recommendation: none; no page excluded automatically
 
 ## Per-slug audit record

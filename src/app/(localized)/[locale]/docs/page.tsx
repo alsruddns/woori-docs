@@ -21,6 +21,7 @@ export default async function Page({ params }: Props) {
   const localePayload = getLocalePayload(lang);
   const publicDocs=documents.filter(doc=>doc.isPublic&&doc.supportedLocales.includes(lang)); const recentSlugs=new Set(publicDocs.slice(-4).map(doc=>doc.slug));
   const catalog=publicDocs.map(doc=>({slug:doc.slug,title:localizedDocumentTitle(doc,lang),description:localizedDescription(doc,lang),category:doc.category,categoryLabel:categoryNames[lang][doc.category],kind:doc.kind,keywords:doc.keywords,recent:recentSlugs.has(doc.slug)}));
+  const sidebarCatalog=catalog.map(({slug,title,description,category,categoryLabel})=>({slug,title,description,category,categoryLabel}));
   const categoryDescriptions=Object.fromEntries(Object.entries(categoryNames[lang]).map(([category,label])=>[category,localizedCategoryDescription(lang,label)]));
-  return <DocumentIndex locale={lang} catalog={catalog} library={buildLibraryContent(lang,categoryNames[lang].work)} categoryDescriptions={categoryDescriptions} {...localePayload}/>;
+  return <DocumentIndex locale={lang} catalog={catalog} sidebarCatalog={sidebarCatalog} library={buildLibraryContent(lang,categoryNames[lang].work)} categoryDescriptions={categoryDescriptions} {...localePayload}/>;
 }

@@ -118,6 +118,32 @@ jobs:
           curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/ko/docs > /dev/null
           curl --fail --silent --show-error --retry 12 --retry-delay 5 --retry-connrefused https://www.woori.today/docs-sitemap.xml > /dev/null
 
+      - name: Remove superseded Docs images from server
+        if: success()
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+          ssh "$SERVER_USER@$SERVER_HOST" 'bash -s' <<'REMOTE'
+            set -uo pipefail
+            repository='ghcr.io/alsruddns/woori-docs'
+            running="$(docker inspect docs --format '{{.Image}}')" || exit 1
+            removed=0
+            while read -r image_ref image_id; do
+              [ -n "$image_ref" ] || continue
+              [ "$image_id" != "$running" ] || continue
+              if docker image rm "$image_ref" >/dev/null 2>&1; then
+                removed=$((removed + 1))
+              fi
+            done < <(docker image ls "$repository" --format '{{.Repository}}:{{.Tag}} {{.ID}}' | sort -u)
+            echo "Removed $removed superseded Docs image tag(s); running image $running was retained."
+          REMOTE
+
       - name: Roll back Docs after failed deployment or public health check
         if: failure() && steps.deploy.outputs.old_image_id != '' && (steps.deploy.outcome == 'failure' || steps.health.outcome == 'failure')
         env:
